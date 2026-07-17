@@ -1,0 +1,5 @@
+interface:
+  display_name: "Page Visual QA"
+  short_description: "Build, capture, and inspect portfolio screens"
+  default_prompt: "Use $page-visual-qa to build and visually inspect every portfolio screen."
+

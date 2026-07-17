@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f6fc"/><stop offset=".5" stop-color="#eeeafb"/><stop offset="1" stop-color="#d9d0f8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="76%" cy="44%" r="54%">
+      <stop offset="0" stop-color="#8968ff" stop-opacity=".5"/><stop offset=".48" stop-color="#7552ed" stop-opacity=".16"/><stop offset="1" stop-color="#7552ed" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse" patternTransform="skewX(-12)">
+      <path d="M72 0H0V72" fill="none" stroke="#6f4bf2" stroke-opacity=".08"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1800" height="1100" fill="url(#base)"/>
+  <rect width="1800" height="1100" fill="url(#grid)"/>
+  <rect width="1800" height="1100" fill="url(#glow)"/>
+  <path d="M760 1100 1190 0h430l-430 1100z" fill="#fff" opacity=".23"/>
+  <g transform="translate(1330 540) rotate(45)" fill="none" stroke="#6f4bf2">
+    <rect x="-250" y="-250" width="500" height="500" stroke-opacity=".2"/>
+    <rect x="-170" y="-170" width="340" height="340" stroke-opacity=".35" stroke-width="2"/>
+    <rect x="-82" y="-82" width="164" height="164" fill="#7552ed" fill-opacity=".16" stroke-opacity=".65" stroke-width="2"/>
+    <rect x="-32" y="-32" width="64" height="64" fill="#7552ed" fill-opacity=".5" stroke="none"/>
+  </g>
+  <g fill="none" stroke="#6f4bf2" stroke-width="1.4" stroke-opacity=".42">
+    <path d="M1330 198V80M1330 882v148M988 540H810M1672 540h108"/>
+    <path d="m1088 298-128-128m612 612 105 105M1088 782 930 940m642-642 130-130"/>
+    <path d="M810 540 640 390 510 520 330 370" stroke-dasharray="5 10"/>
+    <path d="M930 940 770 820 610 930 430 800" stroke-dasharray="5 10"/>
+  </g>
+  <g fill="#7552ed">
+    <rect x="1317" y="67" width="26" height="26" transform="rotate(45 1330 80)" opacity=".75"/>
+    <rect x="797" y="527" width="26" height="26" transform="rotate(45 810 540)" opacity=".55"/>
+    <rect x="947" y="157" width="26" height="26" transform="rotate(45 960 170)" opacity=".45"/>
+    <rect x="597" y="917" width="26" height="26" transform="rotate(45 610 930)" opacity=".4"/>
+    <rect x="317" y="357" width="26" height="26" transform="rotate(45 330 370)" opacity=".34"/>
+  </g>
+  <g font-family="monospace" font-size="13" letter-spacing="5" fill="#55427f" opacity=".48">
+    <text x="1240" y="104">SOURCE / 06</text><text x="1450" y="1018">SYNC / NOMINAL</text>
+    <text x="500" y="500">PRJ NODE</text><text x="730" y="805">BUILD GRAPH</text>
+  </g>
+  <ellipse cx="1370" cy="560" rx="300" ry="210" fill="#7755ef" opacity=".08" filter="url(#soft)"/>
+</svg>

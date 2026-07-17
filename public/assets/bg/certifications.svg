@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1100" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f9f7fc"/><stop offset=".56" stop-color="#eeeafb"/><stop offset="1" stop-color="#d8cef9"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="75%" cy="48%" r="52%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset=".22" stop-color="#9b82ff" stop-opacity=".4"/><stop offset=".7" stop-color="#7652ef" stop-opacity=".08"/><stop offset="1" stop-color="#7652ef" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="20"/></filter>
+  </defs>
+  <rect width="1800" height="1100" fill="url(#base)"/>
+  <rect width="1800" height="1100" fill="url(#halo)"/>
+  <path d="M820 1100 1190 0h390l-370 1100z" fill="#fff" opacity=".28"/>
+  <g transform="translate(1370 530)" fill="none" stroke="#7451ee">
+    <circle r="430" stroke-opacity=".13" stroke-dasharray="3 12"/>
+    <circle r="350" stroke-opacity=".22"/>
+    <circle r="274" stroke-opacity=".3" stroke-width="2" stroke-dasharray="88 18"/>
+    <circle r="192" stroke-opacity=".46" stroke-width="2" stroke-dasharray="38 12"/>
+    <circle r="103" fill="#7451ee" fill-opacity=".09" stroke-opacity=".7" stroke-width="2"/>
+    <g stroke-opacity=".2">
+      <path d="M0-430V430M-430 0H430M-304-304 304 304M304-304-304 304"/>
+      <path d="M-165-397 165 397M397-165-397 165M165-397-165 397M397 165-397-165"/>
+    </g>
+  </g>
+  <g transform="translate(1370 530)" fill="#7451ee">
+    <path d="m0-54 47 27v54L0 54-47 27v-54z" opacity=".52"/>
+    <path d="m0-31 27 15v32L0 31-27 16v-32z" fill="#fff" opacity=".85"/>
+    <g opacity=".65">
+      <rect x="-8" y="-286" width="16" height="16" transform="rotate(45)"/>
+      <rect x="-8" y="266" width="16" height="16" transform="rotate(45)"/>
+      <rect x="266" y="-8" width="16" height="16" transform="rotate(45)"/>
+      <rect x="-286" y="-8" width="16" height="16" transform="rotate(45)"/>
+    </g>
+  </g>
+  <g fill="none" stroke="#7451ee" stroke-opacity=".42">
+    <path d="M1020 180H810l-120 120H520"/><path d="M1080 850H870l-120-120H610"/>
+    <rect x="520" y="268" width="150" height="72" transform="skewX(-12)" fill="#fff" fill-opacity=".28"/>
+    <rect x="610" y="700" width="170" height="72" transform="skewX(-12)" fill="#fff" fill-opacity=".28"/>
+  </g>
+  <g font-family="monospace" fill="#574481" opacity=".5" letter-spacing="4">
+    <text x="545" y="300" font-size="14">VERIFIED</text><text x="545" y="323" font-size="10">CREDENTIAL NODE</text>
+    <text x="625" y="733" font-size="14">62 / ACTIVE</text><text x="625" y="756" font-size="10">9 CATEGORIES</text>
+    <text x="1260" y="92" font-size="12">ACCREDITATION MATRIX</text>
+  </g>
+  <ellipse cx="1370" cy="530" rx="320" ry="240" fill="#7856ee" opacity=".08" filter="url(#blur)"/>
+</svg>

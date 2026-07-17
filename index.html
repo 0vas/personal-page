@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oscar Lobaton — Platform Product Lead · DevSecOps Architect · International Speaker</title>
+  <meta name="description" content="Oscar Lobaton Salas — Platform Product Lead at Credicorp, DevSecOps Architect, DevOps Institute Ambassador and international speaker. Platform engineering, DevSecOps and Generative AI.">
+  <meta property="og:title" content="Oscar Lobaton — Interface">
+  <meta property="og:description" content="Platform Product Lead · DevSecOps Architect · International Speaker">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://0vas.com">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preload" as="image" href="/assets/profile-retouched.jpg" fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    // set theme before paint to avoid flash (?theme= overrides stored preference)
+    try {
+      var q = new URLSearchParams(location.search).get("theme");
+      var t = q || localStorage.getItem("ovas-theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
