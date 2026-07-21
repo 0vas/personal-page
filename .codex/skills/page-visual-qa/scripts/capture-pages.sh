@@ -3,7 +3,7 @@ set -euo pipefail
 
 OUT_DIR="${1:-.artifacts/visual-qa}"
 PORT="${2:-4179}"
-SCREENS=(home career speaking projects education certifications contact)
+SCREENS=(profile career speaking projects education certifications contact)
 ROOT="$(pwd)"
 
 if [[ ! -f "$ROOT/package.json" || ! -d "$ROOT/src" ]]; then

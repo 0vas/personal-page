@@ -5,12 +5,12 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import {
   TALKS, CERT_CATEGORIES, CERT_TOTAL, CAREER_ORDER, CAREER_GROUPS, CAREER_DETAILS,
-  EDUCATION, HOME, PROJECTS, LINKS,
+  EDUCATION, PROFILE, PROJECTS, LINKS, SKILLS,
 } from "../data/content.js";
 import { STRINGS } from "../i18n.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
-const SCREENS = ["home", "career", "speaking", "projects", "education", "certifications", "contact"];
+const SCREENS = ["profile", "career", "speaking", "projects", "education", "certifications", "contact"];
 
 const hexRgb = (hex) => {
   const value = hex.replace("#", "");
@@ -44,7 +44,7 @@ describe("Global", () => {
     const esKeys = new Set(Object.keys(STRINGS.es));
     for (const k of enKeys) expect(esKeys.has(k), `es missing ${k}`).toBe(true);
   });
-  it("G6/G7 — non-blocking first-session intro without a Home background request", () => {
+  it("G6/G7 — non-blocking first-session intro without a Profile background request", () => {
     const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
     const bits = readFileSync(resolve(ROOT, "src/components/bits.jsx"), "utf8");
     const html = readFileSync(resolve(ROOT, "index.html"), "utf8");
@@ -60,7 +60,7 @@ describe("Global", () => {
     expect(css).toMatch(/prefers-reduced-motion:[\s\S]*\.reveal\s*\{[^}]*opacity:\s*1\s*!important[^}]*transform:\s*none\s*!important/);
     expect(css).toContain("screenFadeIn .16s");
     expect(bits).toContain("duration: 0.3");
-    expect(html).not.toContain('/assets/bg/home.');
+    expect(html).not.toContain('/assets/bg/profile.');
   });
   it("G11 — dark theme uses dark ink on the (light) accent fills for contrast", () => {
     const theme = readFileSync(resolve(ROOT, "src/styles/theme.css"), "utf8");
@@ -83,45 +83,132 @@ describe("Global", () => {
       expect(contrast(ink, bg), `--ink on --${bgName}`).toBeGreaterThan(contrast(dim, bg));
     }
   });
-  it("G9/G10/H4 — atomic CSS navigation and no top-right statistics", () => {
+  it("G13 — shared backdrop signals are finite, subtle and motion-safe", () => {
     const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
-    const home = readFileSync(resolve(ROOT, "src/screens/Home.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    const beamRule = css.match(/\.bd-beam\s*\{([^}]*)\}/s)?.[1] ?? "";
+    expect(app.match(/className="bd-beam b[12]"/g)).toHaveLength(2);
+    expect(beamRule).toMatch(/\bheight:\s*clamp\(64px, 11vh, 104px\)/);
+    expect(beamRule).toMatch(/\bwidth:\s*1px/);
+    expect(beamRule).not.toMatch(/\bbottom:/);
+    expect(beamRule).toMatch(/\banimation:\s*backdropSignal/);
+    expect(css).toContain("@keyframes backdropSignal");
+    expect(css).not.toMatch(/\.bd-beam\s*\{[^}]*top:\s*-5%[^}]*bottom:\s*-5%/s);
+    expect(css).toMatch(/@media \(max-width: 760px\)[\s\S]*?\.bd-beam\.b2\s*\{[^}]*display:\s*none;/);
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.bd-beam\s*\{[^}]*animation:\s*none\s*!important;[^}]*opacity:\s*\.08;/);
+  });
+  it("G14 — titled routes use a dedicated chrome-safe scroll boundary", () => {
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(app).toContain('className={`stage ${title ? "stage-titled" : ""}`}');
+    expect(app).toContain('data-screen={id}');
+    expect(css).toMatch(/\.stage\s*\{[^}]*--stage-top:\s*clamp\(120px, 19vh, 190px\);[^}]*padding:\s*var\(--stage-top\) 0 86px;/s);
+    expect(css).toMatch(/\.stage-titled\s*\{[^}]*--stage-top:\s*clamp\(184px, 22vh, 220px\);/s);
+    expect(css).toMatch(/\.stage\[data-screen="contact"\]\s*\{[^}]*--stage-top:\s*clamp\(172px, 21vh, 190px\);/s);
+    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.stage\s*\{[^}]*--stage-top:\s*clamp\(96px, 15vh, 150px\);[^}]*\}[\s\S]*?\.stage-titled\s*\{[^}]*--stage-top:\s*clamp\(128px, 18vh, 156px\);/s);
+    expect(css).toMatch(/\.screen\s*\{[^}]*overflow-y:\s*auto;/s);
+    expect(css).toMatch(/\.screen\[data-screen="contact"\]\s*\{[^}]*overflow-y:\s*hidden;/s);
+  });
+  it("G15 — compact navigation keeps the active route fully visible", () => {
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
+    expect(app).toContain("navMenuRef");
+    expect(app).toContain('aria-current={i === idx ? "page" : undefined}');
+    expect(app).toContain("menu.scrollTo({ left: nextLeft");
+    expect(app).toContain('(prefers-reduced-motion: reduce)');
+    expect(app).not.toContain("scrollIntoView({ behavior");
+  });
+  it("G9/G10/PF4 — atomic CSS navigation and no top-right statistics", () => {
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
+    const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
     expect(app).toContain('className="screen screen-enter"');
     expect(app).not.toContain("<RouteSignal");        // decorative mid-page route line removed
     expect(app).not.toContain("route-transition");
     expect(app).not.toContain("<motion.section");
     expect(app).not.toContain("ct-stat-value");
-    expect(home).not.toContain("READOUTS");
-    expect(home).not.toContain("Counter");
+    expect(profile).not.toContain("READOUTS");
+    expect(profile).not.toContain("Counter");
   });
-  it("H5 — Home skips image backdrop and staggered motion", () => {
+  it("PF5 — Profile skips image backdrop and staggered motion", () => {
     const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
-    const home = readFileSync(resolve(ROOT, "src/screens/Home.jsx"), "utf8");
-    expect(app).toContain('screen !== "home" && <SceneBg');
-    expect(app).toContain("bd-home-ambient");
-    expect(home).not.toContain("<Reveal");
-    expect(home).toContain('data-text="LOBATON"');
+    const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
+    expect(app).toContain('screen !== "profile" && <SceneBg');
+    expect(app).toContain("bd-profile-ambient");
+    expect(profile).not.toContain("<Reveal");
+    expect(profile).toContain('data-text="LOBATON"');
   });
-  it("H6 — Home roles type from a complete first frame without layout shift", () => {
-    const home = readFileSync(resolve(ROOT, "src/screens/Home.jsx"), "utf8");
+  it("PF6 — Profile roles type from a complete first frame without layout shift", () => {
+    const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
     const bits = readFileSync(resolve(ROOT, "src/components/bits.jsx"), "utf8");
-    expect(home).toContain("useTyped(roles");
-    expect(home).toContain("role-reserve");
-    expect(home).toContain("role-live");
+    expect(profile).toContain("useTyped(roles");
+    expect(profile).toContain("role-reserve");
+    expect(profile).toContain("role-live");
     expect(bits).toContain('useState(() => words[0] || "")');
     expect(bits).toContain('(prefers-reduced-motion: reduce)');
   });
+  it("PF7 — Profile is canonical while #/home remains a compatibility alias", () => {
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
+    expect(app).toContain('const SCREEN_IDS = ["profile"');
+    expect(app).toContain('const ROUTE_ALIASES = { home: "profile" }');
+    expect(app).toContain("ROUTE_ALIASES[rawId] || rawId");
+    expect(app).toContain('window.history.replaceState(null, "", "#/profile")');
+    expect(app).toContain("profile: Profile");
+  });
 });
 
-describe("Home", () => {
-  it("H2 — CIP 386940 in the home kicker", () => {
-    expect(HOME.kicker.en).toContain("386940");
-    expect(HOME.kicker.es).toContain("386940");
+describe("Profile", () => {
+  it("PF2 — CIP 386940 in the Profile kicker", () => {
+    expect(PROFILE.kicker.en).toContain("386940");
+    expect(PROFILE.kicker.es).toContain("386940");
   });
-  it("H3 — radial chart removed; skill chips remain", () => {
-    const source = readFileSync(resolve(ROOT, "src/screens/Home.jsx"), "utf8");
-    expect(source).not.toMatch(/EChart|radar/i);
-    expect(source).toContain("SKILLS.map");
+  it("PF3 — one minimal interactive capability directory replaces facts and the skill-chip grid", () => {
+    const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
+    const matrix = readFileSync(resolve(ROOT, "src/components/CapabilityMatrix.jsx"), "utf8");
+    const wrapper = readFileSync(resolve(ROOT, "src/components/EChart.jsx"), "utf8");
+    const data = readFileSync(resolve(ROOT, "src/data/content.js"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(SKILLS).toHaveLength(6);
+    expect(SKILLS.flatMap((group) => group.items)).toHaveLength(35);
+    expect(profile).toContain("<CapabilityMatrix");
+    expect(profile).not.toContain("FACTS");
+    expect(profile).not.toContain("skgrid");
+    expect(data).not.toContain("export const FACTS");
+    expect(data).not.toContain("export const RADAR");
+    expect(wrapper).toContain("CustomChart");
+    expect(wrapper).not.toContain("TreemapChart");
+    expect(matrix).toContain('type: "custom"');
+    expect(matrix).toContain('coordinateSystem: "none"');
+    expect(matrix).toContain("renderCapabilityRow");
+    expect(matrix).toContain('type: "rect"');
+    expect(matrix).toContain('type: "text"');
+    expect(matrix).not.toContain('type: "polygon"');
+    expect(matrix).not.toContain('type: "treemap"');
+    expect(matrix).toContain("SKILLS.map");
+    expect(matrix).toContain("value: [skillIndex, 1]");
+    expect(matrix).toContain("id: SERIES_ID");
+    expect(matrix).toContain("groupId: domainId(domainIndex)");
+    expect(matrix).toContain("activeDomain < 0 ? 1 : compact ? 1 : 2");
+    expect(matrix).toContain('divideShape: "clone"');
+    expect(matrix).toContain("chartColors(theme)");
+    expect(matrix).toContain("useReducedMotion");
+    expect(matrix).toContain('role="listbox"');
+    expect(matrix).toContain('tabIndex={0}');
+    for (const key of ["ArrowUp", "ArrowDown", "Home", "End", "Enter", "Escape"]) expect(matrix).toContain(key);
+    expect(matrix).not.toContain("AssetIcon");
+    expect(matrix).not.toContain("activeSkill");
+    expect(matrix).not.toContain("capability-rail");
+    expect(matrix).not.toContain("capability-readout");
+    expect(matrix).not.toContain("capability-scan");
+    expect(matrix).not.toContain("signalFill");
+    expect(matrix).toContain('aria-live="polite"');
+    expect(STRINGS.en.profile.matrixOverview).toBe("CAPABILITIES");
+    expect(STRINGS.es.profile.matrixOverview).toBe("CAPACIDADES");
+    expect(STRINGS.en.profile.matrixKicker).toBe("06 // 6 DOMAINS · 35 TECHNOLOGIES");
+    expect(STRINGS.es.profile.matrixKicker).toBe("06 // 6 DOMINIOS · 35 TECNOLOGÍAS");
+    expect(css).toContain(".capability-matrix");
+    expect(css).not.toContain(".capability-rail");
+    expect(css).not.toContain(".capability-readout");
+    expect(css).not.toContain(".capability-scan");
+    expect(css).toMatch(/@media \(max-width: 980px\)[\s\S]*\.profile-file/);
   });
 });
 
@@ -320,21 +407,37 @@ describe("Contact", () => {
     expect(app).toContain("data-screen={id}");
     expect(css).toMatch(/\.screen\[data-screen="contact"\]\s*\{[^}]*overflow-y:\s*hidden/);
     expect(css).toContain('.screen[data-screen="contact"] .contact');
-    expect(css).toMatch(/@media\s*\(max-height:\s*760px\)/);
+    expect(css).toMatch(/@media\s*\(max-height:\s*840px\)/);
+    expect(css).toMatch(/@media \(max-height: 840px\)[\s\S]*?\.screen\[data-screen="contact"\] \.contact-meta\s*\{[^}]*margin-top:\s*8px;[^}]*padding-top:\s*10px;/s);
+    expect(css).toMatch(/@media \(max-width: 720px\) and \(max-height: 840px\)[\s\S]*?\.screen\[data-screen="contact"\] \.contact-cta\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1\.35fr\) minmax\(0, \.85fr\);/s);
   });
 });
 
 describe("Certifications", () => {
-  it("CE6 — rendered by ECharts as a sunburst", () => {
+  it("CE5/CE6 — one stable ECharts sunburst owns native drill-down", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
     expect(source).toContain('import EChart from "../components/EChart.jsx"');
-    expect(source).toContain('type: "sunburst"');
+    expect(source.match(/type: "sunburst"/g)).toHaveLength(1);
+    expect(source).toContain('nodeClick: "rootToNode"');
+    expect(source).toContain("SERIES_ID");
     expect(source).toContain("<EChart");
   });
-  it("CE7 — overview and drill-down sunbursts use rounded sectors", () => {
+  it("CE7 — the stable sunburst follows the reference's spaced radial hierarchy", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
-    expect(source.match(/type: "sunburst"/g)).toHaveLength(2);
     expect(source.match(/borderRadius:/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(source).toContain("ATLAS_GEOMETRY");
+    expect(source).toContain("CATEGORY_RING");
+    expect(source).toContain("CERT_RING");
+    expect(source).toMatch(/r0:\s*CATEGORY_RING\.r0/);
+    expect(source).toMatch(/r:\s*CATEGORY_RING\.r/);
+    expect(source).toMatch(/r0:\s*CERT_RING\.r0/);
+    expect(source).toMatch(/r:\s*CERT_RING\.r/);
+    expect(source).toContain("wrapCategoryLabel");
+    expect(source).toContain("categoryLabelRadius");
+    expect(source).toContain("sun-category-name");
+    expect(source).toContain('"--label-angle"');
+    expect(source).toContain("credentialLabelDistance");
+    expect(source).toContain("sort: null");
     expect(source).toContain("sun-logo");
   });
   it("CE8 — wheel center scrolls to a dedicated highlights section", () => {
@@ -349,33 +452,35 @@ describe("Certifications", () => {
     expect(source).toContain("scrollIntoView");
     expect(practitioner?.featured).toBe(true);
   });
-  it("CE9 — drilled slices swap to a badge image only once its file loads", () => {
+  it("CE9 — focused slices retain both complete names and a resolved icon", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
     // badges are probed off-DOM so a missing file never flashes a broken image
     expect(source).toContain("probeBadge");
+    expect(source).toContain("BADGE_PROBE_CACHE");
     expect(source).toContain("/assets/certs/badges/");
     expect(source).toContain("badgeSrc");
     expect(source).toContain("sun-badge-img");
-    // the native radial text label stays until a badge image has resolved
-    expect(source).toContain("show: !badgeSrc[cert.name]");
+    expect(source).toContain('position: "outside"');
+    expect(source).toContain("sun-slice-icon");
+    expect(source).toContain("fallbackId={cert.icon}");
+    expect(source).not.toContain("show: !badgeSrc[cert.name]");
     // Azure certs are wired up with badge slugs
     const azure = CERT_CATEGORIES.find((c) => c.id === "azure");
     expect(azure.certs.every((cert) => typeof cert.badge === "string")).toBe(true);
   });
-  it("CE10 — legible drilled labels; robust level-change deploy", () => {
+  it("CE10 — native ECharts expansion animates unless motion is reduced", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
-    // full-opacity slices + a dark halo keep the white radial label readable
-    expect(source).toContain("opacity: 1");
-    expect(source).toContain("textShadowColor");
-    // drilled slices don't emphasise on hover (no dark-on-hover text, less redraw)
-    expect(source).toContain("emphasis: { disabled: true }");
-    // ECharts' own animation is off (its internal deploy could freeze on resize)…
-    expect(source).toContain("animation: false");
-    // …the level-change deploy is a robust container zoom+fade, skipping 1st mount
-    expect(source).toContain("wrapRef.current.animate(");
-    expect(source).toContain("deployedRef");
-    // resetting badges keeps the same empty reference (no spurious wheel redraw)
-    expect(source).toContain("Object.keys(prev).length ? {} : prev");
+    const wrapper = readFileSync(resolve(ROOT, "src/components/EChart.jsx"), "utf8");
+    expect(source).toContain("useReducedMotion");
+    expect(source).toContain('animationType: "expansion"');
+    expect(source).toContain("animationDurationUpdate");
+    expect(source).toContain("animation: !reduceMotion");
+    expect(source).not.toContain("wrapRef.current.animate(");
+    expect(source).toMatch(
+      /useEffect\(\(\) => \{\s*resetAtlasState\(\);\s*\}, \[theme, lang, compact, reduceMotion, resetAtlasState\]\);/,
+    );
+    expect(wrapper).toContain("rootToTop");
+    expect(wrapper).toContain("sunburstRootToNode");
   });
   it("CE11 — category logos are asset-only (no built-in glyph fallback)", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
@@ -386,6 +491,162 @@ describe("Certifications", () => {
     expect(source).toContain("base={`/assets/certs/${g.catIcon}`}");
     // per-row issuer glyphs still keep their fallback (they are designed as glyphs)
     expect(source).toContain("fallbackId={cert.icon}");
+  });
+  it("CE12/CE13 — contextual registry, accessible controls and theme-safe imagery", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(source).toContain("visibleCategories");
+    expect(source).toContain("selectedCert");
+    expect(source).toContain("categoryIconRadius");
+    expect(source).toContain("credentialIconRadius");
+    expect(source).not.toContain("CATEGORY_LOGO_RADIUS");
+    expect(source).not.toContain("DRILL_ICON_RADIUS");
+    expect(source).not.toContain("LOGO_CLEARANCE");
+    expect(source).not.toContain("LOGO_ORBIT_GAP");
+    expect(source).not.toContain("sun-logo-displaced");
+    expect(source).not.toContain("displaced:");
+    expect(source).not.toContain("sun-logo-count");
+    expect(source).not.toContain("cert-orbit-readout");
+    expect(source).not.toContain("setHoveredCert");
+    expect(css).not.toContain(".cert-orbit-readout");
+    expect(source).toContain('aria-pressed={drill === g.id}');
+    expect(source).toContain('<button className="lg-head"');
+    expect(css).toMatch(/\.sun-logo\s*\{[^}]*width:\s*36px;[^}]*height:\s*36px;/);
+    expect(css).toMatch(/\.sun-slice-icon\s*\{[^}]*width:\s*36px;[^}]*height:\s*36px;/);
+    expect(css).toMatch(/\.sun-badge-img,[\s\S]*?\.sun-slice-icon img,[\s\S]*?\.sun-slice-icon svg\s*\{[^}]*width:\s*22px;[^}]*height:\s*22px;/);
+    expect(css).toMatch(/\.sun-logo img[^{]*\{[^}]*width:\s*22px;[^}]*height:\s*22px;/);
+    expect(css).toContain('[data-theme="dark"] .sun-logo');
+    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.sun-wrap\s*\{[^}]*overflow:\s*visible;/);
+  });
+  it("CE14 — desktop gives the atlas the dominant column without changing the mobile stack", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    const certCss = css.slice(
+      css.indexOf("/* ============ CERTIFICATIONS ============ */"),
+      css.indexOf("/* ============ CONTACT ============ */"),
+    );
+    expect(certCss).toMatch(/\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 700px\) clamp\(340px, 26vw, 380px\);/);
+    expect(certCss).toMatch(/\.certs\s*\{[^}]*gap:\s*clamp\(10px, 1vw, 14px\);/);
+    expect(certCss).toMatch(/\.certs\s*\{[^}]*justify-content:\s*center;/);
+    expect(certCss).toMatch(/\.stage\[data-screen="certifications"\]\s*\{[^}]*--stage-top:\s*clamp\(172px, 19vh, 188px\);[^}]*--cert-field-h:\s*clamp\(532px, calc\(100svh - var\(--stage-top\) - 191px\), 600px\);/);
+    expect(certCss).toMatch(/\.sun-wrap\s*\{[^}]*height:\s*var\(--cert-field-h\);/);
+    expect(certCss).toMatch(/@media \(min-width: 1081px\) and \(max-height: 1000px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 640px\) clamp\(340px, 26vw, 380px\);[^}]*gap:\s*14px;/);
+    expect(source).toContain('"--atlas-size"');
+    expect(certCss).toContain("--atlas-center-y");
+    expect(certCss).toMatch(/@media \(max-width: 1120px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) clamp\(335px, 32vw, 350px\);[^}]*gap:\s*12px;/);
+    expect(certCss).toMatch(/@media \(max-width: 1080px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\);/);
+  });
+  it("CE15 — native and explicit roll-up paths restore the complete overview", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const wrapper = readFileSync(resolve(ROOT, "src/components/EChart.jsx"), "utf8");
+    const reset = source.slice(
+      source.indexOf("const resetAtlasState"),
+      source.indexOf("const cat ="),
+    );
+    expect(source).toContain("resetAtlasState");
+    expect(source).toContain('sunburstroottonode');
+    expect(source).toContain('direction === "rollUp"');
+    expect(reset).toContain("clearTimeout(selectionTimer.current)");
+    expect(reset).toContain("setDrill(null)");
+    expect(reset).toContain("setSelectedCert(null)");
+    expect(reset).toContain("setBadgeSrc({})");
+    expect(source).toMatch(/const back = useCallback\([\s\S]*?resetAtlasState\(\)[\s\S]*?rootToTop\(SERIES_ID\)/);
+    expect(wrapper).toContain("sunburstRootToNode");
+  });
+  it("CE16 — one aligned isometric plane supplies responsive theme-safe neon depth", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(source).toContain("sun-iso-deck");
+    expect(source).toContain("sun-plane");
+    expect(source).toContain('"--atlas-signal"');
+    expect(css).toMatch(/\.sun-plane\s*\{[^}]*perspective\([^}]*rotateX\(/);
+    expect(css).toMatch(/\.sun-iso-deck\s*\{[^}]*box-shadow:/);
+    expect(css).toContain("certNeonBreathe");
+    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.sun-plane\s*\{[^}]*rotateX\(/);
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.sun-iso-deck/);
+  });
+  it("CE17 — focused radial names keep a proportional in-viewport safety lane", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const modes = [...source.matchAll(
+      /(regular|compact):\s*\{[\s\S]*?centerY:\s*([\d.]+),[\s\S]*?credential:\s*\{[^}]*\br:\s*"([\d.]+)%"/g,
+    )];
+    expect(modes.map((match) => match[1])).toEqual(["regular", "compact"]);
+    for (const [, mode, centerValue, radiusValue] of modes) {
+      const center = Number(centerValue);
+      const outerRadius = Number(radiusValue) / 200;
+      const safeLane = Math.min(center - outerRadius, 1 - center - outerRadius);
+      expect(safeLane, `${mode} radial-label lane`).toBeGreaterThanOrEqual(0.08);
+    }
+    expect(source).toContain('center: ["50%", `${atlasGeometry.centerY * 100}%`]');
+    expect(source).toContain('"--atlas-center-y"');
+    expect(source).toContain("credentialIconRadius");
+  });
+  it("CE18 — featured credentials use one minimal signal rail and one live plate", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    const featured = CERT_CATEGORIES.flatMap((category) => category.certs)
+      .filter((cert) => cert.featured || ["EXPERT", "LEADERSHIP"].includes(cert.level));
+    expect(featured).toHaveLength(5);
+    expect(featured.find((cert) => cert.name === "Platform Engineering Certified Practitioner")?.featured).toBe(true);
+    expect(source).toContain("FEATURED_DEFAULT_INDEX");
+    expect(source).toContain("featured-showcase");
+    expect(source).toContain("featured-signal-rail");
+    expect(source).toContain("featured-track-indicator");
+    expect(source).toContain("featured-tab");
+    expect(source).toContain("featured-plate");
+    expect(source).toContain('role="tablist"');
+    expect(source).toContain('role="tab"');
+    expect(source).toContain("aria-selected");
+    expect(source).toContain('role="tabpanel"');
+    expect(source).toContain("featured-locate");
+    expect(source).toContain('event.key === "ArrowRight"');
+    expect(source).toContain('event.key === "Home"');
+    expect(source).toContain('event.key === "End"');
+    expect(source).toContain("event.stopPropagation()");
+    expect(app).toContain("e.defaultPrevented");
+    expect(app).toContain('button, [role="tab"]');
+    expect(source).not.toContain("onMouseEnter");
+    for (const rejected of [
+      "FEATURED_NODE_POSITIONS", "featured-constellation", "featured-deck",
+      "featured-route", "featured-core", "featured-node", "featured-dossier",
+      "featured-acquire", "featured-grid", "featured-card",
+    ]) {
+      expect(source).not.toContain(rejected);
+      expect(css).not.toContain(`.${rejected}`);
+    }
+    expect(css).toContain(".featured-showcase");
+    expect(css).toMatch(/\.featured-tabs\s*\{[^}]*grid-template-columns:\s*repeat\(5, minmax\(0, 1fr\)\);/);
+    expect(css).toMatch(/\.featured-tab\s*\{[^}]*min-height:\s*78px;/);
+    expect(css).toMatch(/\.featured-plate\s*\{[^}]*grid-template-columns:\s*56px minmax\(0, 1fr\) auto;/);
+    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.featured-plate\s*\{[^}]*grid-template-columns:\s*48px minmax\(0, 1fr\);/);
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.featured-track-indicator,[\s\S]*?\.featured-plate-copy\s*\{[^}]*animation:\s*none\s*!important;/);
+  });
+  it("CE19 — certification tooltips stay above the wheel in a lateral safe zone", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(source).toContain("function placeCertificationTooltip");
+    expect(source).toContain('renderMode: "html"');
+    expect(source).toContain('appendTo: "body"');
+    expect(source).toContain('className: "cert-atlas-tooltip"');
+    expect(source).toContain("position: placeCertificationTooltip");
+    expect(source).toContain("size.contentSize");
+    expect(source).toContain("size.viewSize");
+    expect(css).toMatch(/\.cert-atlas-tooltip\s*\{[^}]*z-index:\s*80\s*!important;[^}]*pointer-events:\s*none\s*!important;/s);
+  });
+  it("CE20 — registry geometry is invariant across overview and category filters", () => {
+    const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    const certCss = css.slice(
+      css.indexOf("/* ============ CERTIFICATIONS ============ */"),
+      css.indexOf("/* ============ CONTACT ============ */"),
+    );
+    expect(source).toContain('className="cert-registry-action-slot"');
+    expect(source).toContain("S.registryHint");
+    expect(certCss).toMatch(/\.cert-registry-wrap\s*\{[^}]*height:\s*var\(--cert-field-h\);[^}]*display:\s*grid;[^}]*grid-template-rows:\s*112px minmax\(0, 1fr\);/);
+    expect(certCss).toMatch(/\.cert-registry-head\s*\{[^}]*height:\s*112px;/);
+    expect(certCss).toMatch(/\.ledger\s*\{[^}]*height:\s*auto;[^}]*min-height:\s*0;[^}]*max-height:\s*none;[^}]*scrollbar-gutter:\s*stable;/);
+    expect(certCss).not.toMatch(/@media \(max-width: 1080px\)[\s\S]*?\.ledger\s*\{[^}]*height:\s*auto;[^}]*max-height:/);
   });
   it("CE1 — total 62", () => {
     expect(CERT_TOTAL).toBe(62);
@@ -427,16 +688,16 @@ describe("Assets", () => {
       expect(md, folder).toContain(folder);
     }
   });
-  it("A2 — every screen is named in the bg checklist", () => {
+  it("A2 — every image-backed screen is named in the bg checklist", () => {
     const md = readFileSync(resolve(ROOT, "public/assets/ASSETS.md"), "utf8");
-    for (const s of SCREENS) {
+    for (const s of SCREENS.slice(1)) {
       expect(md, `bg/${s}`).toMatch(new RegExp(`bg/${s}\\.(?:jpe?g|png|webp|svg)`));
     }
   });
   it("A3 — original and retouched profile portraits are both preserved", () => {
     expect(existsSync(resolve(ROOT, "public/assets/profile.png"))).toBe(true);
     expect(existsSync(resolve(ROOT, "public/assets/profile-retouched.jpg"))).toBe(true);
-    expect(readFileSync(resolve(ROOT, "src/screens/Home.jsx"), "utf8")).toContain("/assets/profile-retouched.jpg");
+    expect(readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8")).toContain("/assets/profile-retouched.jpg");
   });
   it("A4 — AssetIcon probes off-DOM so a missing logo never flashes a broken image", () => {
     const icons = readFileSync(resolve(ROOT, "src/components/Icons.jsx"), "utf8");
@@ -445,6 +706,39 @@ describe("Assets", () => {
     expect(assetIcon).toContain("probe.onerror");       // advance on failure without mounting <img>
     expect(assetIcon).toContain("src={resolved}");      // only ever mount a confirmed URL
     expect(assetIcon).not.toContain("onError=");        // no broken-image-then-swap in the DOM
+    expect(icons).toContain("ASSET_PROBE_CACHE");
+    expect(assetIcon).toContain("resolveAssetCandidates");
+  });
+  it("A5 — certification asset checklist covers every referenced logo and badge", () => {
+    const md = readFileSync(resolve(ROOT, "public/assets/ASSETS.md"), "utf8");
+    const logoSlugs = new Set(CERT_CATEGORIES.flatMap((category) => [
+      category.catIcon,
+      ...category.certs.map((cert) => cert.icon),
+    ]));
+    for (const slug of logoSlugs) expect(md).toContain(`certs/${slug}.svg`);
+    for (const badge of CERT_CATEGORIES.flatMap((category) => category.certs.map((cert) => cert.badge).filter(Boolean))) {
+      expect(md).toContain(`certs/badges/${badge}.png`);
+    }
+    expect(md).toContain("theme-safe");
+  });
+  it("A6 — favicon is a compact theme-independent turtle head", () => {
+    const html = readFileSync(resolve(ROOT, "index.html"), "utf8");
+    const faviconPath = resolve(ROOT, "public/assets/favicon.svg");
+    expect(existsSync(faviconPath)).toBe(true);
+    expect(html).toContain('<link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg?v=turtle-head-profile">');
+
+    const svg = readFileSync(faviconPath, "utf8");
+    expect(svg).toContain('<title>0VAS turtle head</title>');
+    expect(svg).toContain('id="turtle-head"');
+    for (const part of ["shell-collar", "neck", "head", "eye", "nostril", "mouth"]) {
+      expect(svg).toContain(`data-part="${part}"`);
+    }
+    expect(svg).toContain("#f7f5fc");
+    expect(svg).toContain("#2b2836");
+    expect(svg).toContain("#67e8f9");
+    expect(svg).not.toMatch(/data-part="(?:tail|rear-flipper|fore-flipper|shell|top-facet|left-facet|right-facet)"/);
+    expect(svg).not.toMatch(/<(?:image|text|filter|animate)\b/);
+    expect(Buffer.byteLength(svg)).toBeLessThan(2500);
   });
 });
 

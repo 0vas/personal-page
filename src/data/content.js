@@ -4,7 +4,7 @@
    Drop-in image folders (see README):
      public/assets/talks/<slug>.jpg   — speaking photos
      public/assets/certs/<icon>.svg   — issuer logos (fallback: built-in glyph)
-     public/assets/tech/<slug>.svg    — technology logos for skill chips
+     public/assets/tech/<slug>.svg    — optional Profile capability marks
      public/assets/orgs/<slug>.svg    — company / institution logos (career)
    ============================================================ */
 
@@ -42,7 +42,7 @@ export const READOUTS = [
   { value: 1, prefix: "$", suffix: "M+", label: { en: "DOCUMENTED SAVINGS", es: "AHORROS DOCUMENTADOS" } },
 ];
 
-export const HOME = {
+export const PROFILE = {
   kicker: {
     en: "MODEL 0VAS — REGISTERED OPERATIVE · LIMA, PERU · CIP 386940",
     es: "MODELO 0VAS — OPERATIVO REGISTRADO · LIMA, PERÚ · CIP 386940",
@@ -52,15 +52,6 @@ export const HOME = {
     es: "Ingeniero de Sistemas — primer puesto, GPA 4.0 — lidera la estrategia de plataformas, DevSecOps y la adopción de IA Generativa en Credicorp, el grupo financiero más grande del Perú. Embajador del DevOps Institute con charlas en Latinoamérica, Europa, EE. UU. y Asia.",
   },
 };
-
-export const FACTS = [
-  { k: { en: "AMBASSADOR", es: "EMBAJADOR" }, v: { en: "DevOps Institute & DevSecOps Space — official ambassador", es: "DevOps Institute y DevSecOps Space — embajador oficial" } },
-  { k: { en: "ACADEMIC", es: "ACADÉMICO" }, v: { en: "GPA 4.0 — top of class · MIT Professional Education · Hanyang", es: "GPA 4.0 — primer puesto · MIT Professional Education · Hanyang" } },
-  { k: { en: "SPEAKER", es: "SPEAKER" }, v: { en: "10 talks · 6+ countries · 3 continents", es: "10 charlas · 6+ países · 3 continentes" } },
-  { k: { en: "RESEARCH", es: "INVESTIGACIÓN" }, v: { en: "AI & Robotics Lab collaborator — humanoid robotics", es: "Colaborador del laboratorio de IA y Robótica — robótica humanoide" } },
-  { k: { en: "LICENSED", es: "COLEGIADO" }, v: { en: "Registered engineer — CIP N° 386940, Peru", es: "Ingeniero colegiado — CIP N° 386940, Perú" } },
-  { k: { en: "ORIGIN", es: "ORIGEN" }, v: { en: "Game developer — Unity 3D, published titles", es: "Desarrollador de videojuegos — Unity 3D, títulos publicados" } },
-];
 
 export const BIO = [
   {
@@ -75,15 +66,6 @@ export const BIO = [
     en: "Outside the enterprise: research on AI applied to humanoid robotics, university teaching from 2020 to 2024, and a background in video game development — the origin of this interface.",
     es: "Fuera de la empresa: investigación en IA aplicada a robótica humanoide, docencia universitaria de 2020 a 2024 y un origen en el desarrollo de videojuegos — de ahí nace esta interfaz.",
   },
-];
-
-export const RADAR = [
-  { name: { en: "PLATFORM", es: "PLATAFORMA" }, value: 95 },
-  { name: { en: "DEVSECOPS", es: "DEVSECOPS" }, value: 92 },
-  { name: { en: "GENAI", es: "IA GEN." }, value: 88 },
-  { name: { en: "CLOUD", es: "NUBE" }, value: 90 },
-  { name: { en: "LEADERSHIP", es: "LIDERAZGO" }, value: 89 },
-  { name: { en: "SPEAKING", es: "PONENCIAS" }, value: 91 },
 ];
 
 /* ---------- career (tree + details) ----------
@@ -670,7 +652,7 @@ export const CERT_CATEGORIES = [
 export const CERT_TOTAL = CERT_CATEGORIES.reduce((n, g) => n + g.certs.length, 0);
 
 /* ---------- skills ----------
-   Tech logo: public/assets/tech/<slug>.svg (chip shows text-only if missing) */
+   Slugs remain stable content identifiers for the interactive Profile directory. */
 
 export const SKILLS = [
   {

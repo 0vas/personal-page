@@ -152,6 +152,7 @@ export function Icon({ id, size = 16, className }) {
    probes `exts`, or a full `src`. */
 const LOGO_EXTS = ["svg", "png", "jpg", "jpeg", "webp"];
 const PHOTO_EXTS = ["jpeg", "jpg", "png", "webp"];
+const ASSET_PROBE_CACHE = new Map();
 
 function useCandidates(base, src, exts) {
   const list = src ? [src] : (base ? exts.map((e) => `${base}.${e}`) : []);
@@ -164,7 +165,8 @@ function useCandidates(base, src, exts) {
 export function AssetIcon({ base, src, exts = LOGO_EXTS, fallbackId, size = 16, className }) {
   // Probe candidate URLs OFF-DOM: only mount an <img> once one is confirmed to
   // load, so a missing file never flashes the browser's broken-image icon. While
-  // probing (and if all fail) we show the built-in glyph — never an empty box.
+  // probing (and if all fail) a supplied fallbackId renders the built-in glyph;
+  // callers that intentionally omit it keep their framed asset slot empty.
   const key = (src ? [src] : base ? exts.map((e) => `${base}.${e}`) : []).join("|");
   const [resolved, setResolved] = useState(null);
   useEffect(() => {
@@ -172,14 +174,9 @@ export function AssetIcon({ base, src, exts = LOGO_EXTS, fallbackId, size = 16, 
     const urls = key ? key.split("|") : [];
     if (!urls.length) return undefined;
     let cancelled = false;
-    const tryAt = (i) => {
-      if (cancelled || i >= urls.length) return;
-      const probe = new Image();
-      probe.onload = () => { if (!cancelled) setResolved(urls[i]); };
-      probe.onerror = () => tryAt(i + 1);
-      probe.src = urls[i];
-    };
-    tryAt(0);
+    resolveAssetCandidates(key, urls).then((url) => {
+      if (!cancelled && url) setResolved(url);
+    });
     return () => { cancelled = true; };
   }, [key]);
 
@@ -193,6 +190,29 @@ export function AssetIcon({ base, src, exts = LOGO_EXTS, fallbackId, size = 16, 
     );
   }
   return fallbackId ? <Icon id={fallbackId} size={size} className={className} /> : null;
+}
+
+// Repeated issuer marks share one off-DOM resolution promise. This matters most
+// while owner assets are still missing: Microsoft, IBM, Google, and others can
+// appear on many rows, but each candidate extension is requested only once per
+// page session rather than once per component mount or theme/route remount.
+function resolveAssetCandidates(key, urls) {
+  if (ASSET_PROBE_CACHE.has(key)) return ASSET_PROBE_CACHE.get(key);
+  const resolution = new Promise((resolve) => {
+    const tryAt = (i) => {
+      if (i >= urls.length) {
+        resolve(null);
+        return;
+      }
+      const probe = new Image();
+      probe.onload = () => resolve(urls[i]);
+      probe.onerror = () => tryAt(i + 1);
+      probe.src = urls[i];
+    };
+    tryAt(0);
+  });
+  ASSET_PROBE_CACHE.set(key, resolution);
+  return resolution;
 }
 
 /* Full-bleed photo (talks, backgrounds). Renders nothing once all extensions

@@ -19,7 +19,7 @@ This repo is set up so **any** coding agent produces consistent results:
 
 - **React 18 + Vite** — SPA with hash-based screen routing (`#/career`, `#/certifications`, …)
 - **Framer Motion** — screen transitions, staggered reveals, detail-panel swaps
-- **Apache ECharts** (SVG renderer) — career trajectory tree, capability radar, zoomable certification sunburst
+- **Apache ECharts** (SVG renderer) — Profile Capability Directory and the zoomable certification sunburst
 
 ## Develop / build
 
@@ -48,11 +48,10 @@ placeholder / built-in glyph is shown instead.
 | `public/assets/talks/` | `<slug>.jpg` — e.g. `devopsdays-lima-2025.jpg` | Speaking cards | Slugs = `slug` field of `TALKS` in `content.js`: devopsdays-medellin-2026, devopsdays-buenosaires-2026, innersource-summit-2025, agile-summit-2025, devopsdays-santiago-2025, devopsdays-lima-2025, devsecopsfest-2024, devopsdays-medellin-2024, github-connect-2024, githubweek-2024. Landscape ~16:9. |
 | `public/assets/certs/` | `<icon>.svg` — e.g. `microsoft.svg`, `redhat.svg` | Certification registry rows | Names = `icon` field in `CERT_CATEGORIES`: microsoft, github, platform, redhat, google, aws, oracle, ibm, hashicorp, codefresh, linuxfoundation, fluidattacks, openbootcamp, mckinsey, harvard, iep, pmi, certiprof, atlassian, samsung, cisco. Unknown issuers fall back to a generic mark. |
 | `public/assets/orgs/` | `<slug>.svg` — e.g. `credicorp.svg`, `uni.svg` | Career detail panel (company/institution logo) | Slugs = `logo` field of `CAREER_DETAILS`: credicorp, pacifico, baufest, nocountry, novatronic, freelance, gamedevs, acm, nixvoid, ailab, devopsinstitute, devsecopsspace, uni, hanyang. |
-| `public/assets/tech/` | `<slug>.svg` — e.g. `docker.svg`, `terraform.svg` | Skill chips (Home) | Slugs = `s` field of `SKILLS` items: azure, googlecloud, aws, oraclecloud, githubactions, jenkins, azuredevops, terraform, docker, kubernetes, openshift, gitops, langchain, agents, mcp, rag, finetuning, prompt, python, bash, cpp, csharp, java, javascript, togaf, c4, bpmn, uml, cmmi, oracledb, postgresql, mongodb, powerbi, unity, ar. |
 | `public/assets/` | `profile.png` | Hero photo + backdrop portrait | Portrait ~4:5. |
 | `public/assets/` | `OscarLobatonS-CV-EN.pdf` | "Download CV" buttons | Replace to update. |
 
-Good SVG sources for tech/issuer logos: the official brand pages, or [simple-icons](https://simpleicons.org/) / [devicon](https://devicon.dev/) (download the `.svg`, rename to the slug above).
+Good SVG sources for issuer logos: the official brand pages, or [simple-icons](https://simpleicons.org/) / [devicon](https://devicon.dev/) (download the `.svg`, rename to the slug above).
 
 ## Deploy to 0vas.com (GitHub Pages)
 

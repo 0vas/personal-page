@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "./components/Icons.jsx";
 import { LINKS } from "./data/content.js";
 import { STRINGS, detectLang } from "./i18n.js";
-import Home from "./screens/Home.jsx";
+import Profile from "./screens/Profile.jsx";
 import Career from "./screens/Career.jsx";
 import Speaking from "./screens/Speaking.jsx";
 import Projects from "./screens/Projects.jsx";
@@ -11,15 +11,17 @@ import Education from "./screens/Education.jsx";
 import Certs from "./screens/Certs.jsx";
 import Contact from "./screens/Contact.jsx";
 
-const SCREEN_IDS = ["home", "career", "speaking", "projects", "education", "certifications", "contact"];
-const COMPONENTS = { home: Home, career: Career, speaking: Speaking, projects: Projects, education: Education, certifications: Certs, contact: Contact };
+const SCREEN_IDS = ["profile", "career", "speaking", "projects", "education", "certifications", "contact"];
+const ROUTE_ALIASES = { home: "profile" };
+const COMPONENTS = { profile: Profile, career: Career, speaking: Speaking, projects: Projects, education: Education, certifications: Certs, contact: Contact };
 const BG_PREFETCH = [
   "/assets/bg/career.jpg", "/assets/bg/speaking.jpg", "/assets/bg/projects.svg",
   "/assets/bg/education.jpg", "/assets/bg/certifications.svg", "/assets/bg/contact.jpg",
 ];
 
 function screenFromHash() {
-  const id = window.location.hash.replace(/^#\/?/, "");
+  const rawId = window.location.hash.replace(/^#\/?/, "");
+  const id = ROUTE_ALIASES[rawId] || rawId;
   const i = SCREEN_IDS.indexOf(id);
   return i >= 0 ? i : 0;
 }
@@ -133,8 +135,8 @@ function Backdrop({ screen, theme }) {
     <div className={`backdrop backdrop-${screen}`} aria-hidden="true">
       <div className="bd-band-2" />
       <div className="bd-band" />
-      {screen !== "home" && <SceneBg screen={screen} theme={theme} />}
-      {screen === "home" && <div className="bd-home-ambient"><i /><i /><i /></div>}
+      {screen !== "profile" && <SceneBg screen={screen} theme={theme} />}
+      {screen === "profile" && <div className="bd-profile-ambient"><i /><i /><i /></div>}
       <div className="bd-beam b1" />
       <div className="bd-beam b2" />
       <div className="bd-tris" />
@@ -211,6 +213,7 @@ export default function App() {
   const [idx, setIdx] = useState(screenFromHash);
   const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || "light");
   const [lang, setLang] = useState(detectLang);
+  const navMenuRef = useRef(null);
 
   const S = STRINGS[lang];
 
@@ -221,14 +224,20 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const onHash = () => setIdx(screenFromHash());
+    const onHash = () => {
+      setIdx(screenFromHash());
+      if (window.location.hash.replace(/^#\/?/, "") === "home") {
+        window.history.replaceState(null, "", "#/profile");
+      }
+    };
+    onHash();
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.target.closest?.("input, textarea")) return;
+      if (e.defaultPrevented || e.target.closest?.('input, textarea, select, button, [role="tab"], a')) return;
       if (e.key === "ArrowRight") go(idx + 1);
       if (e.key === "ArrowLeft") go(idx - 1);
     };
@@ -245,6 +254,22 @@ export default function App() {
     document.documentElement.lang = lang;
     try { localStorage.setItem("ovas-lang", lang); } catch {}
   }, [lang]);
+
+  useEffect(() => {
+    const menu = navMenuRef.current;
+    const active = menu?.querySelector('[aria-current="page"]');
+    if (!menu || !active) return undefined;
+
+    const frame = window.requestAnimationFrame(() => {
+      const maxLeft = Math.max(0, menu.scrollWidth - menu.clientWidth);
+      const centred = active.offsetLeft - ((menu.clientWidth - active.offsetWidth) / 2);
+      const nextLeft = Math.min(maxLeft, Math.max(0, centred));
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      menu.scrollTo({ left: nextLeft, behavior: reduced ? "auto" : "smooth" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [idx, lang]);
 
   useEffect(() => {
     const preload = () => {
@@ -281,7 +306,7 @@ export default function App() {
       </header>
 
       {/* stage */}
-      <main className="stage">
+      <main className={`stage ${title ? "stage-titled" : ""}`} data-screen={id}>
         <section key={key} className="screen screen-enter" data-screen={id}>
           <Screen theme={theme} lang={lang} />
         </section>
@@ -290,12 +315,13 @@ export default function App() {
       {/* bottom chrome */}
       <nav className="chrome-bottom" aria-label="Sections">
         <span className="cb-index">N° <b>{idx + 1}</b> / {SCREEN_IDS.length}</span>
-        <div className="cb-menu">
+        <div className="cb-menu" ref={navMenuRef}>
           {SCREEN_IDS.map((sid, i) => (
             <button
               key={sid}
               className={`cb-item ${i === idx ? "on brk" : ""}`}
               onClick={() => go(i)}
+              aria-current={i === idx ? "page" : undefined}
             >
               {i === idx && <span className="bar dbar" />}
               {S[sid].label}

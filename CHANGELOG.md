@@ -11,11 +11,54 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Fixed
+- **Certifications now fits one complete laptop workbench:** the atlas and
+  contextual registry share a 532–600px height-aware field, with a 640px atlas
+  track on 1440×900 and 1512×982 laptop layouts. The complete focused circle and
+  outside labels now end above the fixed navigation. Overview and every
+  3/4/5/7/8/10-item filter keep the exact same registry height because its 112px
+  header always reserves an action lane and only the ledger scrolls with a stable
+  gutter; filtering no longer grows, shrinks or shifts either surface.
+- **Compact navigation now follows the active section:** the longer Profile label
+  no longer leaves Certifications half-visible or Contact outside the mobile
+  viewport. Route and language changes centre the active tab inside the bottom
+  menu without touching the page's vertical scroll; reduced-motion aligns it
+  instantly.
+- **Certification context now stays centred and unobstructed:** the registry rail
+  is vertically aligned with the complete atlas instead of starting in the
+  upper-right corner. ECharts tooltip plates now use a body-level HTML portal,
+  confined lateral placement and an explicit top layer, so full credential text
+  cannot disappear behind the wheel's centre hub or React-owned icon controls.
+- **Scrolling copy no longer collides with fixed section titles:** titled routes
+  now use a taller shared stage boundary that clips their scrollport below the
+  chrome, including at shorter desktop and mobile heights. Profile keeps its compact
+  untitled origin and Contact keeps a dedicated no-scroll-safe boundary.
+- **Shared background signals no longer read as two full-height rails:** the
+  former 110vh violet beams beside OPTIONS are now finite 1px traces capped at
+  104px, with a slow vertical drift and restrained opacity. Mobile shows one
+  52px trace, while reduced-motion keeps the same quiet shape static.
+- **Featured keyboard navigation stays inside Certifications:** Arrow/Home/End
+  now move roving focus across the five highlighted credentials without also
+  triggering the app-wide previous/next route shortcut. Global arrow navigation
+  ignores interactive controls while the explicit bottom navigation is unchanged.
+- **Focused radial names no longer clip at the top of Certifications:** the
+  regular ECharts geometry previously left only 1% of its SVG field above a 78%
+  corona, so long Red Hat and Azure labels were visibly cut despite the outer
+  wrapper allowing overflow. The rebalanced 70% corona now reserves 12% above
+  and 18% below, with its badge orbit, isometric deck, hub and neon frames
+  recalibrated to the same measured centre. All nine categories remain complete
+  at desktop, compact-desktop and mobile widths.
+- **Every Certifications return path now restores the real overview:** ECharts'
+  native ancestor annulus used to roll the SVG back while leaving React's focused
+  centre, issuer icons and filtered registry behind. The lower-case
+  `sunburstroottonode` action event now shares one idempotent reset with both BACK
+  controls and Escape, clearing delayed highlights, selection and badges
+  before restoring nine category marks/names and all 62 registry rows.
 - **Contact is now a true single-scene final view:** its route alone removes the
   global bottom scroll allowance and locks vertical overflow, eliminating the
   unnecessary scrollbar without moving or scaling the restored composition.
-  Height-aware spacing keeps the title, actions, social links and metadata fully
-  visible at compact desktop and mobile heights.
+  Height-aware spacing now begins at 840px and compacts the final metadata gap,
+  while a two-column mobile action row keeps the bilingual title, actions, social
+  links and every metadata line visible at 1440×768 and 500×768.
 - **Dark-theme secondary text is readable instead of washed out:** raised the
   `--dim` and `--faint` tokens to measurable 7:1 / 4.5:1 minimum contrast across
   all dark base surfaces, strengthened divider lines and panel opacity, and gave
@@ -27,39 +70,83 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   now render **only the asset** (blank until the file exists). The owner supplies
   every category SVG; per-row issuer glyphs keep their fallback. Missing today:
   `platform`, `cloud`, `data`, `security`.
-- **Certifications load is fluid and the level-change deploy is reliable:**
-  ECharts' internal sunburst animation is fragile here — a resize landing mid-flight
-  could freeze the sectors **translucent and unreadable** on drill-in (looked like
-  "nothing showed"), and on first paint it fought the Framer `<Reveal>` fade. The
-  sunburst now renders instantly (`animation: false`, always full-opacity and
-  legible); the first paint is faded in by the `<Reveal>`, and the level-change
-  **deploy** is a robust zoom+fade played on the wheel container (Web Animations
-  API — can't stall on resize, skips the first mount, reduced-motion opts out).
-  Hover emphasis is disabled in the drilled view (fixes dark-on-hover label text),
-  the chart's `ResizeObserver` ignores no-op/sub-pixel resizes, and the redundant
-  app-startup preload of category SVGs was removed.
+- **Certifications deploy is fluid and resize-safe:** the two replace-on-click
+  charts and whole-container zoom/fade were replaced by one stable ECharts tree
+  with native `rootToNode` expansion and stable node IDs. Badge resolution now
+  changes only its DOM overlay, and resize work is frame-batched, so neither can
+  restart or strand a radial transition. Reduced-motion preserves both atlas
+  states but resolves the same operation instantly. A theme, language, compact
+  breakpoint or motion-preference change now resets the chart and contextual
+  registry to overview together.
 - **Removed the mid-page line on navigation:** the decorative route signal (a
   violet line + node + code that swept across the middle of the page on every
   section change) is gone. Navigation keeps its atomic ~160ms opacity fade only.
 - **No more broken-image icon while the wheel loads:** `AssetIcon` now probes its
   candidate URLs off-DOM (`new Image()`) and only mounts an `<img>` once one is
-  confirmed to load, showing the built-in glyph meanwhile. Categories without a
-  supplied SVG (and any other missing logo) no longer flash the browser's
-  broken-image placeholder for ~a second — it looked like an error.
+  confirmed to load. Issuers show their built-in fallback meanwhile; category
+  controls deliberately keep a clean framed slot until their SVG is supplied.
+  Neither case flashes the browser's broken-image placeholder.
 - **Dark-mode contrast on accent buttons:** dark theme's accent is a light violet,
   so white text on it (segmented LANGUAGE/THEME toggles, Download CV, active nav,
   drilled BACK) was low-contrast. `--accent-ink` is now dark in dark mode → legible
   dark-on-violet.
-- **Certifications section no longer flashes white / redraws on open:** the
-  badge-state reset now keeps a stable empty-object reference (it was minting a
-  new `{}` on mount, which re-ran the sunburst option and redrew the whole wheel).
-- **Drilled roster text was unreadable on lighter slices:** drilled slices are now
-  full-opacity and the white radial labels carry a dark halo (`textShadow`), so the
-  certification names stay legible on every category colour in both themes.
+- **Certifications no longer redraws while optional badges resolve:** image
+  probing is decoupled from the ECharts option, so a confirmed badge can appear
+  without rebuilding the wheel or interrupting category focus.
+- **Missing certification assets no longer repeat probe cascades:** issuer/category
+  candidate sets and optional badge results are cached for the page session, so
+  repeated rows, theme/route remounts and returning to a category reuse one
+  off-DOM resolution instead of replaying every absent extension.
+- **Focused certification names remain legible:** complete outside labels use
+  high-contrast ink in light mode and their category signal in dark mode, both
+  with a matching surface keyline. Issuer/badge overlays use adaptive neutral
+  backplates in both themes.
 - **Removed the small ↓ arrow** under the wheel-centre HIGHLIGHTS star (the star and
   its scroll-to-highlights behaviour stay).
 
 ### Changed
+- **Home is now Profile with one dynamic capability surface:** the first screen
+  is canonically `#/profile` and reads Profile/Perfil in the bilingual menu;
+  `#/home` remains a normalized compatibility alias. The static six-row fact
+  ledger and separate 35-chip registry were removed in favor of one ECharts SVG
+  Capability Directory beside the bio. Its overview is now one calm typographic
+  list of six equal domains and factual technology counts; selecting a row morphs
+  that same ECharts custom series into equal rows for every complete technology
+  name. Click/tap, local Arrow/Home/End + Enter navigation, Back/Escape,
+  light/dark and reduced-motion all share the same state without isometric plates,
+  scan effects, a duplicate rail/readout or fake proficiency encoding.
+- **The browser identity is now an unmistakable turtle head:** the compact,
+  cache-busted transparent SVG replaces both the mask-like portrait and rejected
+  miniature full body with an organic violet profile: domed cranium, lateral
+  cyan eye, blunt beak, angled neck and cropped shell collar. Its light halo and
+  dark inner contour remain legible on both light and dark browser chrome at
+  16px/32px without filters, animation or raster dependencies.
+- **Featured Certifications is now a minimal signal rail instead of a second
+  table or constellation:** five equal, aligned diamond selectors drive one
+  compact live credential plate. Platform Engineering Certified Practitioner is
+  the initial verified signal; Arrow/Home/End previews every full credential
+  without moving the page, while an explicit Locate in Atlas control preserves
+  native drill, highlight and registry selection. The same rail/plate composition
+  stacks without horizontal overflow and resolves instantly under reduced motion.
+- **Certifications now follows the supplied radial format as a shallow isometric
+  instrument:** the stable ECharts atlas reads centre star → broad named category
+  sectors → annular gutter → thin 62-cell credential corona. Directionally lit
+  SVG faces sit over a displaced multi-step deck, restrained violet/category
+  energy rim and relieved 22px icon markers; the active hue propagates through
+  that single aligned plane without adding another chart or per-cell filters.
+  Desktop uses a rebalanced 70% face with a reserved outside-name lane while mobile
+  reduces tilt and glow. Restrained cell rounding, responsive label wrapping and
+  motion-safe ambient light preserve full names, native drill motion and
+  light/dark support.
+- **Certifications now gives the atlas visual priority:** the desktop registry is
+  narrowed from a competing near-half-width column to a bounded 340–380px rail,
+  with a safe 335–350px compact-desktop range. The atlas track is capped at the
+  wheel's 700px maximum and becomes 640px across common laptop heights, removing
+  unused column space; a maximum 14px gap (12px in compact desktop) brings the
+  registry visibly closer. A shared height-aware field keeps its decoration,
+  ECharts centre and registry aligned without clipping the circle. At 1080px and
+  below the atlas and registry stack; complete names, icons, levels, filters and
+  scrolling remain.
 - **Projects simplified into a live source index:** replaced the rejected
   topology/telemetry control room with a quieter split composition — six readable
   repositories on the left and one large purpose-specific SVG blueprint on the
@@ -75,7 +162,7 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 - **Speaking geography rebuilt:** replaced the eight hand-drawn continent
   polygons with locally bundled Natural Earth 1:110m land and D3's true
   orthographic horizon clipping. The map module is code-split and prefetched at
-  idle, preserving the original Home bundle and first-render performance.
+  idle, preserving the original Profile bundle and first-render performance.
 - **Exact venue acquisition:** Speaking now tracks the talk and venue
   independently. One location at a time receives a cyan gradient lock-on;
   selecting another venue of the same talk recenters the globe, updates the
@@ -85,15 +172,18 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   surface, with a compact information plate below and a readable vertical
   2026→2024 roster beside it. Mobile stacks photo, information and roster without
   horizontal navigation; mixed image ratios retain ambient-cover + full contain.
-- **Certifications wheel — badge images on drill-down (badges keep the featured
-  star):** drilling into a category now shows each certification's **badge
-  image** on its slice (`certs/badges/<badge>.<ext>`, several extensions probed).
-  Badges are **preloaded off-DOM**, so a slice only swaps its native radial text
-  for the image once the file is confirmed to load — a missing file never
-  flashes a broken-image icon and the text/image never both show (fixes the
-  earlier doubled-text overlap). Azure's 8 certifications are wired with `badge`
-  slugs; see `public/assets/ASSETS.md`. The wheel-center **highlights star is
-  kept**.
+- **Certifications wheel — names and icons coexist in category focus:** every
+  expanded slice keeps its complete radial name and a visual mark. A confirmed
+  badge (`certs/badges/<badge>.<ext>`) is preferred; otherwise the issuer
+  asset/glyph remains. Badges are probed off-DOM so missing files never flash a
+  broken image. Azure's 8 certifications are wired with `badge` slugs, and the
+  wheel-center highlights star is kept.
+- **Certifications became a contextual credential atlas:** the overview presents
+  nine accessible, named category sectors with aligned 36px diamond controls and
+  62 quiet credential cells; selecting a category expands it through ECharts,
+  filters the verified registry in place and exposes a clear Back/Escape path.
+  Selecting a credential synchronizes its radial emphasis, tooltip and exact
+  registry row without moving the page away from the wheel.
 - **Boot terminal now matches the active theme:** the first-session boot log
   uses the design tokens (`--bg0`, `--panel-strong`, `--ink`, …) instead of a
   hard-coded dark palette, so it renders light-on-light or dark-on-dark and no
@@ -106,16 +196,16 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   (owner-requested 2–3s), timer-driven, still once per session, non-blocking and
   skipped under reduced-motion. Boot copy is bilingual in `i18n` `intro`.
 - **Motion language restored without navigation lag:** kept the non-blocking
-  first-session boot terminal, atomic 160ms screen fade and lightweight Home
+  first-session boot terminal, atomic 160ms screen fade and lightweight Profile
   title/portrait scan accents. Route content and the portrait are never
   translated, skewed or delayed.
-- **Home role console restored:** bilingual roles type and erase after the full
+- **Profile role console restored:** bilingual roles type and erase after the full
   primary role is already visible. The longest role reserves the line geometry
   so the effect cannot shift the hero while cycling.
 - **Motion accessibility:** reduced-motion now skips the diagnostic, route,
   typing, caret and ambient title effects, and forces shared content reveals to
   their fully visible resting state.
-- **Navigation readiness:** non-Home backgrounds are prefetched during idle time
+- **Navigation readiness:** non-Profile backgrounds are prefetched during idle time
   and vector-backed sections select their existing SVG first, avoiding failed
   image probes during route changes.
 - **Speaking visual system refined:** inverted the composition so the full-frame
@@ -135,32 +225,31 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   The section background remains deliberately visible through the interface.
 - **Atomic page transitions:** removed Framer Motion from route and background
   image enter/exit. Screens now mount as a single DOM composition with a 160ms
-  opacity-only CSS fade; Home's portrait is preloaded to prevent late collapse.
+  opacity-only CSS fade; Profile's portrait is preloaded to prevent late collapse.
 - **Top chrome simplified:** removed per-screen counters such as “REPOSITORIES 6”;
   only the OPTIONS control remains on the right.
-- **Home transition rebuilt:** Home no longer requests or renders a section
+- **Profile transition rebuilt:** Profile no longer requests or renders a section
   photograph, and its content skips staggered Framer entrances. A lightweight
   CSS orbital/diamond composition supplies motion without delaying text or the
   profile card.
 - **Certification highlights:** the center star now scrolls to and flashes a
   dedicated full-width highlights section below the registry instead of opening
   an overlay on top of the wheel.
-- **Home responsiveness:** route transitions now mount concurrently in 180ms;
+- **Profile responsiveness:** route transitions now mount concurrently in 180ms;
   the top-right certification count and five animated readout counters were
   removed. The primary role renders immediately instead of cycling through a
   type/delete animation that could look partially loaded.
 - **Career:** dates moved to the left side of the vertical rail and the section
   photograph shifted farther right. Speaking's backdrop is more visible.
-- **Profile portrait:** Home uses a conservative identity-preserving retouch,
+- **Profile portrait:** Profile uses a conservative identity-preserving retouch,
   optimized to a 318KB JPEG; the original `profile.png` remains untouched.
-- **Certifications wheel:** retained the Apache ECharts sunburst, drill-down,
-  category logo overlay and 62-cert registry while adopting rounded sectors
-  (`itemStyle.borderRadius`) in both chart states. The ledger now uses a stronger
-  theme token so its content remains legible over the dark-theme background.
+- **Certifications wheel:** retained Apache ECharts, rounded sectors, SVG category
+  logos and the complete 62-cert registry inside one stable, theme-aware series;
+  the contextual ledger remains legible over both section themes.
 - **Faster first paint and navigation:** removed the blocking boot sequence,
-  shortened shared reveals/navigation transitions and eliminated Home's section
+  shortened shared reveals/navigation transitions and eliminated Profile's section
   image request.
-- **Per-screen background composition:** restored the compact far-right Home
+- **Per-screen background composition:** restored the compact far-right Profile
   portrait treatment; Career and Education shift farther right; Speaking now
   uses higher-contrast translucent reading panels. Projects and Certifications
   received richer custom vector backdrops (repository graph and credential
@@ -169,17 +258,11 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   region with centered framing and a shorter left-edge fade, keeping portrait
   subjects visible without washing over the primary content. Projects and
   Certifications use dedicated geometric SVG backgrounds.
-- **Home:** removed the capability radar; the skill-chip registry remains.
 - **Career grouped into sub-sections:** *Professional experience*, *Complementary
   activities* (DevSecOps Space, DevOps Institute, AI & Robotics Lab) and *Academic
   activities* (Nixvoid, GameDevs UNI, ACM). Each group is newest→oldest.
 - **Org logos are JPEG:** Career and Education now load `orgs/<slug>.jpg` (were
   `.svg`). Tech and certification logos stay SVG; speaking photos stay JPG.
-- **Certifications wheel is now an interactive drill-down.** Click a category (slice
-  or logo) → the sunburst zooms into that category, showing its certifications as
-  labeled segments with a center panel (category logo, name, count) and a **BACK**
-  control to zoom out; the ledger highlights the drilled category. Overview keeps
-  the 2-level wheel + 9 category logos + "62" center.
 - **Speaking:** talks updated to the owner's authoritative list — **9 talks**
   (was 10; removed GitHubWeek/Prompt Engineering) with verbatim titles and
   abstracts (EN + ES). Counts updated to 9 (readouts, meta, stat).
@@ -192,12 +275,20 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   light/dark mode as intended.
 
 ### Removed
+- **Redundant Certifications atlas readout:** removed the large “Select a category
+  to deploy” strip below the wheel. Tooltip, synchronized registry and an invisible
+  live announcement retain the useful selection detail without a duplicate panel.
 - **Career II / Parallel Map:** removed the experimental eighth tab and restored
   the original seven-screen navigation after visual comparison.
 
 ### Added
+- **Certification asset upload pack:** `public/assets/ASSETS.md` now lists the
+  exact 30 missing files by priority — four required category marks, 18 issuer
+  marks and eight optional Azure badges — plus accepted formats, the 54 badges
+  not yet wired and one-file light/dark preparation guidance.
 - **Certification highlights:** the sunburst center provides a visual shortcut
-  to a dedicated Expert and Leadership credential section below the registry.
+  to a curated five-item signal rail and compact live plate below the registry,
+  spanning experts, leadership and the featured Platform Engineering practitioner.
 - **Shared `page-visual-qa` skill for Claude and Codex:** identical project-local
   skills build the production app and capture all seven routes at desktop and
   mobile viewports for image-based inspection. Acceptance tests enforce parity.
