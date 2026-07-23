@@ -1,12 +1,11 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import * as echarts from "echarts/core";
-import { CustomChart, SunburstChart } from "echarts/charts";
+import { SunburstChart } from "echarts/charts";
 import { AriaComponent, TooltipComponent, GraphicComponent } from "echarts/components";
 import { SVGRenderer } from "echarts/renderers";
 
-// The certifications atlas and Profile capability signal deck share one lightweight
-// SVG ECharts runtime.
-echarts.use([SunburstChart, CustomChart, TooltipComponent, GraphicComponent, AriaComponent, SVGRenderer]);
+// The certifications atlas uses one lightweight SVG ECharts runtime.
+echarts.use([SunburstChart, TooltipComponent, GraphicComponent, AriaComponent, SVGRenderer]);
 
 const EChart = forwardRef(function EChart({ option, onEvents, style, className, notMerge = true }, forwardedRef) {
   const domRef = useRef(null);

@@ -51,32 +51,59 @@ Run `npm test` after every change; every box must stay green before shipping.
   menu always brings the active route fully into view and centres it when space
   permits. Route changes adjust only the menu's horizontal position, never the
   screen's vertical scroll, and reduced-motion resolves the alignment instantly.
+- **G16** (deployment) — The canonical production origin is
+  `https://0vas.com`. GitHub Pages keeps `0vas.com` as its configured custom
+  domain, completes certificate provisioning for both the apex and `www`, and
+  has **Enforce HTTPS** enabled so every HTTP request redirects to HTTPS. The
+  repository deploy guide records the certificate recovery and verification
+  commands; production assets must not introduce mixed HTTP content.
 
 ## Profile
 - **PF1** — Full name shows the three parts OSCAR / LOBATON / SALAS.
 - **PF2** — CIP 386940 appears in the Profile kicker.
 - **PF3** (visual) — The static six-row personal fact ledger and the separate
-  skill-chip grid are removed. One theme-aware ECharts SVG **Capability
-  Directory** replaces both inside the personal-file column. Its custom series
-  is a flat, typographic list of six equal domain rows with factual technology
-  counts—never area, intensity or an invented proficiency score. Selecting a
-  domain transitions to all 35 complete technology names in equal rows (two
-  columns on desktop, one on mobile). The chart itself is the only selector:
-  there is no duplicate tab rail, status readout, scan, 3D plate or dashboard
-  telemetry. Click/tap and ArrowUp/ArrowDown/Home/End + Enter operate the same
-  focus state; Back and Escape restore the directory. Mobile never overflows
-  horizontally, and reduced-motion resolves the same state changes instantly.
+  skill-chip grid are removed. One minimal, vanilla HTML/CSS **two-pane
+  Capability Directory** replaces both inside the personal-file column — no
+  ECharts, no canvas. The left pane is a roster of six equal domain rows (index,
+  diamond marker, name, factual technology count, caret); the right pane shows
+  the selected domain's complete technology names as plain chips with a
+  name + count header. Counts stay factual text—never area, intensity or an
+  invented proficiency score. The roster is the only selector: there is no
+  duplicate tab rail, status readout, scan, 3D plate or dashboard telemetry.
+  Click/tap and ArrowUp/ArrowDown/ArrowLeft/ArrowRight/Home/End move the same
+  selection (the panes always show a selected domain—there is no empty overview
+  state to return to). The list is a `role="listbox"` with `role="option"`
+  rows and `aria-activedescendant`; an `aria-live` region announces the active
+  domain and every technology name stays in the DOM. Mobile stacks the two panes
+  (list then detail) and never overflows horizontally; reduced-motion drops the
+  detail fade so state changes resolve instantly.
 - **PF4** — Profile has neither the top-right certification statistic nor the five
   animated readout counters.
 - **PF5** — Profile has no section background image and mounts its content without
-  staggered Framer Motion entrances. Lightweight ambient geometry, title scan
-  and pseudo-element glitches may move without delaying the composition.
+  staggered Framer Motion entrances. Its ambient motif is `<ProfileTurtle theme>`,
+  which loads a **per-theme owner illustration** — `/assets/turtle-home-light.png`
+  (violet) or `/assets/turtle-home-dark.png` (neon) — a tribal sea turtle flanked by
+  jellyfish, falling back to `/assets/turtle-home.png` then a code-native line-art
+  turtle. It sits large in the right half of the hero, gently drifting as if swimming,
+  and **must not overlap the name text**; it is hidden on narrow/stacked layouts
+  (≤1024px). Title scan and pseudo-element glitches may also move without delaying the
+  composition. Reduced-motion freezes the turtle.
 - **PF6** — The role line cycles through all bilingual `ROLES` with a code-typing
   effect. Its first render is the complete primary role, its geometry is reserved
   to prevent layout shift, and reduced-motion keeps the primary role static.
 - **PF7** — `#/profile` is the canonical first route and the navigation writes
   that URL. The legacy `#/home` hash remains an explicit compatibility alias
   that resolves to the same Profile screen without adding an eighth route.
+- **PF8** (visual) — Narrow/stacked Profile layouts keep the same retouched
+  portrait visible inside the opening hero. At ≤980px it becomes a full-width
+  horizontal editorial dossier between the role and lede; the lede, CTA and
+  social rows then regain the complete column below it. The cinematic crop keeps
+  Oscar's full face visible, preserves the framed Detroit identity treatment,
+  never overlaps copy, never creates horizontal overflow and does not restore
+  the mobile turtle ambient. The existing vertical desktop portrait remains
+  unchanged. Both layouts place one linked `GITHUB // @0VAS` channel signature
+  below the image instead of repeating Oscar's name over his portrait; the
+  brackets frame only the photograph.
 
 ## Career (vertical, grouped)
 - **C1** — Career is a vertical timeline; oldest role overall (`acm`) is last in `CAREER_ORDER`.
@@ -92,6 +119,10 @@ Run `npm test` after every change; every box must stay green before shipping.
 - **S3** — Talks render **newest → oldest** (data order preserved, not reversed).
 - **S4** — Every talk has: slug, code, year, flag, where, title, desc(en/es), (url optional).
 - **S5** — A "DevOps Institute — official ambassador" badge is shown (i18n key `speaking.ambassador`).
+- **S5b** — The Speaking header has a bilingual **VIEW SLIDES / VER SLIDES** button
+  (i18n key `speaking.viewSlides`) that opens `LINKS.slides` (`https://slides.0vas.com`,
+  the owner's slides subdomain) in a new tab. It sits beside the ambassador badge and
+  matches the DBH parallelogram styling.
 - **S6** — Every talk has one or more geographic coordinates. Speaking renders
   an organic projected globe with locally bundled Natural Earth land geometry
   and true orthographic clipping. It rotates toward the exact selected venue;
@@ -142,6 +173,8 @@ Run `npm test` after every change; every box must stay green before shipping.
 ## Contact (classic direct contact)
 - **CT1** — Contact keeps the primary mailto CTA, downloadable CV and direct
   GitHub, LinkedIn and Credly links from `LINKS`; no fake form is introduced.
+  Credly keeps visible link text and uses the owner-supplied official mark with
+  the built-in monochrome glyph as a load-safe fallback.
 - **CT2** — The restored composition is the simple title, CTA, social link row
   and metadata sequence animated by the shared `Reveal`. It contains no uplink,
   handshake console or routing matrix.
@@ -203,21 +236,26 @@ Run `npm test` after every change; every box must stay green before shipping.
 - **CE13** (visual) — Category and issuer imagery uses neutral adaptive
   backplates so black/multicolour assets remain visible in dark and light
   themes. All nine category controls share one exact orbit at the outer edge of
-  the category band; all focused credential marks share the exact midpoint of
-  the credential corona. Both use the same compact target and 22px artwork box,
-  with no satellite count bubble or per-item radial displacement. Controls stay
-  keyboard accessible, and missing category assets leave a deliberate aligned
-  slot instead of a broken image or glyph swap.
+  the category band, separated from the independent inner name orbit by at least
+  23% of the measured atlas diameter; hyphenated category names may wrap at the
+  hyphen. This keeps Security, Multi-Cloud, Data & AI and DevOps & GitOps clear
+  of their diamonds at desktop and compact widths. All focused credential marks
+  share the exact midpoint of the credential corona. Both use the same compact
+  target and 22px artwork box, with no satellite count bubble or per-item radial
+  displacement. Controls stay keyboard accessible, and missing category assets
+  leave a deliberate aligned slot instead of a broken image or glyph swap.
 - **CE14** (visual) — The desktop composition is atlas-dominant: the contextual
   registry is capped at 380px (335–350px through the compact desktop/tablet
   band), the atlas column is capped at 700px and centred beside it, and the
   inter-panel gap never exceeds 14px (12px through the compact desktop band).
   This removes dead column space so the registry sits visibly closer without
-  shrinking the wheel. On common 14-inch laptop layouts its shared field is
-  height-aware from 532–600px so the complete circle and invariant registry fit
-  above the fixed navigation chrome at 1440×900 and 1512×982. The redundant
-  atlas readout below that field is absent; selection detail remains in the
-  tooltip and synchronized registry. Every circular layer
+  shrinking the wheel. Certifications alone uses a tighter title reserve, while
+  preserving a clear title-to-content boundary. On common 14-inch laptop layouts
+  the atlas track is 680px and its shared field is height-aware from 560–650px,
+  so the expanded 76% radial face and invariant registry meet the upper rule of
+  the fixed navigation without a residual strip at 1440×900 and 1512×982. The redundant atlas readout below
+  that field is absent; selection detail remains in the tooltip and synchronized
+  registry. Every circular layer
   continues to use the same measured diameter and centre as ECharts. At
   1080px and below the single-column stack gives long radial names a full-width
   canvas before the registry instead of clipping them; no certification name,
@@ -270,7 +308,8 @@ Run `npm test` after every change; every box must stay green before shipping.
 - **E1** — 3 academic programs (UNI, MIT Professional Education, Hanyang), each with a `logo`.
 
 ## Assets
-- **A1** — `public/assets/ASSETS.md` exists and lists the bg/, talks/, certs/, orgs/, tech/ folders.
+- **A1** — `public/assets/ASSETS.md` exists and lists the bg/, talks/, certs/,
+  orgs/, tech/ and brands/ folders.
 - **A2** — every image-backed screen is named in the `bg/` checklist; Profile's
   code-native background and legacy unused `bg/home.jpg` are documented explicitly.
 - **A4** — `AssetIcon` resolves user images by probing candidate URLs **off-DOM**
@@ -286,14 +325,33 @@ Run `npm test` after every change; every box must stay green before shipping.
 - **A5** — The asset checklist enumerates every category/issuer logo slug and
   every currently wired certification badge slug, including which files are
   still missing and theme-safe preparation guidance.
-- **A6** — The browser icon is the code-native `assets/favicon.svg`: a transparent,
-  organic violet **turtle head in profile**, not a miniature full body or a
-  mask-like frontal portrait. Its domed cranium, single lateral cyan eye, blunt
-  beak with nostril/long jaw, organic neck sweep and a cropped shell collar keep
-  the animal unmistakable at 16px and 32px. A light outer halo and dark inner contour
-  preserve it on both light and dark browser chrome. It contains no embedded
-  image, text, filter or animation and is linked as a size-independent,
-  cache-busted SVG so browsers do not retain the rejected icon.
+- **A6** — The browser icon is `assets/favicon.png`: the owner-generated **flat geometric
+  violet turtle** (top-down; hexagonal shell scutes with a light/dark-violet split, a
+  rounded head, angular flippers), exported **transparent** and downscaled to 256px so
+  the tab colour shows through and it reads on light and dark chrome. Linked with
+  `type="image/png"` and cache-busted from `index.html`.
+- **A7** — The owner-supplied transparent `brands/credly.png` is the single
+  official Credly mark reused beside the real outbound Credly links in Profile,
+  Contact and Certifications. The visible “Credly” text and monochrome glyph
+  fallback remain accessible and load-safe. Because Credly is the verifier, not
+  the issuer, the mark never becomes a wheel category, issuer row or credential
+  badge.
+- **A8** — Ambient background music is optional and opt-in (`useMusic` hook; the
+  `<audio>` is mounted at App level so it keeps playing across route/dropdown
+  changes). The controls appear **only when an owner audio file exists** at
+  `/assets/ambient.(mp3|m4a|ogg|wav)`: a **play/pause icon button beside OPTIONS**,
+  and inside the OPTIONS dropdown a **MUSIC row with a volume slider and a credit
+  "i" toggle**. It **never autoplays** — sound starts only on the visitor's click;
+  the on/off state and the volume persist (localStorage). Play/pause is labelled in
+  EN/ES. The bundled track is FiftySounds' "Arcano" (commercial licence,
+  **attribution required**), so both Contact's footer and the dropdown "i" credit
+  `Music: "Arcano" — FiftySounds` linking to `fiftysounds.com` (`LINKS.music`); if
+  the audio ships, that credit ships.
+- **A9** — The owner-supplied transparent `brands/linkedin.png` (blue circle, white
+  “in”) is the official LinkedIn mark shown beside the outbound LinkedIn links in
+  Profile, Contact and the Certifications note. Its `in` counter is composited white
+  so it stays on-brand on light and dark chrome; the built-in `linkedin` glyph is the
+  load-safe fallback.
 
 ## Agent contract (cross-agent consistency)
 - **D1** — `AGENTS.md`, `CLAUDE.md`, `CHANGELOG.md`, `SPEC.md` all exist.

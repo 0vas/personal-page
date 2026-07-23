@@ -129,6 +129,27 @@ const UI = {
     </g>
   ),
   chevron: <path {...S(2)} d="M6 9l6 6 6-6" />,
+  slides: (
+    <g {...S(2)}>
+      <rect x="3" y="4" width="18" height="12.5" rx="1.5" />
+      <path d="M9 20h6M12 16.5V20" />
+    </g>
+  ),
+  music: (
+    <g>
+      <path {...S(2)} d="M9 17V5l11-2v11" />
+      <ellipse cx="6.2" cy="17.4" rx="2.9" ry="2.3" {...F} />
+      <ellipse cx="17.2" cy="15.4" rx="2.9" ry="2.3" {...F} />
+    </g>
+  ),
+  "music-off": (
+    <g>
+      <path {...S(2)} d="M9 17V5l11-2v11" />
+      <ellipse cx="6.2" cy="17.4" rx="2.9" ry="2.3" {...F} />
+      <ellipse cx="17.2" cy="15.4" rx="2.9" ry="2.3" {...F} />
+      <path {...S(2)} d="M3.2 3.2 20.8 20.8" />
+    </g>
+  ),
   /* generic organization mark — fallback for issuers without a dedicated glyph */
   org: (
     <g>

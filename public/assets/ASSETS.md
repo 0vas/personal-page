@@ -8,10 +8,23 @@ under `public/assets/`.
 
 ## 0. Site identity — code-managed
 
-- [x] `favicon.svg` — transparent organic violet turtle head in profile, with a
-  cyan lateral eye, blunt beak, angled neck and cropped shell collar. This is the
-  settled browser identity, is cache-busted from `index.html` and is maintained
-  with the interface; no owner upload is required.
+- [x] `favicon.png` — the browser icon: the owner-generated **flat geometric violet
+  turtle** (top-down, hexagonal shell with a light/dark-violet split, angular flippers),
+  transparent, downscaled to 256px so it reads on light and dark tabs. Linked +
+  cache-busted from `index.html`. Drop another transparent PNG here to replace it.
+- [x] `turtle-home-light.png` / `turtle-home-dark.png` — Profile hero ambient
+  illustration, **per theme**: a tribal/Polynesian sea turtle flanked by jellyfish
+  (light = violet; dark = neon violet + cyan). Transparent PNGs, ~627px. Loaded by
+  `<ProfileTurtle theme>`, which falls back to `turtle-home.png`, then a code-native
+  line-art turtle. Generate on a solid green screen and export transparent (avoids
+  white halos); drop replacements here — no code change.
+- [x] `turtle-home.png` — shared/legacy fallback used when a per-theme file is missing.
+- [x] `ambient.mp3` (or `.m4a`/`.ogg`/`.wav`) — background music. When present, a music
+  toggle appears left of OPTIONS (icon-only, off by default, loops at low volume, never
+  autoplays). Currently **FiftySounds "Arcano"** (commercial licence). ⚠️ The licence
+  **requires attribution** — the credit `Music: "Arcano" — FiftySounds` (link to
+  `fiftysounds.com`) is rendered in Contact's footer. If you swap the track, update that
+  credit to match the new source's licence.
 
 ## 1. Section backgrounds — `bg/` (NEW)
 
@@ -55,6 +68,8 @@ accept `.png`, `.webp`, `.jpg`, `.jpeg` or `.svg` (in that lookup order);
 These appear on the wheel, drilled center and ledger headers. They are
 asset-only and have no glyph fallback, so the slot stays empty while missing.
 `platform` also supplies the issuer mark for its four certification rows.
+These four files are the only mandatory uploads needed to complete all nine
+category diamonds; every P1–P3 item below has a working fallback or is optional.
 
 - [ ] `certs/platform.svg`
 - [ ] `certs/cloud.svg` — representative multi-cloud mark
@@ -168,6 +183,18 @@ finetuning, prompt, python, bash, cpp, csharp, java, javascript, togaf, c4,
 bpmn, uml, cmmi, oracledb, postgresql, mongodb, powerbi, unity, ar`
 
 Reserved pattern: `tech/<slug>.svg`.
+
+## 7. Brand / verifier marks — `brands/`
+
+- [x] `brands/credly.png` — owner-supplied official Credly mark, transparent
+  RGBA. Reused beside the outbound Credly links in Profile, Contact and the
+  Certifications verification note. Keep it here rather than under `certs/`:
+  Credly verifies the registry but is not the issuer of its credentials. The
+  built-in monochrome glyph remains the graceful load fallback.
+- [x] `brands/linkedin.png` — owner-supplied official LinkedIn mark (blue circle,
+  white “in”), transparent RGBA. The `in` counter was composited white so it stays
+  on-brand on both light and dark chrome. Shown beside the LinkedIn links in Profile,
+  Contact and the Certifications note; falls back to the built-in `linkedin` glyph.
 
 ---
 

@@ -117,6 +117,15 @@ describe("Global", () => {
     expect(app).toContain('(prefers-reduced-motion: reduce)');
     expect(app).not.toContain("scrollIntoView({ behavior");
   });
+  it("G16 — the production domain is documented and declared as HTTPS-only", () => {
+    const html = readFileSync(resolve(ROOT, "index.html"), "utf8");
+    const readme = readFileSync(resolve(ROOT, "README.md"), "utf8");
+    expect(html).toContain('<meta property="og:url" content="https://0vas.com">');
+    expect(readme).toContain("certificate provisioning");
+    expect(readme).toContain("**Enforce HTTPS**");
+    expect(readme).toContain("curl -I http://0vas.com");
+    expect(readme).toContain("openssl s_client -connect 0vas.com:443");
+  });
   it("G9/G10/PF4 — atomic CSS navigation and no top-right statistics", () => {
     const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
     const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
@@ -128,13 +137,24 @@ describe("Global", () => {
     expect(profile).not.toContain("READOUTS");
     expect(profile).not.toContain("Counter");
   });
-  it("PF5 — Profile skips image backdrop and staggered motion", () => {
+  it("PF5 — Profile skips image backdrop and uses the animated turtle ambient", () => {
     const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
     const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
-    expect(app).toContain('screen !== "profile" && <SceneBg');
-    expect(app).toContain("bd-profile-ambient");
+    const turtle = readFileSync(resolve(ROOT, "src/components/ProfileTurtle.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(app).toContain('screen !== "profile" && <SceneBg');       // no bg image on Profile
+    expect(app).toContain("<ProfileTurtle");
     expect(profile).not.toContain("<Reveal");
     expect(profile).toContain('data-text="LOBATON"');
+    // Prefers an owner illustration at /assets/turtle-home.*, else a code-native
+    // line-art turtle (shell + flippers); frozen under reduced-motion.
+    expect(turtle).toContain("/assets/turtle-home");
+    expect(turtle).toContain("onError");
+    expect(turtle).toContain("pt-shell");
+    expect(turtle).toContain("pt-flap");
+    expect(css).toContain(".bd-profile-turtle");
+    expect(css).toContain(".pt-img");
+    expect(css).toMatch(/@media \(prefers-reduced-motion: reduce\)[\s\S]*\.bd-profile-turtle/);
   });
   it("PF6 — Profile roles type from a complete first frame without layout shift", () => {
     const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
@@ -153,6 +173,30 @@ describe("Global", () => {
     expect(app).toContain('window.history.replaceState(null, "", "#/profile")');
     expect(app).toContain("profile: Profile");
   });
+  it("PF8 — narrow Profile uses a full-width editorial portrait between role and lede", () => {
+    const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(profile).toContain('className="profile-hero"');
+    expect(profile).toContain('className="profile-lede-block"');
+    expect(profile).toContain('className="profile-photo"');
+    expect(profile).toContain("/assets/profile-retouched.jpg");
+    expect(profile).toContain('alt="Oscar Lobaton Salas"');
+    expect(profile).toContain('fetchPriority="high"');
+    expect(profile).toContain('className="profile-photo-channel dbar"');
+    expect(profile).toContain('className="profile-photo-frame"');
+    expect(profile).toContain("GITHUB // @0VAS");
+    expect(profile).toContain("href={LINKS.github}");
+    expect(profile).not.toContain('<span className="tag dbar"><span>OSCAR LOBATON SALAS</span></span>');
+    expect(css).toContain(".profile-hero { display: contents; }");
+    expect(css).toContain(".profile-photo-channel");
+    expect(css).toMatch(/\.profile\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\);/);
+    expect(css).toMatch(/\.profile-photo\s*\{[^}]*display:\s*block;[^}]*grid-column:\s*1\s*\/\s*-1;[^}]*grid-row:\s*4;[^}]*width:\s*100%;/);
+    expect(css).toMatch(/\.profile-lede-block\s*\{[^}]*grid-column:\s*1\s*\/\s*-1;[^}]*grid-row:\s*5;/);
+    expect(css).toMatch(/\.profile-cta-block\s*\{[^}]*grid-column:\s*1\s*\/\s*-1;[^}]*grid-row:\s*6;/);
+    expect(css).toMatch(/\.profile-net-block\s*\{[^}]*grid-column:\s*1\s*\/\s*-1;[^}]*grid-row:\s*7;/);
+    expect(css).toMatch(/\.profile-photo \.ph\s*\{[^}]*aspect-ratio:\s*8\s*\/\s*5;/);
+    expect(css).not.toContain(".profile-photo { display: none; }");
+  });
 });
 
 describe("Profile", () => {
@@ -160,7 +204,7 @@ describe("Profile", () => {
     expect(PROFILE.kicker.en).toContain("386940");
     expect(PROFILE.kicker.es).toContain("386940");
   });
-  it("PF3 — one minimal interactive capability directory replaces facts and the skill-chip grid", () => {
+  it("PF3 — one minimal vanilla two-pane capability directory replaces facts and the skill-chip grid", () => {
     const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
     const matrix = readFileSync(resolve(ROOT, "src/components/CapabilityMatrix.jsx"), "utf8");
     const wrapper = readFileSync(resolve(ROOT, "src/components/EChart.jsx"), "utf8");
@@ -173,27 +217,27 @@ describe("Profile", () => {
     expect(profile).not.toContain("skgrid");
     expect(data).not.toContain("export const FACTS");
     expect(data).not.toContain("export const RADAR");
-    expect(wrapper).toContain("CustomChart");
-    expect(wrapper).not.toContain("TreemapChart");
-    expect(matrix).toContain('type: "custom"');
-    expect(matrix).toContain('coordinateSystem: "none"');
-    expect(matrix).toContain("renderCapabilityRow");
-    expect(matrix).toContain('type: "rect"');
-    expect(matrix).toContain('type: "text"');
-    expect(matrix).not.toContain('type: "polygon"');
-    expect(matrix).not.toContain('type: "treemap"');
-    expect(matrix).toContain("SKILLS.map");
-    expect(matrix).toContain("value: [skillIndex, 1]");
-    expect(matrix).toContain("id: SERIES_ID");
-    expect(matrix).toContain("groupId: domainId(domainIndex)");
-    expect(matrix).toContain("activeDomain < 0 ? 1 : compact ? 1 : 2");
-    expect(matrix).toContain('divideShape: "clone"');
-    expect(matrix).toContain("chartColors(theme)");
-    expect(matrix).toContain("useReducedMotion");
-    expect(matrix).toContain('role="listbox"');
-    expect(matrix).toContain('tabIndex={0}');
-    for (const key of ["ArrowUp", "ArrowDown", "Home", "End", "Enter", "Escape"]) expect(matrix).toContain(key);
+    // Capabilities is now plain HTML/CSS — the shared ECharts runtime no longer bundles the custom series.
+    expect(wrapper).not.toContain("CustomChart");
+    expect(wrapper).toContain("SunburstChart");
+    expect(matrix).not.toContain("EChart");
+    expect(matrix).not.toContain('type: "custom"');
+    expect(matrix).not.toContain("renderItem");
+    expect(matrix).not.toContain("chartColors");
     expect(matrix).not.toContain("AssetIcon");
+    // Two panes: a domain roster (left) and the selected domain's technology chips (right).
+    expect(matrix).toContain("SKILLS.map");
+    expect(matrix).toContain("capability-panes");
+    expect(matrix).toContain("capability-domain");
+    expect(matrix).toContain("capability-detail");
+    expect(matrix).toContain("capability-chips");
+    expect(matrix).toContain("capability-chip");
+    expect(matrix).toContain('role="listbox"');
+    expect(matrix).toContain('role="option"');
+    expect(matrix).toContain("aria-selected");
+    expect(matrix).toContain("aria-activedescendant");
+    expect(matrix).toContain('tabIndex={0}');
+    for (const key of ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End"]) expect(matrix).toContain(key);
     expect(matrix).not.toContain("activeSkill");
     expect(matrix).not.toContain("capability-rail");
     expect(matrix).not.toContain("capability-readout");
@@ -205,9 +249,15 @@ describe("Profile", () => {
     expect(STRINGS.en.profile.matrixKicker).toBe("06 // 6 DOMAINS · 35 TECHNOLOGIES");
     expect(STRINGS.es.profile.matrixKicker).toBe("06 // 6 DOMINIOS · 35 TECNOLOGÍAS");
     expect(css).toContain(".capability-matrix");
+    expect(css).toContain(".capability-panes");
+    expect(css).toContain(".capability-domain");
+    expect(css).toContain(".capability-chip");
+    expect(css).not.toContain(".capability-chart-shell");
     expect(css).not.toContain(".capability-rail");
     expect(css).not.toContain(".capability-readout");
     expect(css).not.toContain(".capability-scan");
+    // Mobile stacks the two panes; the outer profile grid still collapses at 980px.
+    expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*\.capability-panes \{ grid-template-columns: 1fr/);
     expect(css).toMatch(/@media \(max-width: 980px\)[\s\S]*\.profile-file/);
   });
 });
@@ -273,6 +323,16 @@ describe("Speaking", () => {
   it("S5 — DevOps ambassador badge string present (en + es)", () => {
     expect(STRINGS.en.speaking.ambassador).toMatch(/AMBASSADOR/i);
     expect(STRINGS.es.speaking.ambassador).toMatch(/EMBAJADOR/i);
+  });
+  it("S10 — Speaking has a bilingual 'view slides' button to the slides subdomain", () => {
+    const speaking = readFileSync(resolve(ROOT, "src/screens/Speaking.jsx"), "utf8");
+    expect(LINKS.slides).toBe("https://slides.0vas.com");
+    expect(speaking).toContain("LINKS.slides");
+    expect(speaking).toContain('className="slides-link"');
+    expect(speaking).toContain('target="_blank"');
+    expect(speaking).toContain("S.viewSlides");
+    expect(STRINGS.en.speaking.viewSlides).toBeTruthy();
+    expect(STRINGS.es.speaking.viewSlides).toBeTruthy();
   });
   it("S6 — every talk is geocoded and Speaking uses the projected globe", () => {
     for (const talk of TALKS) {
@@ -439,6 +499,7 @@ describe("Certifications", () => {
     expect(source).toContain("credentialLabelDistance");
     expect(source).toContain("sort: null");
     expect(source).toContain("sun-logo");
+    expect(source).toMatch(/regular:\s*\{[\s\S]*?category:\s*\{\s*r0:\s*"16%",\s*r:\s*"60%"\s*\}[\s\S]*?credential:\s*\{\s*r0:\s*"62%",\s*r:\s*"76%"\s*\}[\s\S]*?faceRatio:\s*0\.76[\s\S]*?labelFrameRatio:\s*0\.90/);
   });
   it("CE8 — wheel center scrolls to a dedicated highlights section", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
@@ -517,9 +578,18 @@ describe("Certifications", () => {
     expect(css).toMatch(/\.sun-logo img[^{]*\{[^}]*width:\s*22px;[^}]*height:\s*22px;/);
     expect(css).toContain('[data-theme="dark"] .sun-logo');
     expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.sun-wrap\s*\{[^}]*overflow:\s*visible;/);
+    expect(source).toContain('name.replace(/-/g, "- ")');
+    const categoryOrbits = [...source.matchAll(
+      /(regular|compact):\s*\{[\s\S]*?categoryLabelRadius:\s*([\d.]+),[\s\S]*?categoryIconRadius:\s*([\d.]+)/g,
+    )];
+    expect(categoryOrbits.map((match) => match[1])).toEqual(["regular", "compact"]);
+    for (const [, mode, labelRadius, iconRadius] of categoryOrbits) {
+      expect(Number(iconRadius) - Number(labelRadius), `${mode} category orbit clearance`).toBeGreaterThanOrEqual(0.23);
+    }
   });
   it("CE14 — desktop gives the atlas the dominant column without changing the mobile stack", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
     const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
     const certCss = css.slice(
       css.indexOf("/* ============ CERTIFICATIONS ============ */"),
@@ -528,9 +598,12 @@ describe("Certifications", () => {
     expect(certCss).toMatch(/\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 700px\) clamp\(340px, 26vw, 380px\);/);
     expect(certCss).toMatch(/\.certs\s*\{[^}]*gap:\s*clamp\(10px, 1vw, 14px\);/);
     expect(certCss).toMatch(/\.certs\s*\{[^}]*justify-content:\s*center;/);
-    expect(certCss).toMatch(/\.stage\[data-screen="certifications"\]\s*\{[^}]*--stage-top:\s*clamp\(172px, 19vh, 188px\);[^}]*--cert-field-h:\s*clamp\(532px, calc\(100svh - var\(--stage-top\) - 191px\), 600px\);/);
+    expect(app).toContain('<header className="chrome-top" data-screen={id}>');
+    expect(css).toMatch(/\.chrome-top\[data-screen="certifications"\]\s*\{[^}]*padding-top:\s*24px;/);
+    expect(css).toMatch(/\.chrome-top\[data-screen="certifications"\] \.ct-left \.rule\s*\{[^}]*margin-bottom:\s*18px;/);
+    expect(certCss).toMatch(/\.stage\[data-screen="certifications"\]\s*\{[^}]*--stage-top:\s*clamp\(150px, 17vh, 166px\);[^}]*--cert-field-h:\s*clamp\(560px, calc\(100svh - var\(--stage-top\) - 166px\), 650px\);[^}]*padding-bottom:\s*73px;/);
     expect(certCss).toMatch(/\.sun-wrap\s*\{[^}]*height:\s*var\(--cert-field-h\);/);
-    expect(certCss).toMatch(/@media \(min-width: 1081px\) and \(max-height: 1000px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 640px\) clamp\(340px, 26vw, 380px\);[^}]*gap:\s*14px;/);
+    expect(certCss).toMatch(/@media \(min-width: 1081px\) and \(max-height: 1000px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 680px\) clamp\(340px, 26vw, 380px\);[^}]*gap:\s*14px;/);
     expect(source).toContain('"--atlas-size"');
     expect(certCss).toContain("--atlas-center-y");
     expect(certCss).toMatch(/@media \(max-width: 1120px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) clamp\(335px, 32vw, 350px\);[^}]*gap:\s*12px;/);
@@ -684,7 +757,7 @@ describe("Assets", () => {
     const p = resolve(ROOT, "public/assets/ASSETS.md");
     expect(existsSync(p)).toBe(true);
     const md = readFileSync(p, "utf8");
-    for (const folder of ["bg/", "talks/", "certs/", "orgs/", "tech/"]) {
+    for (const folder of ["bg/", "talks/", "certs/", "orgs/", "tech/", "brands/"]) {
       expect(md, folder).toContain(folder);
     }
   });
@@ -721,24 +794,83 @@ describe("Assets", () => {
     }
     expect(md).toContain("theme-safe");
   });
-  it("A6 — favicon is a compact theme-independent turtle head", () => {
+  it("A6 — favicon is the owner's transparent geometric violet turtle (PNG)", () => {
     const html = readFileSync(resolve(ROOT, "index.html"), "utf8");
-    const faviconPath = resolve(ROOT, "public/assets/favicon.svg");
-    expect(existsSync(faviconPath)).toBe(true);
-    expect(html).toContain('<link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg?v=turtle-head-profile">');
+    const pngPath = resolve(ROOT, "public/assets/favicon.png");
+    expect(existsSync(pngPath)).toBe(true);
+    expect(html).toContain('<link rel="icon" type="image/png" sizes="any" href="/assets/favicon.png?v=turtle-geo2">');
 
-    const svg = readFileSync(faviconPath, "utf8");
-    expect(svg).toContain('<title>0VAS turtle head</title>');
-    expect(svg).toContain('id="turtle-head"');
-    for (const part of ["shell-collar", "neck", "head", "eye", "nostril", "mouth"]) {
-      expect(svg).toContain(`data-part="${part}"`);
+    const buf = readFileSync(pngPath);
+    expect(buf.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a"); // valid PNG
+    expect(buf[25]).toBe(6); // RGBA — transparent, so the tab colour shows through
+  });
+  it("A7 — the owner-supplied Credly mark is reused only on Credly verification links", () => {
+    const asset = resolve(ROOT, "public/assets/brands/credly.png");
+    expect(existsSync(asset)).toBe(true);
+    const buf = readFileSync(asset);
+    expect(buf.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+    expect(buf[25]).toBe(6);
+
+    for (const screen of ["Profile", "Contact", "Certs"]) {
+      const source = readFileSync(resolve(ROOT, `src/screens/${screen}.jsx`), "utf8");
+      expect(source).toContain('base="/assets/brands/credly"');
+      expect(source).toContain('fallbackId="credly"');
+      expect(source).toMatch(/>\s*Credly/);
     }
-    expect(svg).toContain("#f7f5fc");
-    expect(svg).toContain("#2b2836");
-    expect(svg).toContain("#67e8f9");
-    expect(svg).not.toMatch(/data-part="(?:tail|rear-flipper|fore-flipper|shell|top-facet|left-facet|right-facet)"/);
-    expect(svg).not.toMatch(/<(?:image|text|filter|animate)\b/);
-    expect(Buffer.byteLength(svg)).toBeLessThan(2500);
+
+    const certs = readFileSync(resolve(ROOT, "src/screens/Certs.jsx"), "utf8");
+    expect(certs).not.toContain("/assets/certs/credly");
+  });
+  it("A8 — ambient music: opt-in play/pause beside OPTIONS, volume + credit in the menu", () => {
+    const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
+    const hook = readFileSync(resolve(ROOT, "src/hooks/useMusic.js"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    // <audio> is lifted to App so it stays mounted (keeps playing) when the dropdown closes.
+    expect(app).toContain("useMusic(");
+    expect(app).toContain("<audio");
+    expect(app).toContain("loop");
+    expect(app).toContain('preload="none"');
+    // Play/pause is a button beside OPTIONS; volume + the credit "i" live in the dropdown.
+    expect(app).toContain("music={music}");
+    expect(app).toContain("music-toggle");   // standalone play/pause
+    expect(app).toContain("music.setVolume"); // volume control in the dropdown
+    expect(app).toContain("opt-info");        // credit "i" toggle
+    // Hook: probes owner audio, hidden if absent, never autoplays, remembers pref + volume.
+    expect(hook).toContain("/assets/ambient");
+    expect(hook).toContain("Boolean(src)");
+    expect(hook).not.toMatch(/autoplay/i);
+    expect(hook).toContain("localStorage");
+    expect(hook).toContain("setVolume");
+    expect(css).toContain(".music-toggle");
+    expect(css).toContain(".sp-vol");
+    expect(css).toContain(".opt-info");
+    for (const key of ["musicPlay", "musicPause", "optMusic", "musicInfo"]) {
+      expect(STRINGS.en[key], `en.${key}`).toBeTruthy();
+      expect(STRINGS.es[key], `es.${key}`).toBeTruthy();
+    }
+    // The bundled FiftySounds track ("Arcano") requires attribution. If the audio
+    // ships, the credit + source link must ship (Contact footer + the dropdown "i").
+    if (existsSync(resolve(ROOT, "public/assets/ambient.mp3"))) {
+      const contact = readFileSync(resolve(ROOT, "src/screens/Contact.jsx"), "utf8");
+      expect(contact).toContain("FiftySounds");
+      expect(app).toContain("FiftySounds");
+      expect(LINKS.music).toContain("fiftysounds.com");
+      expect(STRINGS.en.contact.musicBy).toBeTruthy();
+      expect(STRINGS.es.contact.musicBy).toBeTruthy();
+    }
+  });
+  it("A9 — the owner-supplied LinkedIn mark is used beside LinkedIn links", () => {
+    const asset = resolve(ROOT, "public/assets/brands/linkedin.png");
+    expect(existsSync(asset)).toBe(true);
+    const buf = readFileSync(asset);
+    expect(buf.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+    expect(buf[25]).toBe(6); // RGBA — transparent outside the blue circle
+
+    for (const screen of ["Profile", "Contact", "Certs"]) {
+      const source = readFileSync(resolve(ROOT, `src/screens/${screen}.jsx`), "utf8");
+      expect(source, screen).toContain('base="/assets/brands/linkedin"');
+      expect(source, screen).toContain('fallbackId="linkedin"');
+    }
   });
 });
 

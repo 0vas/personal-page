@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "./components/Icons.jsx";
+import ProfileTurtle from "./components/ProfileTurtle.jsx";
+import { useMusic } from "./hooks/useMusic.js";
 import { LINKS } from "./data/content.js";
 import { STRINGS, detectLang } from "./i18n.js";
 import Profile from "./screens/Profile.jsx";
@@ -136,7 +138,7 @@ function Backdrop({ screen, theme }) {
       <div className="bd-band-2" />
       <div className="bd-band" />
       {screen !== "profile" && <SceneBg screen={screen} theme={theme} />}
-      {screen === "profile" && <div className="bd-profile-ambient"><i /><i /><i /></div>}
+      {screen === "profile" && <ProfileTurtle theme={theme} />}
       <div className="bd-beam b1" />
       <div className="bd-beam b2" />
       <div className="bd-tris" />
@@ -150,8 +152,9 @@ function Backdrop({ screen, theme }) {
   );
 }
 
-function Settings({ S, lang, setLang, theme, setTheme }) {
+function Settings({ S, lang, setLang, theme, setTheme, music }) {
   const [open, setOpen] = useState(false);
+  const [credit, setCredit] = useState(false);
   const ref = useRef(null);
   useEffect(() => {
     if (!open) return;
@@ -178,14 +181,14 @@ function Settings({ S, lang, setLang, theme, setTheme }) {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="sp-row">
+            <div className="opt-row">
               <span className="sp-lab">{S.optLanguage}</span>
               <div className="seg">
                 <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>EN</button>
                 <button className={lang === "es" ? "on" : ""} onClick={() => setLang("es")}>ES</button>
               </div>
             </div>
-            <div className="sp-row">
+            <div className="opt-row">
               <span className="sp-lab">{S.optTheme}</span>
               <div className="seg">
                 <button className={theme === "light" ? "on" : ""} onClick={() => setTheme("light")}>
@@ -196,12 +199,44 @@ function Settings({ S, lang, setLang, theme, setTheme }) {
                 </button>
               </div>
             </div>
-            <div className="sp-row">
+            <div className="opt-row">
               <span className="sp-lab">{S.optDoc}</span>
               <a className="sp-cv" href={LINKS.cv} download>
                 <Icon id="download" size={13} /> {S.downloadCV}
               </a>
             </div>
+            {music?.available && (
+              <div className="opt-row">
+                <span className="sp-lab">
+                  {S.optMusic}
+                  <button
+                    type="button"
+                    className={`opt-info ${credit ? "on" : ""}`}
+                    onClick={() => setCredit((v) => !v)}
+                    aria-label={S.musicInfo}
+                    aria-expanded={credit}
+                    title={S.musicInfo}
+                  >i</button>
+                </span>
+                <div className="sp-vol">
+                  <Icon id="music-off" size={12} />
+                  <input
+                    type="range" min="0" max="100" step="1"
+                    value={Math.round(music.volume * 100)}
+                    onChange={(e) => music.setVolume(Number(e.target.value) / 100)}
+                    aria-label={S.optMusic}
+                    style={{ "--vol": `${Math.round(music.volume * 100)}%` }}
+                  />
+                  <Icon id="music" size={12} />
+                </div>
+                {credit && (
+                  <p className="opt-credit">
+                    {S.contact.musicBy}{" "}
+                    <a href={LINKS.music} target="_blank" rel="noopener noreferrer">FiftySounds</a>
+                  </p>
+                )}
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -214,6 +249,7 @@ export default function App() {
   const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || "light");
   const [lang, setLang] = useState(detectLang);
   const navMenuRef = useRef(null);
+  const music = useMusic();
 
   const S = STRINGS[lang];
 
@@ -294,16 +330,29 @@ export default function App() {
       <Backdrop screen={id} theme={theme} />
 
       {/* top chrome */}
-      <header className="chrome-top">
+      <header className="chrome-top" data-screen={id}>
         <div className="ct-left">
           <div className="rule" />
           <p className="ct-eyebrow">{S.eyebrow}</p>
           {title && <h1 key={key} className="ct-title ct-title-enter" data-text={title}>{title}</h1>}
         </div>
         <div className="ct-right">
-          <Settings S={S} lang={lang} setLang={setLang} theme={theme} setTheme={setTheme} />
+          {music.available && (
+            <button
+              type="button"
+              className={`music-toggle ${music.playing ? "on" : ""}`}
+              onClick={music.toggle}
+              aria-pressed={music.playing}
+              aria-label={music.playing ? S.musicPause : S.musicPlay}
+              title={music.playing ? S.musicPause : S.musicPlay}
+            >
+              <Icon id={music.playing ? "music" : "music-off"} size={15} />
+            </button>
+          )}
+          <Settings S={S} lang={lang} setLang={setLang} theme={theme} setTheme={setTheme} music={music} />
         </div>
       </header>
+      {music.src && <audio ref={music.audioRef} src={music.src} loop preload="none" />}
 
       {/* stage */}
       <main className={`stage ${title ? "stage-titled" : ""}`} data-screen={id}>

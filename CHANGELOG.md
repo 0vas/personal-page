@@ -10,11 +10,101 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [v1] - 2026-07-23
+
+First public release of the 0VAS personal page at https://0vas.com.
+
+### Added
+- **"View slides" button in Speaking:** a bilingual VIEW SLIDES / VER SLIDES button in
+  the Speaking header opens the owner's slides subdomain `https://slides.0vas.com`
+  (`LINKS.slides`) in a new tab. Styled as an outlined DBH parallelogram beside the
+  ambassador badge. (Requires the `slides.0vas.com` DNS/Pages setup — see README.)
+- **Official LinkedIn mark:** the owner's LinkedIn logo (`brands/linkedin.png`, blue
+  circle + white “in”, transparent RGBA) now appears beside the LinkedIn links in
+  Profile, Contact and the Certifications note, matching the Credly treatment. The
+  `in` counter was composited white so it stays on-brand on light and dark; the
+  built-in monochrome glyph remains the load fallback.
+- **Official Credly verifier mark:** the owner's transparent orange/white asset
+  now appears beside the real Credly links in Profile, Contact and the
+  Certifications verification note. One shared `brands/credly.png` source keeps
+  the mark consistent in light/dark themes, retains visible link text and the
+  monochrome load fallback, and intentionally stays out of issuer/category
+  badges because Credly verifies rather than issues the credentials.
+- **Turtle ambient on Profile (`<ProfileTurtle>`):** replaces the abstract
+  ring/orbiting-diamond backdrop. Ships with the owner's generated **tribal/Polynesian
+  sea turtle flanked by jellyfish**, per theme: `/assets/turtle-home-light.png` (violet)
+  and `/assets/turtle-home-dark.png` (neon violet + cyan). `<ProfileTurtle theme>`
+  picks the right one and falls back to `/assets/turtle-home.png`, then a code-native
+  line-art turtle. Images were generated on a green screen, exported transparent and
+  downscaled to 627px (premultiplied) for clean edges with no white halo. It sits large
+  in the right half of the hero, gently drifting/swimming (organic `ptSwim`), never
+  overlaps the name text, is hidden on ≤1024px layouts, and freezes under reduced-motion.
+  Swapping the artwork is drop-in — no code change.
+- **Optional ambient background music (`useMusic` hook):** appears **only when** an
+  owner audio file exists at `/assets/ambient.(mp3|m4a|ogg|wav)` (no dead control
+  otherwise). A **play/pause icon button sits beside OPTIONS**, while the OPTIONS
+  dropdown holds a **MUSIC row with a volume slider and an "i" credit toggle**. The
+  `<audio>` is lifted to App level so it keeps playing when the dropdown closes or the
+  route changes. It never autoplays — the visitor opts in with a click; on/off state
+  and volume persist (localStorage). Now shipping FiftySounds' **"Arcano"**
+  (`ambient.mp3`, commercial licence). The licence **requires attribution**, so both
+  Contact's footer and the dropdown "i" credit `Music: "Arcano" — FiftySounds`
+  linking to `fiftysounds.com` (`LINKS.music`).
+
+### Changed
+- **Profile Capabilities is now a minimal vanilla two-pane directory:** the
+  ~350-line ECharts custom-series (manual per-pixel rects/diamonds/text) was
+  replaced with plain HTML/CSS. A left roster of the six domains selects one at a
+  time; the right pane lists that domain's technologies as simple chips with a
+  name + count header. It reads cleaner, is far easier to maintain, and drops the
+  busy chart backdrop — the owner asked for something more aesthetic, minimalist
+  and clean. Counts stay factual text; keyboard (Arrow/Home/End), `role="listbox"`
+  semantics, `aria-live`, light/dark, mobile stacking (no horizontal overflow) and
+  reduced-motion are all preserved. `CustomChart` was removed from the shared
+  ECharts runtime since the sunburst was its only remaining consumer.
+- **Favicon is now a flat geometric violet turtle** (`favicon.png`): top-down, hexagonal
+  shell scutes with a light/dark-violet split, rounded head and angular flippers, in the
+  style of a clean geometric turtle logo. Owner-generated, transparent, downscaled to
+  256px; linked as `type="image/png"`, cache-busted (`?v=turtle-geo2`). Replaces the
+  earlier tribal-turtle favicon.
+
 ### Fixed
-- **Certifications now fits one complete laptop workbench:** the atlas and
-  contextual registry share a 532–600px height-aware field, with a 640px atlas
-  track on 1440×900 and 1512×982 laptop layouts. The complete focused circle and
-  outside labels now end above the fixed navigation. Overview and every
+- **"Download CV" no longer wraps to two lines in the OPTIONS menu:** the settings
+  dropdown rows used the class `.sp-row`, which collided with the Certifications
+  registry's `.sp-row` (a `display:flex` rule) and forced the DOCUMENT label and the
+  CV button side-by-side, squeezing the button. The dropdown rows were renamed to
+  `.opt-row` (restoring the intended label-above-control layout) and the CV button /
+  `.btn` got `white-space: nowrap`. Fixes desktop and mobile.
+- **Profile portrait is restored and editorial on mobile:** the ≤980px rule no
+  longer removes Oscar's photo or compresses the lede beside an avatar-sized
+  crop. The existing retouched portrait now becomes one full-width 8:5 dossier
+  between the role and lede, with a clean full-face crop and contained brackets;
+  the redundant name ribbon is replaced in both layouts by one useful linked
+  `GITHUB // @0VAS` signature below the photograph. The lede, CTA and social rows
+  regain the full column without overlap, width expansion, a duplicate asset
+  request or the hidden mobile turtle returning. The vertical desktop crop is
+  unchanged.
+- **Capabilities panel is legible over the turtle backdrop:** the two-pane directory
+  used a 34%-opacity fill, so the fixed Profile turtle bled through and washed out the
+  domain rows and technology chips on scroll. It is now a near-opaque frosted panel
+  (`--panel-strong` + 16px backdrop blur + soft shadow) with more solid chips, so the
+  content stays readable regardless of what scrolls behind it.
+- **The custom domain is being restored to HTTPS-only operation:** GitHub Pages
+  reported valid apex/`www` DNS but no custom certificate and
+  `https_enforced: false`, so `http://0vas.com` remained unencrypted while TLS
+  exposed the incompatible `*.github.io` certificate. Re-saving `0vas.com` in
+  the Pages configuration requested a fresh certificate-provisioning check; the deployment
+  contract now requires enabling **Enforce HTTPS** as soon as issuance completes
+  and verifies both the HTTP redirect and certificate SAN, with a documented
+  recovery path if provisioning stalls.
+- **Certifications now fits one larger, collision-free laptop workbench:** its
+  route-specific title reserve gives a 680px atlas track and a 560–650px
+  height-aware field on 1440×900 and 1512×982 layouts. The regular ECharts face
+  expands to 76%, while names and category diamonds use separate radial orbits;
+  hyphen-aware wrapping keeps Security, Multi-Cloud, Data & AI and DevOps &
+  GitOps from touching their marks. The complete focused circle, outside labels
+  and registry now meet the fixed navigation's upper rule instead of leaving a
+  visible strip above it. Overview and every
   3/4/5/7/8/10-item filter keep the exact same registry height because its 112px
   header always reserves an action lane and only the ledger scrolls with a stable
   gutter; filtering no longer grows, shrinks or shifts either surface.
@@ -43,10 +133,11 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 - **Focused radial names no longer clip at the top of Certifications:** the
   regular ECharts geometry previously left only 1% of its SVG field above a 78%
   corona, so long Red Hat and Azure labels were visibly cut despite the outer
-  wrapper allowing overflow. The rebalanced 70% corona now reserves 12% above
-  and 18% below, with its badge orbit, isometric deck, hub and neon frames
-  recalibrated to the same measured centre. All nine categories remain complete
-  at desktop, compact-desktop and mobile widths.
+  wrapper allowing overflow. The regular 76% corona and 90% label frame now keep
+  their complete names inside the measured field, with its badge orbit,
+  isometric deck, hub and neon frames recalibrated to the same centre. The
+  compact geometry retains its balanced 70% corona; all nine categories remain
+  complete at desktop, compact-desktop and mobile widths.
 - **Every Certifications return path now restores the real overview:** ECharts'
   native ancestor annulus used to roll the SVG back while leaving React's focused
   centre, issuer icons and filtered registry behind. The lower-case
@@ -134,14 +225,14 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   SVG faces sit over a displaced multi-step deck, restrained violet/category
   energy rim and relieved 22px icon markers; the active hue propagates through
   that single aligned plane without adding another chart or per-cell filters.
-  Desktop uses a rebalanced 70% face with a reserved outside-name lane while mobile
+  Desktop uses an expanded 76% face with a reserved outside-name lane while mobile
   reduces tilt and glow. Restrained cell rounding, responsive label wrapping and
   motion-safe ambient light preserve full names, native drill motion and
   light/dark support.
 - **Certifications now gives the atlas visual priority:** the desktop registry is
   narrowed from a competing near-half-width column to a bounded 340–380px rail,
   with a safe 335–350px compact-desktop range. The atlas track is capped at the
-  wheel's 700px maximum and becomes 640px across common laptop heights, removing
+  wheel's 700px maximum and becomes 680px across common laptop heights, removing
   unused column space; a maximum 14px gap (12px in compact desktop) brings the
   registry visibly closer. A shared height-aware field keeps its decoration,
   ECharts centre and registry aligned without clipping the circle. At 1080px and

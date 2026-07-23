@@ -56,8 +56,30 @@ Good SVG sources for issuer logos: the official brand pages, or [simple-icons](h
 ## Deploy to 0vas.com (GitHub Pages)
 
 1. Push to GitHub (`main` branch). The included workflow `.github/workflows/deploy.yml` builds and publishes automatically — set repo **Settings → Pages → Source: GitHub Actions**.
-2. Add the custom domain: create `public/CNAME` containing `0vas.com` (it gets copied into the build), or set it in Settings → Pages.
+2. In **Settings → Pages → Custom domain**, save `0vas.com`. With a GitHub Actions source this setting is authoritative; `public/CNAME` mirrors the intended domain in the built artifact but does not replace the Pages setting.
 3. DNS at your registrar:
    - `A` records for apex `0vas.com`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
    - `CNAME` record for `www` → `0vas.github.io`
-4. Enable **Enforce HTTPS**.
+4. Wait for the DNS check and **certificate provisioning** to finish, then enable **Enforce HTTPS**. If GitHub reports that the certificate does not exist after 24 hours, remove and re-save the same custom domain to restart provisioning; keep the DNS records above unchanged.
+5. Verify that HTTP redirects and that the issued certificate contains `0vas.com`:
+
+   ```bash
+   curl -I http://0vas.com
+   openssl s_client -connect 0vas.com:443 -servername 0vas.com </dev/null 2>/dev/null \
+     | openssl x509 -noout -ext subjectAltName
+   ```
+
+## Slides subdomain (`slides.0vas.com`)
+
+The Speaking screen's **VIEW SLIDES** button opens `https://slides.0vas.com`, which
+serves the separate **`0vas/slides`** repo (currently at `0vas.github.io/slides/`).
+A subdomain can point to a different repo than the apex — set it up once:
+
+1. **In the `0vas/slides` repo** → Settings → Pages → **Custom domain** = `slides.0vas.com`
+   (this writes a `CNAME` file containing `slides.0vas.com`). Then enable **Enforce HTTPS**
+   once the certificate is provisioned.
+2. **DNS at GoDaddy** — add one record: `CNAME`, Name `slides`, Value `0vas.github.io`
+   (TTL 1 hour). Do **not** touch the apex `A`/`www` records.
+3. **Base path:** if the slides were built for `/slides/` (project-page base), set the
+   slides project's base to `/` and rebuild, or assets will 404 at the subdomain root.
+4. Verify: `curl -I https://slides.0vas.com` (expect `200`, `server: GitHub.com`).

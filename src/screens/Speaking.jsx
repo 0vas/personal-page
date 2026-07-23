@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from "react";
 import { Icon, Photo } from "../components/Icons.jsx";
 import CountryFlag from "../components/CountryFlag.jsx";
-import { TALKS } from "../data/content.js";
+import { TALKS, LINKS } from "../data/content.js";
 import { L, STRINGS } from "../i18n.js";
 
 const TourGlobe = lazy(() => import("../components/TourGlobe.jsx"));
@@ -30,6 +30,11 @@ export default function Speaking({ lang }) {
         <a className="amb-badge" href="https://www.linkedin.com/in/oscarlobatons/" target="_blank" rel="noopener noreferrer">
           <span className="amb-mark" aria-hidden="true">◆</span>
           <span className="amb-text">{S.ambassador}</span>
+          <Icon id="ext" size={11} className="amb-ext" />
+        </a>
+        <a className="slides-link" href={LINKS.slides} target="_blank" rel="noopener noreferrer">
+          <Icon id="slides" size={14} />
+          <span className="slides-text">{S.viewSlides}</span>
           <Icon id="ext" size={11} className="amb-ext" />
         </a>
         <div className="tour-meta">

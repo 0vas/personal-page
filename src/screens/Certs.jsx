@@ -12,22 +12,22 @@ const SERIES_ID = "credential-atlas";
 const ATLAS_GEOMETRY = Object.freeze({
   regular: {
     centerY: 0.47,
-    category: { r0: "16%", r: "54%" },
-    credential: { r0: "56%", r: "70%" },
-    categoryLabelRadius: 0.34,
-    categoryIconRadius: 0.52,
-    credentialIconRadius: 0.63,
+    category: { r0: "16%", r: "60%" },
+    credential: { r0: "62%", r: "76%" },
+    categoryLabelRadius: 0.32,
+    categoryIconRadius: 0.58,
+    credentialIconRadius: 0.69,
     credentialLabelDistance: 12,
-    faceRatio: 0.70,
-    ringFrameRatio: 0.76,
-    labelFrameRatio: 0.84,
+    faceRatio: 0.76,
+    ringFrameRatio: 0.82,
+    labelFrameRatio: 0.90,
   },
   compact: {
     centerY: 0.48,
     category: { r0: "18%", r: "50%" },
     credential: { r0: "52%", r: "70%" },
-    categoryLabelRadius: 0.34,
-    categoryIconRadius: 0.48,
+    categoryLabelRadius: 0.29,
+    categoryIconRadius: 0.52,
     credentialIconRadius: 0.61,
     credentialLabelDistance: 6,
     faceRatio: 0.70,
@@ -70,7 +70,7 @@ function wrapRadialLabel(name, limit) {
 }
 
 function wrapCategoryLabel(name, compact) {
-  return wrapRadialLabel(name, compact ? 7 : 10);
+  return wrapRadialLabel(name.replace(/-/g, "- "), compact ? 7 : 10);
 }
 
 function rgba(hex, alpha) {
@@ -505,8 +505,14 @@ export default function Certs({ theme, lang }) {
           <p className="kicker">{S.kicker}</p>
           <p className="cert-note">
             {cat ? S.noteDrill : S.note}{" "}
-            <a href={LINKS.credly} target="_blank" rel="noopener noreferrer">Credly ↗</a> ·{" "}
-            <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a className="credly-link" href={LINKS.credly} target="_blank" rel="noopener noreferrer">
+              <AssetIcon base="/assets/brands/credly" fallbackId="credly" size={18} className="brand-mark-credly" />
+              Credly ↗
+            </a> ·{" "}
+            <a className="brand-link" href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+              <AssetIcon base="/assets/brands/linkedin" fallbackId="linkedin" size={18} className="brand-mark-linkedin" />
+              LinkedIn ↗
+            </a>
           </p>
         </Reveal>
         <Reveal delay={0.08}>

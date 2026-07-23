@@ -1,5 +1,5 @@
 import { Reveal } from "../components/bits.jsx";
-import { Icon } from "../components/Icons.jsx";
+import { AssetIcon, Icon } from "../components/Icons.jsx";
 import { LINKS } from "../data/content.js";
 import { STRINGS } from "../i18n.js";
 
@@ -24,13 +24,27 @@ export default function Contact({ lang }) {
       <Reveal delay={0.32}>
         <ul className="net contact-net" style={{ listStyle: "none" }}>
           <li><a href={LINKS.github} target="_blank" rel="noopener noreferrer"><Icon id="github" />GitHub</a></li>
-          <li><a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer"><Icon id="linkedin" />LinkedIn</a></li>
-          <li><a href={LINKS.credly} target="_blank" rel="noopener noreferrer"><Icon id="credly" />Credly</a></li>
+          <li>
+            <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">
+              <AssetIcon base="/assets/brands/linkedin" fallbackId="linkedin" size={20} className="brand-mark-linkedin" />
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={LINKS.credly} target="_blank" rel="noopener noreferrer">
+              <AssetIcon base="/assets/brands/credly" fallbackId="credly" size={20} className="brand-mark-credly" />
+              Credly
+            </a>
+          </li>
         </ul>
       </Reveal>
       <Reveal delay={0.4}>
         <div className="contact-meta">
           {S.meta.map((m) => <span key={m}>{m}</span>)}
+          <span className="contact-credit">
+            {S.musicBy}{" "}
+            <a href={LINKS.music} target="_blank" rel="noopener noreferrer">FiftySounds</a>
+          </span>
         </div>
       </Reveal>
     </div>

@@ -86,11 +86,12 @@ public/assets/             # drop-in images (see ASSETS.md); category marks may 
 
 - **Profile** — hero (name OSCAR / LOBATON / SALAS), stable code-typed rotating
   roles, lightweight scan/glitch accents and a merged personal file. Its bio is
-  paired with one ECharts Capability Directory: six equal typographic rows in
-  overview and equal technology rows for all 35 complete names on focus. Counts
-  remain factual text, never visual scores. The old fact ledger, skill-chip grid,
-  3D plates, duplicate rail and readout do not return. `#/profile` is canonical;
-  `#/home` remains a legacy alias.
+  paired with one vanilla (HTML/CSS, no ECharts) two-pane Capability Directory:
+  a left roster of six equal domain rows and a right pane listing the selected
+  domain's technologies as plain chips (all 35 names across the six domains).
+  Counts remain factual text, never visual scores. The old fact ledger,
+  skill-chip grid, 3D plates, duplicate rail and readout do not return.
+  `#/profile` is canonical; `#/home` remains a legacy alias.
 - **Career** — **vertical timeline**, newest→oldest by start date (`CAREER_ORDER`),
   accordion; flagship `lead` role expanded by default; org logo per role.
   Career = professional roles ONLY (education never appears here).
@@ -131,9 +132,10 @@ until the real logo is supplied. The full checklist the owner fills in lives in
 **`public/assets/ASSETS.md`**:
 `bg/<screen>.jpg` (per-section background), `talks/<slug>.jpg`,
 `certs/<icon>.svg` (category + issuer logos), `orgs/<slug>.svg`
-(company/institution logos), `profile.png`, CV pdf. Technology slugs remain
+(company/institution logos), `brands/credly.png` + `brands/linkedin.png` (link marks),
+`profile.png`, CV pdf. Technology slugs remain
 stable content identifiers but the text-first Profile directory needs no logo upload.
-`assets/favicon.svg` is code-managed identity artwork rather than a drop-in.
+`assets/favicon.png` is the owner-generated geometric turtle browser icon.
 
 ## 7. Design decisions — do NOT regress these
 
@@ -147,8 +149,10 @@ These were settled through iteration; changing them needs the owner's OK.
 4. Certifications = one stable ECharts sunburst **and** SVG logos (keep both).
    Preserve the reference-derived hierarchy: centre → broad named categories →
    gutter → thin credential corona → outside focus labels. Category diamonds
-   share one exact orbit, focused credential marks share the corona midpoint,
-   and both use the same compact 22px artwork box. Its theme-aware diagonal faces,
+   share one exact outer orbit, category names use a separate inner orbit with
+   at least 23% diameter clearance (hyphenated names may wrap), focused
+   credential marks share the corona midpoint, and both marks use the same
+   compact 22px artwork box. Its theme-aware diagonal faces,
    displaced circular deck and restrained neon rim create shallow isometric depth
    without duplicating the chart. Category focus uses native `rootToNode`
    expansion; ECharts' ancestor roll-up, both BACK controls and Escape all reset
@@ -156,9 +160,11 @@ These were settled through iteration; changing them needs the owner's OK.
    replace this with a second chart or a container-only transition. Keep enough
    proportional space inside the ECharts viewport for every focused outside name
    at desktop and mobile widths. On desktop, keep the atlas track capped at
-   700px and its registry gap at 14px or less. Common 1440×900 and 1512×982
-   laptop layouts use a 640px atlas track and one shared 532–600px field so the
-   complete circle and registry end above the fixed navigation. The registry
+   700px and its registry gap at 14px or less. Certifications may use a tighter
+   route-specific title reserve without changing other routes. Common 1440×900
+   and 1512×982 laptop layouts use a 680px atlas track and one shared 560–650px
+   field with a 76% radial face, so the complete circle and registry meet the
+   fixed navigation's upper rule without a residual strip. The registry
    outer height and 112px header/action lane never change between overview and
    category focus; only its ledger scrolls. Stack both surfaces at 1080px and
    below. Tooltip plates use the body portal and a confined lateral lane so they
@@ -166,18 +172,36 @@ These were settled through iteration; changing them needs the owner's OK.
    credentials remain one accessible five-item signal rail + one compact live
    plate; Platform Engineering Certified Practitioner is the initial signal,
    Arrow/Home/End stay local to the rail, and a separate control locates it in
-   the atlas without making tab exploration jump the page.
+   the atlas without making tab exploration jump the page. Credly's official
+   mark is verification-link chrome only; never present it as a category,
+   credential badge or issuer in the atlas/registry.
 5. Career is a **vertical** timeline; contains no education.
 6. Speaking has **no horizontal scroll**; ordered newest→oldest; nothing is
    "upcoming". Keep the directly manipulable Natural Earth globe, independently
    selected talk/venue, cyan lock-on, photo-dominant Mission Reel, vertical
    year-grouped roster, SVG country marks and visible photographic background.
 7. Full name includes **SALAS**.
-8. Image-backed sections use `bg/<screen>.jpg`; Profile deliberately uses animated
-   code-native geometry. Default is a clean gradient — the profile photo is NOT
-   the section background. Shared violet backdrop signals are finite 1px traces,
-   never full-height twin rails: they drift slowly, collapse to one short trace
-   on mobile and remain as a quiet static mark under reduced motion.
+8. Image-backed sections use `bg/<screen>.jpg`; Profile's ambient is
+   `<ProfileTurtle theme>`, which loads a **per-theme owner illustration**
+   (`/assets/turtle-home-light.png` violet, `/assets/turtle-home-dark.png` neon) — a
+   tribal/Polynesian sea turtle flanked by jellyfish — falling back to
+   `/assets/turtle-home.png` then a code-native line-art turtle. It sits large in the
+   right half of the hero and gently drifts as if swimming; it **must never overlap the
+   name text** (that was rejected) and is hidden on ≤1024px layouts. Owner artwork is
+   generated on a green screen and exported transparent (chroma-key / premultiplied
+   downscale avoids white halos); to swap, drop a new transparent PNG — no code change.
+   Default is a clean gradient — the profile photo is NOT the section background.
+   The photo card itself remains visible on ≤980px layouts as a full-width
+   horizontal editorial dossier between the role and Profile lede. The lede,
+   CTA and social rows return to the complete column beneath it; the cinematic
+   crop keeps the full face clear without overlap or horizontal overflow when
+   the turtle disappears. Desktop and mobile place one linked
+   `GITHUB // @0VAS` channel signature below the photograph instead of repeating
+   the owner's already-prominent name over it; the corner brackets frame only
+   the image. The vertical desktop crop remains unchanged.
+   Shared violet backdrop signals are finite 1px traces, never full-height twin
+   rails: they drift slowly, collapse to one short trace on mobile. The turtle and
+   all ambient signals go static under reduced motion.
 9. Show the full 62-certification registry, grouped into 9 colored categories.
 10. Keep the once-per-session NieR-style boot terminal (a monospace system log
     that types itself out line by line, ~2–3s total, then fades out). The app is
@@ -198,20 +222,24 @@ These were settled through iteration; changing them needs the owner's OK.
     composition and never add vertical scrolling to that route. Height-aware
     spacing must keep every bilingual metadata line above the fixed navigation at
     768px-high desktop and mobile QA viewports.
-14. The browser favicon is the transparent, code-native violet turtle head in
-    profile in `public/assets/favicon.svg`. Keep its domed cranium, lateral cyan
-    eye, blunt beak, organic angled neck, cropped shell collar and dual light/dark
-    contour legible at native favicon sizes; do not return to a miniature full
-    body, mask-like frontal portrait, old generic diamond or theme-dependent
-    raster.
-15. Profile capabilities use one ECharts SVG custom-series Capability Directory,
-    not a fact table, chip registry, treemap, radar or second radial atlas.
-    Overview keeps six flat typographic rows; focus exposes all 35 names on equal
-    rows, with real technology counts shown only as text—never area, intensity or
-    an invented skill score. The chart itself is the sole selector: do not restore
-    isometric plates, scan effects, a duplicate keyboard rail or status readout.
-    Click/tap, local keyboard navigation, Back/Escape, light/dark and mobile all
-    preserve the same complete content.
+14. The browser favicon is `public/assets/favicon.png`: the owner-generated **flat
+    geometric violet turtle** (top-down; hexagonal shell scutes with a light/dark-violet
+    split, rounded head, angular flippers), exported transparent and downscaled to 256px
+    so the tab colour shows through on light and dark chrome. Linked with
+    `type="image/png"` and cache-busted from `index.html`. To update, drop another
+    transparent PNG at that path and bump the `?v=` tag.
+15. Profile capabilities use one minimal, vanilla (HTML/CSS) two-pane Capability
+    Directory — a left roster of six equal domain rows and a right pane of the
+    selected domain's technology chips. Do NOT reintroduce ECharts/canvas here,
+    nor a fact table, the old flat skill-chip grid, treemap, radar or a second
+    radial atlas. Real technology counts are shown only as text—never area,
+    intensity or an invented skill score. The roster is the sole selector: no
+    isometric plates, scan effects, duplicate keyboard rail or status readout.
+    The panes always show one selected domain (there is no empty overview state).
+    The list is a `role="listbox"`/`role="option"` with `aria-activedescendant`
+    and an `aria-live` announcement; Click/tap, Arrow/Home/End keyboard
+    navigation, light/dark and mobile (stacked panes, no horizontal overflow)
+    all preserve the same complete content. Reduced-motion drops the detail fade.
 
 ## 8. TDD workflow (how to iterate safely)
 
@@ -251,5 +279,9 @@ Verify mobile at `--window-size=500,900`, or assert `scrollWidth == clientWidth`
 ## 11. Deploy
 
 `main` → GitHub Actions (`.github/workflows/deploy.yml`) builds and publishes to
-GitHub Pages. Custom domain **0vas.com** via a `CNAME` (see `README.md` for DNS).
+GitHub Pages. Custom domain **0vas.com** is configured in Settings → Pages (the
+Pages setting is authoritative for the Actions workflow; see `README.md` for
+DNS). Production is HTTPS-only: wait for the apex + `www` certificate, enable
+**Enforce HTTPS**, then verify the HTTP redirect and certificate SAN before
+calling a deployment healthy.
 Do not commit or push unless the owner asks.

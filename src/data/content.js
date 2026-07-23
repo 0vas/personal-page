@@ -14,6 +14,8 @@ export const LINKS = {
   github: "https://github.com/0vas",
   linkedin: "https://www.linkedin.com/in/oscarlobatons/",
   credly: "https://www.credly.com/users/oscar-andres-lobaton-salas/badges",
+  slides: "https://slides.0vas.com",
+  music: "https://www.fiftysounds.com/es/",
   cv: "/assets/OscarLobatonS-CV-EN.pdf",
 };
 
