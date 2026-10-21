@@ -1157,6 +1157,11 @@
   font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.26em; color: var(--dim);
 }
 .edu .meta.gold { color: var(--gold); }
+.edu-award {
+  margin-top: 12px; max-width: 62ch;
+  color: var(--gold); font-size: 14.5px; font-weight: 500; line-height: 1.45;
+}
+.edu-award::before { content: "◆ "; }
 .edu ul { margin-top: 12px; list-style: none; }
 .edu li {
   position: relative; padding: 3px 0 3px 20px;

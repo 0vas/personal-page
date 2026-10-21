@@ -179,11 +179,16 @@ export default function TourGlobe({ talks, selected, focusedGeo = 0, activationK
         <path className="globe-edge" d={geometry.sphere} />
 
         {geometry.locations.map((point) => {
-          const labelWidth = point.active ? Math.max(96, point.label.length * 6.2 + 16) : Math.max(54, point.label.length * 6.2 + 14);
+          const textWidth = (text, fontSize, tracking) => text.length * fontSize * 0.64 + Math.max(0, text.length - 1) * tracking;
+          const labelWidth = Math.ceil(Math.max(
+            textWidth(point.label, 10.5, 1.15),
+            point.active ? textWidth(statusLabel, 5.6, 1) : 0,
+          ) + 18);
+          const gap = point.active ? 30 : 16;
           const placeLeft = point.x > CX;
-          const labelX = placeLeft ? -labelWidth - 12 : 12;
-          const labelY = point.active ? -34 : -23;
-          const labelHeight = point.active ? 27 : 17;
+          const labelX = placeLeft ? -labelWidth - gap : gap;
+          const labelY = point.active ? -50 : -26;
+          const labelHeight = point.active ? 32 : 16;
           return (
             <g
               key={`${point.lat}:${point.lon}`}
@@ -213,9 +218,9 @@ export default function TourGlobe({ talks, selected, focusedGeo = 0, activationK
               <circle className="pulse" r={point.active ? 10 : 7} />
               <circle className="node" r={point.active ? 5.5 : 4} />
               <rect className="marker-label-bg" x={labelX} y={labelY} width={labelWidth} height={labelHeight} />
-              <text x={placeLeft ? labelX + labelWidth - 7 : labelX + 7} y={point.active ? -22 : -11} textAnchor={placeLeft ? "end" : "start"}>{point.label}</text>
-              {point.active && <text className="marker-status" x={placeLeft ? labelX + labelWidth - 7 : labelX + 7} y="-11" textAnchor={placeLeft ? "end" : "start"}>{statusLabel}</text>}
-              {point.appearances.length > 1 && <text className="marker-count" x="9" y="14">×{point.appearances.length}</text>}
+              <text x={placeLeft ? labelX + labelWidth - 9 : labelX + 9} y={point.active ? labelY + 14 : labelY + 12} textAnchor={placeLeft ? "end" : "start"}>{point.label}</text>
+              {point.active && <text className="marker-status" x={placeLeft ? labelX + labelWidth - 9 : labelX + 9} y={labelY + 26} textAnchor={placeLeft ? "end" : "start"}>{statusLabel}</text>}
+              {point.appearances.length > 1 && <text className="marker-count" x={placeLeft ? 14 : -14} y="16" textAnchor={placeLeft ? "start" : "end"}>×{point.appearances.length}</text>}
             </g>
           );
         })}

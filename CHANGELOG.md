@@ -11,6 +11,9 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- **UNI education highlights the Tesis con Impacto prize:** a gold line on the
+  Systems Engineering record states the award for the best faculty research and
+  Top 4 at the university, in English and Spanish.
 - **Two 2026 talks on Speaking:** F13 Code Summit (Lima, UTEC) — “Abstracción en
   Platform Engineering” — and the GitHub LATAM broadcast “Jueves de Quack:
   InnerSource con Credicorp” (https://www.youtube.com/watch?v=aWz3BWj3d00).
@@ -28,6 +31,12 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   Speaking and Projects also top-align their command kickers instead of centring
   them 12px lower. Profile's untitled opening remains unchanged, and Contact
   remains viewport-locked without scroll.
+
+### Fixed
+- **Globe venue plates no longer cover the lock-on:** the active name plate
+  clears the cyan reticle, and a stacked count such as the two GitHub
+  broadcasts (`×2`) sits on the opposite side. “GLOBAL BROADCAST” keeps its
+  full tracked width inside the plate.
 
 ## [v1] - 2026-07-23
 

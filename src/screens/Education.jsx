@@ -22,6 +22,7 @@ export default function Education({ lang }) {
                   <span className="org">{L(e.org, lang)}</span>
                 </h3>
                 <p className={`meta ${e.gold ? "gold" : ""}`}>{L(e.meta, lang)}</p>
+                {e.award && <p className="edu-award">{L(e.award, lang)}</p>}
                 <ul>
                   {e.notes.map((n, j) => <li key={j}>{L(n, lang)}</li>)}
                 </ul>

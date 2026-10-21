@@ -425,6 +425,8 @@ describe("Speaking", () => {
     expect(css).toContain("--geo-active");
     expect(css).toContain("locationAcquire");
     expect(css).toMatch(/prefers-reduced-motion:[\s\S]*\.marker-acquisition/);
+    expect(globe).toContain("const gap = point.active ? 30 : 16");
+    expect(globe).toContain("textAnchor={placeLeft ? \"start\" : \"end\"}");
   });
 });
 
@@ -778,6 +780,19 @@ describe("Education", () => {
   it("E1 — 3 programs, each with a logo", () => {
     expect(EDUCATION).toHaveLength(3);
     for (const e of EDUCATION) expect(e.logo).toBeTruthy();
+  });
+  it("E2 — UNI highlights the Tesis con Impacto faculty prize", () => {
+    const uni = EDUCATION.find((item) => item.logo === "uni");
+    expect(uni.award.en).toMatch(/Tesis con Impacto/i);
+    expect(uni.award.en).toMatch(/faculty/i);
+    expect(uni.award.en).toMatch(/Top 4/i);
+    expect(uni.award.es).toMatch(/Tesis con Impacto/i);
+    expect(uni.award.es).toMatch(/facultad/i);
+    expect(uni.award.es).toMatch(/Top 4/i);
+    const education = readFileSync(resolve(ROOT, "src/screens/Education.jsx"), "utf8");
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(education).toContain('className="edu-award"');
+    expect(css).toMatch(/\.edu-award\s*\{[^}]*color:\s*var\(--gold\)/s);
   });
 });
 

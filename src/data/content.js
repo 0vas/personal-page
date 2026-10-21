@@ -509,6 +509,10 @@ export const EDUCATION = [
     org: { en: "National University of Engineering (UNI), Peru", es: "Universidad Nacional de Ingeniería (UNI), Perú" },
     meta: { en: "COMPLETED 2023 · GPA 4.0 — TOP OF CLASS · CIP 386940", es: "COMPLETADA 2023 · GPA 4.0 — PRIMER PUESTO · CIP 386940" },
     gold: true,
+    award: {
+      en: "Tesis con Impacto Award — best research in the faculty · Top 4 at UNI",
+      es: "Premio Tesis con Impacto — mejor investigación de la facultad · Top 4 de la UNI",
+    },
     notes: [
       { en: "Ranked among the top three in project fairs, twice · Student representative, 2021.", es: "Top 3 en ferias de proyectos, dos veces · Representante estudiantil, 2021." },
       { en: "1.5 years of competitive programming (IEEE Xtreme) · 2 years in GameDevsUNI, the university's game development group.", es: "1.5 años de programación competitiva (IEEE Xtreme) · 2 años en GameDevsUNI, el grupo de desarrollo de videojuegos de la universidad." },

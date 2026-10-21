@@ -157,6 +157,9 @@ Run `npm test` after every change; every box must stay green before shipping.
   marker, including another venue of the already-selected talk, recenters the
   globe, updates the coordinate readout and restarts a short gradient lock-on.
   Reduced-motion keeps the final locked state without rotation or pulses.
+  The active name plate, including the wide GLOBAL BROADCAST plate, stays
+  clear of the lock-on reticle, and a stacked appearance count sits on the
+  opposite side of that plate.
 
 ## Projects (source index + live blueprint)
 - **P1** — Exactly 6 GitHub projects. IDs, names and URLs are unique; every
@@ -319,6 +322,9 @@ Run `npm test` after every change; every box must stay green before shipping.
 
 ## Education
 - **E1** — 3 academic programs (UNI, MIT Professional Education, Hanyang), each with a `logo`.
+- **E2** — The UNI record highlights the Tesis con Impacto prize: best research
+  in the faculty and Top 4 at the university, in both languages, as its own
+  gold line above the other notes.
 
 ## Assets
 - **A1** — `public/assets/ASSETS.md` exists and lists the bg/, talks/, certs/,
