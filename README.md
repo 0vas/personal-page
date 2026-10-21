@@ -45,7 +45,7 @@ placeholder / built-in glyph is shown instead.
 
 | Folder | Filename | Used in | Notes |
 |---|---|---|---|
-| `public/assets/talks/` | `<slug>.jpg` — e.g. `devopsdays-lima-2025.jpg` | Speaking cards | Slugs = `slug` field of `TALKS` in `content.js`: devopsdays-medellin-2026, devopsdays-buenosaires-2026, innersource-summit-2025, agile-summit-2025, devopsdays-santiago-2025, devopsdays-lima-2025, devsecopsfest-2024, devopsdays-medellin-2024, github-connect-2024, githubweek-2024. Landscape ~16:9. |
+| `public/assets/talks/` | `<slug>.jpg` — e.g. `devopsdays-lima-2025.jpg` | Speaking cards | Slugs = `slug` field of `TALKS` in `content.js`: f13-code-summit-2026, github-latam-quack-2026, devopsdays-medellin-2026, devopsdays-buenosaires-2026, innersource-summit-2025, agile-summit-2025, devopsdays-santiago-2025, devopsdays-lima-2025, devsecopsfest-2024, devopsdays-medellin-2024, github-connect-2024. Landscape ~16:9. |
 | `public/assets/certs/` | `<icon>.svg` — e.g. `microsoft.svg`, `redhat.svg` | Certification registry rows | Names = `icon` field in `CERT_CATEGORIES`: microsoft, github, platform, redhat, google, aws, oracle, ibm, hashicorp, codefresh, linuxfoundation, fluidattacks, openbootcamp, mckinsey, harvard, iep, pmi, certiprof, atlassian, samsung, cisco. Unknown issuers fall back to a generic mark. |
 | `public/assets/orgs/` | `<slug>.svg` — e.g. `credicorp.svg`, `uni.svg` | Career detail panel (company/institution logo) | Slugs = `logo` field of `CAREER_DETAILS`: credicorp, pacifico, baufest, nocountry, novatronic, freelance, gamedevs, acm, nixvoid, ailab, devopsinstitute, devsecopsspace, uni, hanyang. |
 | `public/assets/` | `profile.png` | Hero photo + backdrop portrait | Portrait ~4:5. |

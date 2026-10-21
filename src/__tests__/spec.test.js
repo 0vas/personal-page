@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import {
   TALKS, CERT_CATEGORIES, CERT_TOTAL, CAREER_ORDER, CAREER_GROUPS, CAREER_DETAILS,
-  EDUCATION, PROFILE, PROJECTS, LINKS, SKILLS,
+  EDUCATION, PROFILE, PROJECTS, LINKS, SKILLS, READOUTS,
 } from "../data/content.js";
 import { STRINGS } from "../i18n.js";
 
@@ -100,11 +100,17 @@ describe("Global", () => {
   it("G14 — titled routes use a dedicated chrome-safe scroll boundary", () => {
     const app = readFileSync(resolve(ROOT, "src/App.jsx"), "utf8");
     const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(app).toContain('className={`chrome-top ${title ? "chrome-top-titled" : ""}`}');
     expect(app).toContain('className={`stage ${title ? "stage-titled" : ""}`}');
     expect(app).toContain('data-screen={id}');
+    expect(css).toMatch(/\.chrome-top-titled\s*\{[^}]*padding-top:\s*24px;/s);
+    expect(css).toMatch(/\.chrome-top-titled \.ct-left \.rule\s*\{[^}]*margin-bottom:\s*18px;/s);
     expect(css).toMatch(/\.stage\s*\{[^}]*--stage-top:\s*clamp\(120px, 19vh, 190px\);[^}]*padding:\s*var\(--stage-top\) 0 86px;/s);
-    expect(css).toMatch(/\.stage-titled\s*\{[^}]*--stage-top:\s*clamp\(184px, 22vh, 220px\);/s);
-    expect(css).toMatch(/\.stage\[data-screen="contact"\]\s*\{[^}]*--stage-top:\s*clamp\(172px, 21vh, 190px\);/s);
+    expect(css).toMatch(/\.stage-titled\s*\{[^}]*--stage-top:\s*clamp\(150px, 17vh, 166px\);/s);
+    expect(css).toMatch(/\.project-command\s*\{[^}]*align-items:\s*start;/s);
+    expect(css).toMatch(/\.tour-command\s*\{[^}]*align-items:\s*start;/s);
+    expect(css).not.toMatch(/\.chrome-top\[data-screen="(?:contact|certifications)"\]\s*\{[^}]*padding-top:/s);
+    expect(css).not.toMatch(/\.stage\[data-screen="(?:contact|certifications)"\]\s*\{[^}]*--stage-top:/s);
     expect(css).toMatch(/@media \(max-width: 720px\)[\s\S]*?\.stage\s*\{[^}]*--stage-top:\s*clamp\(96px, 15vh, 150px\);[^}]*\}[\s\S]*?\.stage-titled\s*\{[^}]*--stage-top:\s*clamp\(128px, 18vh, 156px\);/s);
     expect(css).toMatch(/\.screen\s*\{[^}]*overflow-y:\s*auto;/s);
     expect(css).toMatch(/\.screen\[data-screen="contact"\]\s*\{[^}]*overflow-y:\s*hidden;/s);
@@ -302,8 +308,30 @@ describe("Career", () => {
 });
 
 describe("Speaking", () => {
-  it("S1 — exactly 9 talks", () => {
-    expect(TALKS).toHaveLength(9);
+  it("S1 — exactly 11 talks, with the two newest 2026 appearances first", () => {
+    expect(TALKS).toHaveLength(11);
+    expect(TALKS[0]).toMatchObject({
+      slug: "f13-code-summit-2026",
+      year: "2026",
+      title: "Abstracción en Platform Engineering",
+      url: "https://www.f13.pe/",
+    });
+    expect(TALKS[0].countryCodes).toEqual(["PE"]);
+    expect(TALKS[1]).toMatchObject({
+      slug: "github-latam-quack-2026",
+      year: "2026",
+      title: "Jueves de Quack: InnerSource con Credicorp",
+      url: "https://www.youtube.com/watch?v=aWz3BWj3d00",
+      broadcast: true,
+    });
+    expect(TALKS[1].countryCodes).toEqual(["GLOBAL"]);
+    expect(READOUTS.find((item) => item.label.en === "CONFERENCE TALKS").value).toBe(11);
+    expect(STRINGS.en.speaking.meta[0]).toBe("11 TALKS");
+    expect(STRINGS.es.speaking.meta[0]).toBe("11 CHARLAS");
+    expect(STRINGS.en.speaking.meta[3]).toMatch(/2 OFFICIAL GITHUB BROADCASTS/);
+    expect(STRINGS.es.speaking.meta[3]).toMatch(/2 TRANSMISIONES OFICIALES DE GITHUB/);
+    expect(STRINGS.en.stats.speaking[1]).toBe("11");
+    expect(STRINGS.es.stats.speaking[1]).toBe("11");
   });
   it("S2 — July 2026: nothing upcoming", () => {
     for (const t of TALKS) expect(t.up, t.slug).toBeFalsy();
@@ -375,6 +403,9 @@ describe("Speaking", () => {
     expect(speaking.indexOf('className="mission-panel')).toBeLessThan(speaking.indexOf('className="globe-panel'));
     expect(speaking).toContain("mission-reel");
     expect(speaking).toContain("mission-roster");
+    expect(speaking).toContain("padStart(2, \"0\")");
+    expect(speaking).toContain("roster.scrollTop");
+    expect(css).toMatch(/\.tour-timeline\s*\{[^}]*overflow-y:\s*auto/s);
     expect(speaking).toContain("<CountryFlag");
     expect(speaking).not.toContain("event.flag");
     expect(speaking).not.toContain("talk.flag");
@@ -598,10 +629,8 @@ describe("Certifications", () => {
     expect(certCss).toMatch(/\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 700px\) clamp\(340px, 26vw, 380px\);/);
     expect(certCss).toMatch(/\.certs\s*\{[^}]*gap:\s*clamp\(10px, 1vw, 14px\);/);
     expect(certCss).toMatch(/\.certs\s*\{[^}]*justify-content:\s*center;/);
-    expect(app).toContain('<header className="chrome-top" data-screen={id}>');
-    expect(css).toMatch(/\.chrome-top\[data-screen="certifications"\]\s*\{[^}]*padding-top:\s*24px;/);
-    expect(css).toMatch(/\.chrome-top\[data-screen="certifications"\] \.ct-left \.rule\s*\{[^}]*margin-bottom:\s*18px;/);
-    expect(certCss).toMatch(/\.stage\[data-screen="certifications"\]\s*\{[^}]*--stage-top:\s*clamp\(150px, 17vh, 166px\);[^}]*--cert-field-h:\s*clamp\(560px, calc\(100svh - var\(--stage-top\) - 166px\), 650px\);[^}]*padding-bottom:\s*73px;/);
+    expect(app).toContain('<header className={`chrome-top ${title ? "chrome-top-titled" : ""}`} data-screen={id}>');
+    expect(certCss).toMatch(/\.stage\[data-screen="certifications"\]\s*\{[^}]*--cert-field-h:\s*clamp\(560px, calc\(100svh - var\(--stage-top\) - 166px\), 650px\);[^}]*padding-bottom:\s*73px;/);
     expect(certCss).toMatch(/\.sun-wrap\s*\{[^}]*height:\s*var\(--cert-field-h\);/);
     expect(certCss).toMatch(/@media \(min-width: 1081px\) and \(max-height: 1000px\)[\s\S]*?\.certs\s*\{[^}]*grid-template-columns:\s*minmax\(0, 680px\) clamp\(340px, 26vw, 380px\);[^}]*gap:\s*14px;/);
     expect(source).toContain('"--atlas-size"');

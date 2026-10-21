@@ -10,6 +10,25 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **Two 2026 talks on Speaking:** F13 Code Summit (Lima, UTEC) — “Abstracción en
+  Platform Engineering” — and the GitHub LATAM broadcast “Jueves de Quack:
+  InnerSource con Credicorp” (https://www.youtube.com/watch?v=aWz3BWj3d00).
+  Both sit ahead of the May and April DevOpsDays dates. The stage photo and the
+  official broadcast frame ship with the entries, and the talk count is now 11.
+
+### Changed
+- **Speaking chronology stays reachable at 11 talks:** the fixed desktop roster
+  scrolls inside its panel and brings the active event into view without moving
+  the page. Indices use a real two-digit pad, so the counter reads `01 / 11`
+  instead of `01 / 011`.
+- **Every titled route now shares Certifications' compact title spacing:** Career,
+  Speaking, Projects, Education, Certifications and Contact use the same 24px
+  desktop chrome inset, 18px rule gap and 150–166px chrome-safe content reserve.
+  Speaking and Projects also top-align their command kickers instead of centring
+  them 12px lower. Profile's untitled opening remains unchanged, and Contact
+  remains viewport-locked without scroll.
+
 ## [v1] - 2026-07-23
 
 First public release of the 0VAS personal page at https://0vas.com.

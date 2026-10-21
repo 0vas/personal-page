@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Icon, Photo } from "../components/Icons.jsx";
 import CountryFlag from "../components/CountryFlag.jsx";
 import { TALKS, LINKS } from "../data/content.js";
@@ -8,9 +8,11 @@ const TourGlobe = lazy(() => import("../components/TourGlobe.jsx"));
 
 export default function Speaking({ lang }) {
   const S = STRINGS[lang].speaking;
+  const rosterRef = useRef(null);
   const [selection, setSelection] = useState({ talkIndex: 0, geoIndex: 0, activationKey: 0 });
   const { talkIndex: sel, geoIndex, activationKey } = selection;
   const talk = TALKS[sel];
+  const indexLabel = (value) => String(value).padStart(2, "0");
   const years = [...new Set(TALKS.map((event) => event.year))];
   const selectMission = (talkIndex, nextGeoIndex = 0) => {
     setSelection((current) => ({
@@ -19,6 +21,15 @@ export default function Speaking({ lang }) {
       activationKey: current.activationKey + 1,
     }));
   };
+  useEffect(() => {
+    const roster = rosterRef.current;
+    const active = roster?.querySelector("button.active");
+    if (!roster || !active) return;
+    const rosterRect = roster.getBoundingClientRect();
+    const activeRect = active.getBoundingClientRect();
+    if (activeRect.top < rosterRect.top) roster.scrollTop -= rosterRect.top - activeRect.top;
+    else if (activeRect.bottom > rosterRect.bottom) roster.scrollTop += activeRect.bottom - rosterRect.bottom;
+  }, [sel]);
 
   return (
     <div className="screen-inner speaking-v tour-console">
@@ -71,7 +82,7 @@ export default function Speaking({ lang }) {
             </div>
           </div>
 
-          <nav className="tour-timeline mission-roster" aria-label={S.selectEvent}>
+          <nav className="tour-timeline mission-roster" aria-label={S.selectEvent} ref={rosterRef}>
             <div className="timeline-heading mono"><span>{S.timeline}</span><b>2026 → 2024</b></div>
             {years.map((year) => (
               <div className="timeline-year" key={year}>
@@ -88,7 +99,7 @@ export default function Speaking({ lang }) {
                       <span className="event-node" aria-hidden="true" />
                       <span className="event-copy">
                         <strong>{event.name}</strong>
-                        <small className="mono"><span>{event.code} / 0{index + 1}</span><span className="country-flags">{event.countryCodes.map((code) => <CountryFlag key={code} code={code} />)}</span></small>
+                        <small className="mono"><span>{event.code} / {indexLabel(index + 1)}</span><span className="country-flags">{event.countryCodes.map((code) => <CountryFlag key={code} code={code} />)}</span></small>
                       </span>
                     </button>
                   ))}
@@ -100,7 +111,7 @@ export default function Speaking({ lang }) {
 
         <section className="globe-panel brk">
           <div className="globe-panel-head mono">
-            <span>0{sel + 1} / 0{TALKS.length}</span>
+            <span>{indexLabel(sel + 1)} / {indexLabel(TALKS.length)}</span>
             <b>{S.route}</b>
             <span>{talk.year}</span>
           </div>

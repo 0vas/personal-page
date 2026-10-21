@@ -330,7 +330,7 @@ export default function App() {
       <Backdrop screen={id} theme={theme} />
 
       {/* top chrome */}
-      <header className="chrome-top" data-screen={id}>
+      <header className={`chrome-top ${title ? "chrome-top-titled" : ""}`} data-screen={id}>
         <div className="ct-left">
           <div className="rule" />
           <p className="ct-eyebrow">{S.eyebrow}</p>

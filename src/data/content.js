@@ -39,7 +39,7 @@ export const ROLES = {
 export const READOUTS = [
   { value: 5, suffix: "+", label: { en: "YEARS EXPERIENCE", es: "AÑOS DE EXPERIENCIA" } },
   { value: 62, suffix: "", label: { en: "CERTIFICATIONS", es: "CERTIFICACIONES" } },
-  { value: 9, suffix: "", label: { en: "CONFERENCE TALKS", es: "CHARLAS" } },
+  { value: 11, suffix: "", label: { en: "CONFERENCE TALKS", es: "CHARLAS" } },
   { value: 8000, suffix: "+", label: { en: "DEVELOPERS REACHED", es: "DESARROLLADORES ALCANZADOS" } },
   { value: 1, prefix: "$", suffix: "M+", label: { en: "DOCUMENTED SAVINGS", es: "AHORROS DOCUMENTADOS" } },
 ];
@@ -300,6 +300,30 @@ export const CAREER_KIND = {
 /* ---------- speaking (real talk titles) ---------- */
 
 export const TALKS = [
+  {
+    slug: "f13-code-summit-2026", code: "F13·LIM", name: "F13 Code Summit", year: "2026",
+    countryCodes: ["PE"],
+    geo: [{ lat: -12.0464, lon: -77.0428, label: "LIMA" }],
+    flag: "🇵🇪", where: { en: "UTEC · LIMA, PERU", es: "UTEC · LIMA, PERÚ" },
+    title: "Abstracción en Platform Engineering",
+    desc: {
+      en: "Abstraction in platform engineering, framed as “build everything for someone — not something for everyone”: a platform that hides complexity for a specific user instead of offering one generic tool for all.",
+      es: "Abstracción en platform engineering, planteada como “construir todo para alguien — no algo para todos”: una plataforma que oculta la complejidad para un usuario concreto en lugar de ofrecer una herramienta genérica para todos.",
+    },
+    url: "https://www.f13.pe/",
+  },
+  {
+    slug: "github-latam-quack-2026", code: "GH·LAT", name: "GitHub LATAM", year: "2026",
+    countryCodes: ["GLOBAL"],
+    geo: [{ lat: 37.7749, lon: -122.4194, label: "GLOBAL BROADCAST" }],
+    flag: "🌐", where: { en: "GITHUB LATAM · OFFICIAL YOUTUBE", es: "GITHUB LATAM · YOUTUBE OFICIAL" },
+    title: "Jueves de Quack: InnerSource con Credicorp",
+    desc: {
+      en: "GitHub LATAM's Jueves de Quack Show with Juan David Arguello: how InnerSource lets teams across companies in one group collaborate, reuse solutions and turn individual capabilities into shared assets.",
+      es: "Jueves de Quack Show de GitHub LATAM junto a Juan David Arguello: cómo InnerSource permite que equipos de distintas empresas de un mismo grupo colaboren, reutilicen soluciones y conviertan capacidades individuales en activos compartidos.",
+    },
+    url: "https://www.youtube.com/watch?v=aWz3BWj3d00", status: { en: "BROADCAST", es: "TRANSMISIÓN" }, broadcast: true,
+  },
   {
     slug: "devopsdays-medellin-2026", code: "DOD·MDE", name: "DevOpsDays Medellín", year: "2026",
     countryCodes: ["CO"],

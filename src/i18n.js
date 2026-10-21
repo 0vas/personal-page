@@ -46,7 +46,7 @@ export const STRINGS = {
       matrixAria: "Interactive capability directory with six domains and thirty-five technologies.",
     },
     career: { label: "Career", title: "CAREER", kicker: "01 // SERVICE RECORD", hint: "TIMELINE — SELECT A ROLE TO EXPAND · NEWEST FIRST" },
-    speaking: { label: "Speaking", title: "SPEAKING", kicker: "02 // GLOBAL SPEAKING TOUR", ambassador: "OFFICIAL DEVOPS AMBASSADOR — DEVOPS INSTITUTE", meta: ["9 TALKS", "6+ COUNTRIES", "3 CONTINENTS", "1 OFFICIAL GITHUB BROADCAST"], event: "EVENT", channel: "CHANNEL", viewSlides: "VIEW SLIDES", globeMode: "GEOSPATIAL TOUR INTERFACE / ONLINE", route: "ACTIVE ROUTE", selectedMission: "SELECTED APPEARANCE", selectEvent: "Select a conference", selectLocation: "Select location", locationLocked: "POSITION LOCKED", globeAria: "Interactive world tour centered on", timeline: "FLIGHT LOG / CHRONOLOGY", globeControl: "DRAG TO ROTATE · SELECT A LOCATION" },
+    speaking: { label: "Speaking", title: "SPEAKING", kicker: "02 // GLOBAL SPEAKING TOUR", ambassador: "OFFICIAL DEVOPS AMBASSADOR — DEVOPS INSTITUTE", meta: ["11 TALKS", "6+ COUNTRIES", "3 CONTINENTS", "2 OFFICIAL GITHUB BROADCASTS"], event: "EVENT", channel: "CHANNEL", viewSlides: "VIEW SLIDES", globeMode: "GEOSPATIAL TOUR INTERFACE / ONLINE", route: "ACTIVE ROUTE", selectedMission: "SELECTED APPEARANCE", selectEvent: "Select a conference", selectLocation: "Select location", locationLocked: "POSITION LOCKED", globeAria: "Interactive world tour centered on", timeline: "FLIGHT LOG / CHRONOLOGY", globeControl: "DRAG TO ROTATE · SELECT A LOCATION" },
     projects: {
       label: "Projects", title: "PROJECTS", kicker: "03 // OPEN SOURCE CONTROL ROOM",
       index: "SOURCE INDEX", blueprint: "LIVE BLUEPRINT", selected: "SELECTED SOURCE",
@@ -78,7 +78,7 @@ export const STRINGS = {
     },
     stats: {
       profile: ["CERTIFICATIONS", "62"],
-      career: ["YEARS EXPERIENCE", "5+"], speaking: ["CONFERENCE TALKS", "9"],
+      career: ["YEARS EXPERIENCE", "5+"], speaking: ["CONFERENCE TALKS", "11"],
       projects: ["REPOSITORIES", "6"], education: ["ACADEMIC PROGRAMS", "3"],
       certifications: ["VERIFIED", "62"], contact: ["STATUS", "OPEN"],
     },
@@ -123,7 +123,7 @@ export const STRINGS = {
       matrixAria: "Directorio interactivo de capacidades con seis dominios y treinta y cinco tecnologías.",
     },
     career: { label: "Carrera", title: "CARRERA", kicker: "01 // HOJA DE SERVICIO", hint: "LÍNEA DE TIEMPO — SELECCIONA UN ROL PARA EXPANDIR · MÁS RECIENTE PRIMERO" },
-    speaking: { label: "Ponencias", title: "PONENCIAS", kicker: "02 // GIRA GLOBAL DE CONFERENCIAS", ambassador: "EMBAJADOR OFICIAL DEVOPS — DEVOPS INSTITUTE", meta: ["9 CHARLAS", "6+ PAÍSES", "3 CONTINENTES", "1 TRANSMISIÓN OFICIAL DE GITHUB"], event: "EVENTO", channel: "CANAL", viewSlides: "VER SLIDES", globeMode: "INTERFAZ GEOESPACIAL / EN LÍNEA", route: "RUTA ACTIVA", selectedMission: "APARICIÓN SELECCIONADA", selectEvent: "Selecciona una conferencia", selectLocation: "Seleccionar ubicación", locationLocked: "POSICIÓN FIJADA", globeAria: "Gira mundial interactiva centrada en", timeline: "BITÁCORA / CRONOLOGÍA", globeControl: "ARRASTRA PARA GIRAR · SELECCIONA UNA UBICACIÓN" },
+    speaking: { label: "Ponencias", title: "PONENCIAS", kicker: "02 // GIRA GLOBAL DE CONFERENCIAS", ambassador: "EMBAJADOR OFICIAL DEVOPS — DEVOPS INSTITUTE", meta: ["11 CHARLAS", "6+ PAÍSES", "3 CONTINENTES", "2 TRANSMISIONES OFICIALES DE GITHUB"], event: "EVENTO", channel: "CANAL", viewSlides: "VER SLIDES", globeMode: "INTERFAZ GEOESPACIAL / EN LÍNEA", route: "RUTA ACTIVA", selectedMission: "APARICIÓN SELECCIONADA", selectEvent: "Selecciona una conferencia", selectLocation: "Seleccionar ubicación", locationLocked: "POSICIÓN FIJADA", globeAria: "Gira mundial interactiva centrada en", timeline: "BITÁCORA / CRONOLOGÍA", globeControl: "ARRASTRA PARA GIRAR · SELECCIONA UNA UBICACIÓN" },
     projects: {
       label: "Proyectos", title: "PROYECTOS", kicker: "03 // SALA DE CONTROL OPEN SOURCE",
       index: "ÍNDICE DE FUENTES", blueprint: "PLANO EN VIVO", selected: "FUENTE SELECCIONADA",
@@ -155,7 +155,7 @@ export const STRINGS = {
     },
     stats: {
       profile: ["CERTIFICACIONES", "62"],
-      career: ["AÑOS DE EXPERIENCIA", "5+"], speaking: ["CHARLAS", "9"],
+      career: ["AÑOS DE EXPERIENCIA", "5+"], speaking: ["CHARLAS", "11"],
       projects: ["REPOSITORIOS", "6"], education: ["PROGRAMAS ACADÉMICOS", "3"],
       certifications: ["VERIFICADAS", "62"], contact: ["ESTADO", "ABIERTO"],
     },

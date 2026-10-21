@@ -46,6 +46,8 @@ ideally 2000×1200+. Missing → clean violet gradient (no photo).
 
 ## 3. Speaking photos — `talks/` (JPG/JPEG; mixed ratios supported)
 
+- [x] `talks/f13-code-summit-2026.jpeg`
+- [x] `talks/github-latam-quack-2026.jpeg`
 - [x] `talks/devopsdays-medellin-2026.jpeg`
 - [x] `talks/devopsdays-buenosaires-2026.jpeg`
 - [x] `talks/agile-summit-2025.jpeg`

@@ -160,8 +160,8 @@ These were settled through iteration; changing them needs the owner's OK.
    replace this with a second chart or a container-only transition. Keep enough
    proportional space inside the ECharts viewport for every focused outside name
    at desktop and mobile widths. On desktop, keep the atlas track capped at
-   700px and its registry gap at 14px or less. Certifications may use a tighter
-   route-specific title reserve without changing other routes. Common 1440×900
+   700px and its registry gap at 14px or less. Certifications inherits the same
+   compact title reserve as every titled route. Common 1440×900
    and 1512×982 laptop layouts use a 680px atlas track and one shared 560–650px
    field with a 76% radial face, so the complete circle and registry meet the
    fixed navigation's upper rule without a residual strip. The registry
@@ -208,9 +208,13 @@ These were settled through iteration; changing them needs the owner's OK.
     mounted underneath immediately; the boot overlay never captures input; route
     content only uses a 160ms opacity fade and is never translated, skewed or
     held back. No decorative line/ornament is drawn across the page on navigation.
-    Titled routes use the shared chrome-safe stage boundary so scrolling content
-    is clipped below, never rendered behind, the fixed heading; Profile keeps the
-    compact untitled boundary and Contact remains viewport-locked.
+    Titled routes use the compact Certifications-derived chrome calibration:
+    24px desktop top inset, 18px rule gap and one
+    `clamp(150px, 17vh, 166px)` stage boundary. Speaking and Projects top-align
+    their composite command kickers to that boundary. Scrolling content is
+    clipped below, never rendered behind, the fixed heading; Profile keeps its
+    original untitled chrome/boundary and Contact shares the title geometry while
+    remaining viewport-locked.
 11. Reduced-motion skips the boot terminal and ambient effects, keeps the first
     Profile role static, resolves capability focus instantly and makes every
     content reveal immediately visible.

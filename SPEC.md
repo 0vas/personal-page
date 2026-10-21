@@ -42,11 +42,16 @@ Run `npm test` after every change; every box must stay green before shipping.
   reduced-motion freezes it as a faint static segment. No route or theme gains
   horizontal overflow from these signals.
 - **G14** (visual) — The fixed top chrome and the scroll viewport use one
-  title-aware safety boundary. Every titled route begins at least 28px below the
-  desktop title and 24px below it on mobile, so scrolling content is clipped at
-  that boundary instead of passing behind the heading. Profile retains its compact
-  untitled origin, while Contact uses a dedicated shorter safe boundary and
-  remains viewport-locked with no vertical scroll.
+  title-aware safety boundary. Every titled route inherits the compact
+  Certifications calibration: `24px` desktop chrome inset, `18px` between the
+  top rule and eyebrow, and one shared
+  `clamp(150px, 17vh, 166px)` desktop content reserve. No titled screen keeps a
+  private vertical offset; the composite Speaking and Projects command rows
+  align their kickers to the top of that shared boundary instead of vertically
+  centering them inside a taller control row. Mobile preserves its shared
+  `clamp(128px, 18vh, 156px)` reserve, so scrolling content is clipped below the
+  heading instead of passing behind it. Profile retains its compact untitled
+  origin, while Contact remains viewport-locked with no vertical scroll.
 - **G15** (visual) — On compact/mobile widths the horizontally scrollable bottom
   menu always brings the active route fully into view and centres it when space
   permits. Route changes adjust only the menu's horizontal position, never the
@@ -114,7 +119,12 @@ Run `npm test` after every change; every box must stay green before shipping.
   (dss, devopsinstitute, ailab), `academic` (nixvoid, gamedevs, acm); group names bilingual.
 
 ## Speaking (no scroll)
-- **S1** — Exactly 9 talks (the owner's authoritative list).
+- **S1** — Exactly 11 talks (the owner's authoritative list). The two newest,
+  both 2026, are F13 Code Summit in Lima (`f13-code-summit-2026`,
+  “Abstracción en Platform Engineering”, https://www.f13.pe/) and the GitHub
+  LATAM broadcast (`github-latam-quack-2026`, “Jueves de Quack: InnerSource con
+  Credicorp”, https://www.youtube.com/watch?v=aWz3BWj3d00). Header, stat and
+  readout counts say 11.
 - **S2** — It is **July 2026**: no talk is "upcoming" (`up` flag absent on all).
 - **S3** — Talks render **newest → oldest** (data order preserved, not reversed).
 - **S4** — Every talk has: slug, code, year, flag, where, title, desc(en/es), (url optional).
@@ -139,7 +149,9 @@ Run `npm test` after every change; every box must stay green before shipping.
   without a horizontal carousel.
 - **S8** — Events form an explicit 2026 → 2025 → 2024 timeline with readable
   names. Country identity is rendered with code-native SVG flags, never emoji
-  text in the Speaking interface.
+  text in the Speaking interface. On the fixed desktop panel the chronology
+  scrolls inside the roster and keeps the active event in view without moving
+  the page. Appearance indices are zero-padded to two digits (`01 / 11`).
 - **S9** — Speaking tracks the selected talk and selected venue independently.
   Exactly one venue uses the active cyan acquisition treatment; clicking any
   marker, including another venue of the already-selected talk, recenters the
@@ -249,8 +261,9 @@ Run `npm test` after every change; every box must stay green before shipping.
   band), the atlas column is capped at 700px and centred beside it, and the
   inter-panel gap never exceeds 14px (12px through the compact desktop band).
   This removes dead column space so the registry sits visibly closer without
-  shrinking the wheel. Certifications alone uses a tighter title reserve, while
-  preserving a clear title-to-content boundary. On common 14-inch laptop layouts
+  shrinking the wheel. Certifications inherits the same compact title reserve
+  as every other titled route while preserving a clear title-to-content
+  boundary. On common 14-inch laptop layouts
   the atlas track is 680px and its shared field is height-aware from 560–650px,
   so the expanded 76% radial face and invariant registry meet the upper rule of
   the fixed navigation without a residual strip at 1440×900 and 1512×982. The redundant atlas readout below
