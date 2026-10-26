@@ -431,8 +431,18 @@ describe("Speaking", () => {
 });
 
 describe("Projects", () => {
-  it("P1/P2 — six complete projects drive six unique blueprint modes", () => {
-    expect(PROJECTS).toHaveLength(6);
+  it("P1/P2 — seven complete projects drive seven unique blueprint modes", () => {
+    expect(PROJECTS).toHaveLength(7);
+    const hyperion = PROJECTS.find((project) => project.name === "hyperion");
+    expect(hyperion).toMatchObject({
+      id: "PRJ-07",
+      visual: "workflow",
+      url: "https://github.com/0vas/hyperion",
+    });
+    expect(hyperion.desc.en).toMatch(/0vas\.github\.io\/hyperion/);
+    expect(hyperion.desc.es).toMatch(/0vas\.github\.io\/hyperion/);
+    expect(STRINGS.en.stats.projects[1]).toBe("7");
+    expect(STRINGS.es.stats.projects[1]).toBe("7");
     for (const field of ["id", "name", "url"]) {
       expect(new Set(PROJECTS.map((project) => project[field])).size).toBe(PROJECTS.length);
     }
@@ -454,6 +464,9 @@ describe("Projects", () => {
     expect(source).toContain("project-index");
     expect(source).toContain("project-visual");
     expect(source).toContain("ProjectBlueprint");
+    expect(source).toContain('type === "workflow"');
+    expect(source).toContain("list.scrollTop");
+    expect(css).toMatch(/\.project-index-list\s*\{[^}]*overflow-y:\s*auto/s);
     expect(source).toContain('aria-pressed={i === idx}');
     expect(source).toContain('aria-controls="project-presentation"');
     expect(source).toContain('aria-live="polite"');

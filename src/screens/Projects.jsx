@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "../components/Icons.jsx";
 import { PROJECTS, LINKS } from "../data/content.js";
 import { L, STRINGS } from "../i18n.js";
@@ -97,6 +97,8 @@ function ProjectBlueprint({ type, label }) {
     );
   }
 
+  if (type === "workflow") return <WorkflowBlueprint label={label} />;
+
   if (type === "sync") {
     return (
       <BlueprintFrame label={label}>
@@ -129,12 +131,43 @@ function ProjectBlueprint({ type, label }) {
   );
 }
 
+function WorkflowBlueprint({ label }) {
+  return (
+    <BlueprintFrame label={label}>
+      <g className="blueprint-enter">
+        <circle className="blueprint-node" cx="108" cy="140" r="14" />
+        <rect className="blueprint-surface" x="164" y="100" width="132" height="80" rx="3" />
+        <path className="blueprint-muted" d="M184 128H274M184 150H250" />
+        <rect className="blueprint-core" x="342" y="122" width="36" height="36" transform="rotate(45 360 140)" />
+        <rect className="blueprint-surface active" x="430" y="100" width="146" height="80" rx="3" />
+        <path className="blueprint-muted" d="M452 128H552M452 150H526" />
+        <circle className="blueprint-node" cx="624" cy="140" r="14" />
+        <path className="blueprint-line" d="M122 140H164M296 140H334M386 140H430M576 140H610" />
+        <path className="blueprint-signal" d="M122 140H610" />
+        <text x="188" y="84">PLAN</text>
+        <text x="328" y="84">DECIDE</text>
+        <text x="454" y="84">EVIDENCE</text>
+      </g>
+    </BlueprintFrame>
+  );
+}
+
 export default function Projects({ lang }) {
   const S = STRINGS[lang].projects;
   const [idx, setIdx] = useState(0);
   const [signalKey, setSignalKey] = useState(0);
+  const listRef = useRef(null);
   const itemRefs = useRef([]);
   const project = PROJECTS[idx];
+  useEffect(() => {
+    const list = listRef.current;
+    const active = itemRefs.current[idx];
+    if (!list || !active) return;
+    const listRect = list.getBoundingClientRect();
+    const activeRect = active.getBoundingClientRect();
+    if (activeRect.top < listRect.top) list.scrollTop -= listRect.top - activeRect.top;
+    else if (activeRect.bottom > listRect.bottom) list.scrollTop += activeRect.bottom - listRect.bottom;
+  }, [idx]);
 
   const selectProject = (next) => {
     setIdx(next);
@@ -175,8 +208,8 @@ export default function Projects({ lang }) {
             <span>{S.index}</span>
             <b>{String(idx + 1).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}</b>
           </header>
-          <i className="project-index-cursor" aria-hidden="true" />
-          <div className="project-index-list">
+          <div className="project-index-list" ref={listRef}>
+            <i className="project-index-cursor" aria-hidden="true" />
             {PROJECTS.map((item, i) => (
               <button
                 ref={(node) => { itemRefs.current[i] = node; }}

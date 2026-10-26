@@ -79,7 +79,7 @@ export const STRINGS = {
     stats: {
       profile: ["CERTIFICATIONS", "62"],
       career: ["YEARS EXPERIENCE", "5+"], speaking: ["CONFERENCE TALKS", "11"],
-      projects: ["REPOSITORIES", "6"], education: ["ACADEMIC PROGRAMS", "3"],
+      projects: ["REPOSITORIES", "7"], education: ["ACADEMIC PROGRAMS", "3"],
       certifications: ["VERIFIED", "62"], contact: ["STATUS", "OPEN"],
     },
   },
@@ -156,7 +156,7 @@ export const STRINGS = {
     stats: {
       profile: ["CERTIFICACIONES", "62"],
       career: ["AÑOS DE EXPERIENCIA", "5+"], speaking: ["CHARLAS", "11"],
-      projects: ["REPOSITORIOS", "6"], education: ["PROGRAMAS ACADÉMICOS", "3"],
+      projects: ["REPOSITORIOS", "7"], education: ["PROGRAMAS ACADÉMICOS", "3"],
       certifications: ["VERIFICADAS", "62"], contact: ["ESTADO", "ABIERTO"],
     },
   },

@@ -162,9 +162,13 @@ Run `npm test` after every change; every box must stay green before shipping.
   opposite side of that plate.
 
 ## Projects (source index + live blueprint)
-- **P1** — Exactly 6 GitHub projects. IDs, names and URLs are unique; every
+- **P1** — Exactly 7 GitHub projects. IDs, names and URLs are unique; every
   project has bilingual tag/description and short name, a language, technologies
-  and one unique visual mode. Content is local and never waits for the GitHub API.
+  and one unique visual mode. Hyperion (`hyperion`, https://github.com/0vas/hyperion)
+  is the seventh, with its own workflow blueprint and the live canvas named in
+  the description. The source index scrolls inside its panel when the seventh
+  row does not fit, without moving the page. Content is local and never waits
+  for the GitHub API.
 - **P2** — Projects is a minimal split composition: a persistent vertical source
   index on the left and one large live blueprint on the right. It does not use a
   source topology, affinity graph, diamond cloud or telemetry dashboard.
