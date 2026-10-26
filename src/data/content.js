@@ -506,7 +506,7 @@ export const PROJECTS = [
       en: "Human-guided workflows for any AI tool. The live canvas at 0vas.github.io/hyperion turns a conversation into a visible plan: evidence, decisions and when the agent may continue.",
       es: "Flujos guiados por una persona para cualquier herramienta de IA. El canvas en 0vas.github.io/hyperion convierte una conversación en un plan visible: evidencia, decisiones y cuándo el agente puede continuar.",
     },
-    url: "https://github.com/0vas/hyperion",
+    url: "https://0vas.github.io/hyperion/",
   },
 ];
 

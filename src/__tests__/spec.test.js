@@ -437,7 +437,7 @@ describe("Projects", () => {
     expect(hyperion).toMatchObject({
       id: "PRJ-07",
       visual: "workflow",
-      url: "https://github.com/0vas/hyperion",
+      url: "https://0vas.github.io/hyperion/",
     });
     expect(hyperion.desc.en).toMatch(/0vas\.github\.io\/hyperion/);
     expect(hyperion.desc.es).toMatch(/0vas\.github\.io\/hyperion/);
@@ -454,7 +454,7 @@ describe("Projects", () => {
       expect(project.shortName.en && project.shortName.es).toBeTruthy();
       expect(project.tech?.length).toBeGreaterThanOrEqual(2);
       expect(project.visual).toBeTruthy();
-      expect(new URL(project.url).hostname).toBe("github.com");
+      expect(["github.com", "0vas.github.io"]).toContain(new URL(project.url).hostname);
     }
   });
   it("P3/P4/P6 — source index is accessible, atomic and reduced-motion safe", () => {

@@ -11,11 +11,10 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
-- **Hyperion joins Projects:** `0vas/hyperion` is the seventh repository, linked
-  to https://github.com/0vas/hyperion, with the live canvas
-  (https://0vas.github.io/hyperion/) named in the description and its own
-  workflow blueprint. The source index scrolls inside the panel so the new row
-  stays reachable.
+- **Hyperion joins Projects:** `0vas/hyperion` is the seventh repository, with
+  its own workflow blueprint. The open link goes to the live canvas at
+  https://0vas.github.io/hyperion/. The source index scrolls inside the panel
+  so the new row stays reachable.
 - **UNI education highlights the Tesis con Impacto prize:** a gold line on the
   Systems Engineering record states the award for the best faculty research and
   Top 4 at the university, in English and Spanish.
