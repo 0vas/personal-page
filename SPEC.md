@@ -46,9 +46,9 @@ Run `npm test` after every change; every box must stay green before shipping.
   Certifications calibration: `24px` desktop chrome inset, `18px` between the
   top rule and eyebrow, and one shared
   `clamp(150px, 17vh, 166px)` desktop content reserve. No titled screen keeps a
-  private vertical offset; the composite Speaking and Projects command rows
-  align their kickers to the top of that shared boundary instead of vertically
-  centering them inside a taller control row. Mobile preserves its shared
+  private vertical offset. Speaking's command row aligns its kicker to the top
+  of that shared boundary. Projects fills the same boundary from the top with
+  the source sphere and no longer keeps a separate command row. Mobile preserves its shared
   `clamp(128px, 18vh, 156px)` reserve, so scrolling content is clipped below the
   heading instead of passing behind it. Profile retains its compact untitled
   origin, while Contact remains viewport-locked with no vertical scroll.
@@ -161,33 +161,46 @@ Run `npm test` after every change; every box must stay green before shipping.
   clear of the lock-on reticle, and a stacked appearance count sits on the
   opposite side of that plate.
 
-## Projects (source index + live blueprint)
+## Projects (source sphere)
 - **P1** — Exactly 7 GitHub projects. IDs, names and URLs are unique; every
   project has bilingual tag/description and short name, a language, technologies
   and one unique visual mode. Hyperion (`hyperion`) is the seventh, with its own
   workflow blueprint. Its open link goes to the live canvas at
-  https://0vas.github.io/hyperion/. The source index scrolls inside its panel when the seventh
-  row does not fit, without moving the page. Content is local and never waits
-  for the GitHub API.
-- **P2** — Projects is a minimal split composition: a persistent vertical source
-  index on the left and one large live blueprint on the right. It does not use a
-  source topology, affinity graph, diamond cloud or telemetry dashboard.
-- **P3** — Exactly one index row is selected. Selection atomically updates the
-  blueprint motif, ID, full name, description, language, technologies and real
-  repository URL without unmounting the presentation or using
-  `AnimatePresence mode="wait"`/translations.
-- **P4** — Index rows expose `aria-pressed`, point to the presentation with
-  `aria-controls`, have visible keyboard focus and support ArrowUp/ArrowDown,
-  Home and End. The selected project copy is announced politely.
-- **P5** (visual) — Desktop keeps the readable list at left and a clean, dominant
-  code-native SVG representation at right. Each repository has a distinct motif
-  related to its purpose. Restrained frame depth, selection/acquisition accents
-  and ambient SVG detail may polish those same two surfaces, but must not add a
-  third panel, dashboard or topology. Mobile stacks list then blueprint, keeps
-  targets at least 44px and has no horizontal carousel or overflow.
-- **P6** — Blueprint drawing, cursor and signal movement use CSS/SVG only and
-  never delay selection. Reduced-motion disables them while preserving the full
-  final motif and selected state.
+  https://0vas.github.io/hyperion/. Content is local and never waits for the
+  GitHub API.
+- **P2** — Projects is one Fibonacci ring of the seven repositories inside the
+  route's content well. The headline ("I Build in the Open" / "Construyo en
+  abierto") is a sibling of the ring and shares its 0×0 origin: horizontal
+  center is `margin-left: calc(var(--hw) / -2)`, vertical center is
+  `.inner { transform: translateY(-50%) }`. Each frame the headline transform is
+  only `rotateX(-sx) rotateY(-sy) translateZ(R * TITLE_Z)`. `TITLE_Z` is 1.08,
+  so the words stay in front of every card. The world transform is
+  only `translateZ(camZ) rotateY(sy) rotateX(sx)`. Drag turns the ring around
+  the words. While nobody is dragging and no card is open, the ring keeps a
+  slow idle yaw (`IDLE_YAW`). A 16% scroll of the projects screen dollies
+  forward and never moves the other routes. It does not use a source topology,
+  affinity graph, diamond cloud or telemetry dashboard.
+- **P3** — A card click opens one lightbox with that repository's blueprint,
+  short name, slug, description, language, technologies and real URL. Opening
+  does not use `AnimatePresence mode="wait"` or a translated unmount. Escape
+  closes the lightbox first, then the grid.
+- **P4** — Sphere cards are named buttons with a visible focus ring. Keyboard
+  activation opens the same lightbox. The grid toggle exposes `aria-pressed`.
+  The open note is announced politely. While the lightbox or the grid is open,
+  ArrowLeft/ArrowRight do not change the route.
+- **P5** (visual) — The ring uses the page palette. Each card is a theme plate:
+  the motif above, and the short name plus index always readable in `--ink` on
+  `--panel-solid`. The headline stays `--ink` and does not fade. Depth is a
+  light wash that never covers the name. The full name is shown, never clamped,
+  in a short band under the motif. The plates sit apart on a wide ring around
+  the headline, and the idle turn keeps that spacing.
+  The ring is sized so every plate and the full headline stay inside the
+  projects stage. The grid shows the same named plates. Reduced motion holds
+  the words and the finished motif without momentum or idle yaw. Targets stay
+  at least 44px. The ring does not overflow the screen horizontally.
+- **P6** — Blueprint drawing and the signal use CSS/SVG only. Reduced motion
+  disables them, the headline entrance and the idle yaw. The camera loop still
+  follows a drag, and it snaps instead of easing when reduced motion is on.
 
 ## Contact (classic direct contact)
 - **CT1** — Contact keeps the primary mailto CTA, downloadable CV and direct

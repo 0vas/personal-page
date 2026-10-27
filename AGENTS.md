@@ -99,9 +99,12 @@ public/assets/             # drop-in images (see ASSETS.md); category marks may 
   vertical roster and an exact-venue, draggable Natural Earth globe. Venue
   acquisition is cyan; SVG country marks and the 2026→2024 chronology remain.
   All talks stay **newest→oldest** and the section background stays visible.
-- **Projects** — minimal split interface: a dynamic vertical source index at
-  left and one animated code-native SVG blueprint for the selected repository at
-  right. Mobile stacks index then blueprint.
+- **Projects** — a Fibonacci ring of the seven repositories. Each card is a
+  theme plate with its motif and a readable name. The headline shares the
+  ring's center. Left alone the ring turns slowly, and drag turns the cards
+  around the words. Every plate and the headline stay inside the stage. A short scroll of this
+  screen dollies in, and a card opens its blueprint and repository link. A flat
+  grid is the same seven, read in rows.
 - **Education** — academic only (UNI, MIT Professional Education, Hanyang), each with a logo.
 - **Certifications** — one stable ECharts **radial-reference credential atlas**:
   centre star, broad named category band, deliberate gutter and thin 62-cell
@@ -218,10 +221,17 @@ These were settled through iteration; changing them needs the owner's OK.
 11. Reduced-motion skips the boot terminal and ambient effects, keeps the first
     Profile role static, resolves capability focus instantly and makes every
     content reveal immediately visible.
-12. Projects keeps the minimal **source index + live blueprint** composition:
-    readable list at left, one purpose-specific animated SVG at right. Do not
-    reintroduce the rejected source topology, affinity graph, diamond cloud or
-    telemetry dashboard. Aesthetic polish stays inside those same two surfaces.
+12. Projects is a **source sphere**: the seven repositories sit on a Fibonacci
+    ring and the headline stays on that ring's center (`margin-left: calc(var(--hw) / -2)`
+    and `.inner { translateY(-50%) }`; the frame transform never recenters it).
+    Left alone the ring turns slowly; drag takes over, this screen's 16% scroll
+    dollies in, and a card opens its blueprint plus the real repository link.
+    Size the ring so every plate and the full headline stay inside the stage.
+    Every plate keeps its short name in full, in `--ink` on `--panel-solid`, in
+    both themes. Reduced motion holds the ring still. Hyperion still opens
+    https://0vas.github.io/hyperion/. A flat grid is the alternate reading.
+    Do not reintroduce the rejected source topology, affinity graph, diamond
+    cloud, telemetry dashboard, boxed specimen frame, watermark or marching border.
 13. Contact is the viewport-locked final scene: keep the restored direct-contact
     composition and never add vertical scrolling to that route. Height-aware
     spacing must keep every bilingual metadata line above the fixed navigation at

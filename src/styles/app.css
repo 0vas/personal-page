@@ -509,7 +509,7 @@
 .lede strong, .p strong { color: var(--ink); font-weight: 500; }
 .p { color: var(--dim); font-size: 15.5px; line-height: 1.8; margin-bottom: 16px; max-width: 68ch; }
 .p:last-child { margin-bottom: 0; }
-[data-theme="dark"] :is(.lede, .p, .project-presentation-copy > p:last-child, .edu li, .cert-note, .tl-notes li, .sp-desc, .mission-copy p) { font-weight: 400; }
+[data-theme="dark"] :is(.lede, .p, .project-lead, .edu li, .cert-note, .tl-notes li, .sp-desc, .mission-copy p) { font-weight: 400; }
 
 .btn {
   position: relative; display: inline-flex; align-items: center; gap: 10px;
@@ -642,7 +642,9 @@
   .reveal { opacity: 1 !important; transform: none !important; }
   .marker-acquisition, .globe-marker.active .pulse, .timeline-events button.active::after, .mission-media-enter { animation: none !important; }
   .project-index-cursor, .blueprint-enter, .blueprint-line, .blueprint-signal,
-  .blueprint-packet, .blueprint-pulse, .blueprint-slide-scan, .project-calibration { animation: none !important; transition: none !important; }
+  .blueprint-packet, .blueprint-pulse, .blueprint-slide-scan { animation: none !important; transition: none !important; }
+  .sphere-word { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+  .sphere-cue s::after { animation: none !important; }
   .profile-name::after, .profile-name .n2::before, .profile-name .n2::after, .profile-photo .ph::before { animation: none !important; opacity: 0; }
   .profile-role .caret { display: none; }
 }
@@ -1018,110 +1020,283 @@
 
 /* ============ PROJECTS — source index + live blueprint ============ */
 .projects { max-width: 1280px; }
-.project-command { min-height: 48px; margin-bottom: 8px; display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 24px; }
-.project-command .kicker { margin-bottom: 2px; }
-.project-system, .project-hint { font-size: 8px; letter-spacing: .14em; color: var(--faint); }
-.project-system span { display: inline-block; width: 6px; height: 6px; margin-right: 6px; transform: rotate(45deg); background: var(--geo-active); box-shadow: 0 0 0 4px color-mix(in srgb, var(--geo-active) 13%, transparent); }
-.project-hint { justify-self: end; }
-
-.project-showcase { height: 500px; display: grid; grid-template-columns: minmax(260px, .62fr) minmax(0, 1.38fr); gap: clamp(20px, 2.4vw, 34px); }
-.project-index, .project-presentation { min-width: 0; height: 100%; border: 1px solid var(--line-soft); background: color-mix(in srgb, var(--panel-strong) 72%, transparent); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 5%, transparent); }
-.project-index { position: relative; display: flex; flex-direction: column; overflow: hidden; }
-.project-index-head, .project-presentation-head { height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 18px; border-bottom: 1px solid var(--line-soft); font-size: 8px; letter-spacing: .16em; color: var(--faint); }
-.project-index-head b, .project-presentation-head b { color: var(--accent); font-weight: 500; }
-.project-index-list { position: relative; flex: 1; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
-.project-index-cursor { position: absolute; z-index: 3; left: 0; top: 0; width: 3px; height: 64px; transform: translateY(calc(var(--active-index) * 64px)); background: linear-gradient(var(--accent), var(--geo-active)); box-shadow: 0 0 16px color-mix(in srgb, var(--geo-active) 38%, transparent); transition: transform .22s cubic-bezier(.2,.72,.25,1); pointer-events: none; }
-.project-index-item { position: relative; width: 100%; height: 64px; display: grid; grid-template-columns: 38px minmax(0, 1fr) 14px; align-items: center; gap: 10px; padding: 0 18px; text-align: left; border: 0; border-bottom: 1px solid var(--line-soft); background: transparent; color: var(--dim); transition: background .16s, color .16s; }
-.project-index-item:hover, .project-index-item:focus-visible { outline: none; color: var(--ink); background: color-mix(in srgb, var(--accent) 5%, transparent); }
-.project-index-item:focus-visible { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 65%, transparent); }
-.project-index-item.active { color: var(--ink); background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 78%); }
-.project-index-item.active .project-index-copy small { color: var(--dim); }
-.project-index-number { color: var(--faint); font-size: 8px; letter-spacing: .14em; }
-.project-index-item.active .project-index-number { color: var(--geo-active); }
-.project-index-copy { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
-.project-index-copy strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 1.1; letter-spacing: .025em; font-weight: 550; }
-.project-index-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--faint); font-size: 8px; letter-spacing: .07em; }
-.project-index-item > i { width: 7px; height: 7px; justify-self: end; transform: rotate(45deg); border: 1px solid var(--line); transition: border-color .16s, background .16s, box-shadow .16s; }
-.project-index-item.active > i { border-color: var(--geo-active); background: var(--geo-active); box-shadow: 0 0 0 4px color-mix(in srgb, var(--geo-active) 13%, transparent); }
-.project-index-foot { height: 64px; display: flex; align-items: center; padding: 0 18px; color: var(--faint); font-size: 7.5px; letter-spacing: .13em; }
-
-.project-presentation { display: grid; grid-template-rows: 52px 220px minmax(0, 1fr) 70px; overflow: hidden; background: linear-gradient(130deg, color-mix(in srgb, var(--panel-strong) 92%, transparent), color-mix(in srgb, var(--panel) 42%, transparent)); }
-.project-visual { position: relative; min-height: 0; overflow: hidden; border-bottom: 1px solid var(--line-soft); background: radial-gradient(circle at 52% 46%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 47%); }
-.project-visual::before { content: ""; position: absolute; inset: 12% 22%; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--geo-active) 8%, transparent), transparent 68%); pointer-events: none; }
-.project-blueprint { position: relative; z-index: 1; display: block; width: 100%; height: 100%; overflow: visible; }
+.screen[data-screen="projects"] { padding: 0; background: transparent; scrollbar-width: none; }
+.screen[data-screen="projects"]::-webkit-scrollbar { display: none; }
+.projects-fit {
+  --hw: min(46vw, 520px);
+  --persp: 1150px;
+  --pad: clamp(14px, 2.6vw, 34px);
+  --cw: 176px;
+  --nameh: 36px;
+  max-width: none;
+  width: 100%;
+  position: relative;
+  color: var(--ink);
+  background: transparent;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+.projects-stage {
+  position: sticky; top: 0; height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  background: transparent;
+}
+.projects-scene {
+  position: absolute; inset: 0;
+  perspective: var(--persp);
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+}
+@media (pointer: coarse) { .projects-stage { touch-action: pan-y; } }
+.sphere-world {
+  position: absolute; top: 50%; left: 50%;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.sphere-orb {
+  position: absolute; top: 0; left: 0;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+}
+.sphere-headline {
+  position: absolute; top: 0; left: 0;
+  width: var(--hw);
+  margin-left: calc(var(--hw) / -2);
+  text-align: center;
+  font-family: var(--f-ui);
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 40px);
+  line-height: 1.05;
+  letter-spacing: .01em;
+  color: var(--ink);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sphere-headline .inner {
+  position: absolute; top: 0; left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+.sphere-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.28em);
+  transition: opacity .7s ease, transform .7s ease;
+  transition-delay: calc(.12s + var(--i) * .06s);
+}
+.projects-fit.revealed .sphere-word { opacity: 1; transform: none; }
+.sphere-hint {
+  display: block; margin-top: 12px;
+  font-family: var(--f-mono); font-size: 11px; font-weight: 400;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--dim);
+}
+.sphere-card {
+  position: absolute; top: 0; left: 0;
+  width: var(--cw);
+  margin-left: calc(var(--cw) / -2);
+  margin-top: calc((var(--cw) / 1.5 + var(--nameh)) / -2);
+  padding: 0;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel-solid);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.sphere-card figure {
+  position: relative;
+  height: calc(var(--cw) / 1.5);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--bg1) 62%, var(--panel-solid));
+  border-bottom: 1px solid var(--line-soft);
+}
+.sphere-card:hover, .sphere-card:focus-visible { border-color: var(--accent); }
+.sphere-card:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+.sphere-card figure::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: color-mix(in srgb, var(--bg0) calc(var(--d, 0) * 40%), transparent);
+  pointer-events: none;
+}
+.sphere-card .project-blueprint, .sphere-tile .project-blueprint { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sphere-name {
+  display: flex; align-items: center; gap: 6px;
+  height: auto; padding: 4px 8px 5px;
+  background: var(--panel-solid); color: var(--ink); text-align: left;
+}
+.sphere-name .mono { flex: none; font-size: 10px; letter-spacing: .12em; color: var(--accent); }
+.sphere-name strong {
+  font-size: 12px; font-weight: 500; letter-spacing: .02em; line-height: 1.15;
+  text-transform: uppercase; overflow-wrap: break-word;
+}
+.sphere-vig { display: none; }
+.projects-fit.gridview .sphere-vig, .projects-fit.lit .sphere-vig { opacity: 0; }
+.projects-fit.gridview .sphere-world { opacity: 0; filter: blur(14px); pointer-events: none; }
+.sphere-repos {
+  position: absolute; top: calc(var(--pad) * .7); right: var(--pad); z-index: 4;
+  min-height: 44px; display: inline-flex; align-items: center;
+  font-size: 11px; letter-spacing: .14em; color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+}
+.sphere-gridbtn {
+  position: absolute; left: var(--pad); bottom: var(--pad); z-index: 4;
+  width: 44px; height: 44px; padding: 8px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  border: 1px solid var(--line); border-radius: 4px;
+  background: var(--panel-solid);
+}
+.sphere-gridbtn b { background: var(--ink); border-radius: 1px; transition: transform .35s ease, background .35s ease; }
+.sphere-gridbtn:hover b { background: var(--accent); }
+.projects-fit.gridview .sphere-gridbtn { top: calc(var(--pad) * .45); bottom: auto; }
+.projects-fit.gridview .sphere-gridbtn b:first-child { transform: translate(3px, 3px); }
+.projects-fit.gridview .sphere-gridbtn b:last-child { transform: translate(-3px, -3px); }
+.sphere-cue { display: none; }
+.sphere-cue s { position: relative; width: 44px; height: 1px; background: var(--line); overflow: hidden; text-decoration: none; }
+.sphere-cue s::after {
+  content: ""; position: absolute; inset: 0; background: var(--accent);
+  animation: sphereSweep 2.6s ease infinite;
+}
+@keyframes sphereSweep { 0% { transform: translateX(-100%); } 55% { transform: translateX(0); } 100% { transform: translateX(100%); } }
+.projects-fit[data-deep="1"] .sphere-cue,
+.projects-fit.gridview .sphere-cue,
+.projects-fit.lit .sphere-cue { opacity: 0; pointer-events: none; }
+.sphere-colophon {
+  position: absolute; right: var(--pad); bottom: var(--pad); z-index: 3;
+  margin: 0; font-size: 13px; color: var(--dim);
+}
+.projects-fit.gridview .sphere-colophon, .projects-fit.lit .sphere-colophon { opacity: 0; }
+.sphere-grid {
+  position: absolute; inset: 0; z-index: 3; overflow: auto;
+  padding: 76px var(--pad) calc(var(--pad) * 4 + 28px);
+  background: color-mix(in srgb, var(--bg0) 94%, transparent);
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+.projects-fit.gridview .sphere-grid { opacity: 1; visibility: visible; pointer-events: auto; }
+.sphere-rows { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: clamp(12px, 1.4vw, 20px); max-width: 1680px; margin: 0 auto; }
+.sphere-tile {
+  display: flex; flex-direction: column; width: 100%; padding: 0; color: var(--ink); text-align: left;
+  background: var(--panel-solid); border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
+}
+.sphere-tile:hover, .sphere-tile:focus-visible { border-color: var(--accent); outline: none; }
+.sphere-tile figure {
+  position: relative; aspect-ratio: 2.2 / 1; overflow: hidden;
+  background: color-mix(in srgb, var(--bg1) 62%, var(--panel-solid));
+  border-bottom: 1px solid var(--line-soft);
+}
+.sphere-tile .sphere-name strong { font-size: 15px; }
+.sphere-lit {
+  position: absolute; inset: 0; z-index: 6;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(28px, 5vh, 64px) var(--pad);
+  overflow: auto;
+  background: color-mix(in srgb, var(--bg0) 88%, transparent);
+}
+.sphere-scrim { position: absolute; inset: 0; background: transparent; }
+.sphere-plate {
+  position: relative; z-index: 1;
+  width: min(72vw, 860px);
+  padding: 12px;
+  background: var(--panel-solid);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  transition: transform .62s cubic-bezier(.22,.61,.36,1), opacity .42s ease;
+}
+.sphere-shot { position: relative; background: color-mix(in srgb, var(--bg1) 70%, var(--panel-solid)); border-radius: 3px; border: 1px solid var(--line-soft); }
+.sphere-shot .project-blueprint { display: block; width: 100%; height: auto; border-radius: 2px; }
+.sphere-shot .project-blueprint text { font-size: 16px; fill: var(--dim); }
+.sphere-close {
+  position: absolute; top: 12px; right: 14px;
+  min-width: 44px; min-height: 44px; padding: 10px 14px;
+  border: 1px solid var(--line); border-radius: 4px;
+  background: var(--panel-solid); color: var(--ink);
+  font-size: 13px;
+}
+.sphere-close:hover { border-color: var(--accent); color: var(--accent); }
+.sphere-meta {
+  display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+  gap: clamp(22px, 3.2vw, 48px); padding: 18px 8px 8px;
+}
+.sphere-meta h3 {
+  font-family: var(--f-ui);
+  font-weight: 500; font-size: clamp(22px, 2.15vw, 30px);
+  line-height: 1.08; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 6px;
+  color: var(--ink);
+}
+.sphere-where { font-size: 13px; color: var(--dim); }
+.project-blueprint { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
 .project-blueprint text { fill: var(--faint); font-family: var(--f-mono); font-size: 8px; letter-spacing: .16em; }
-.blueprint-grid-line { fill: none; stroke: color-mix(in srgb, var(--line-soft) 58%, transparent); stroke-width: .55; }
-.blueprint-axis, .blueprint-line, .blueprint-muted, .blueprint-signal, .blueprint-slide-scan { fill: none; vector-effect: non-scaling-stroke; }
-.blueprint-axis { stroke: var(--line); stroke-width: .8; }
-.blueprint-line { stroke: color-mix(in srgb, var(--ink) 43%, transparent); stroke-width: 1; stroke-dasharray: 800; animation: blueprintDraw .58s cubic-bezier(.2,.72,.25,1) both; }
-.blueprint-muted { stroke: var(--line); stroke-width: .8; }
-.blueprint-surface { fill: color-mix(in srgb, var(--panel-solid) 56%, transparent); stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.blueprint-surface.active { fill: color-mix(in srgb, var(--accent) 6%, var(--panel-solid)); stroke: color-mix(in srgb, var(--accent) 68%, transparent); }
-.blueprint-node { fill: var(--panel-solid); stroke: var(--accent); stroke-width: 1.2; }
+.blueprint-line, .blueprint-muted, .blueprint-signal, .blueprint-slide-scan { fill: none; vector-effect: non-scaling-stroke; }
+.blueprint-line { stroke: color-mix(in srgb, var(--ink) 82%, transparent); stroke-width: 1.35; stroke-dasharray: 800; animation: blueprintDraw .7s cubic-bezier(.2,.72,.25,1) both; }
+.blueprint-muted { stroke: color-mix(in srgb, var(--ink) 35%, var(--line)); stroke-width: .9; }
+.blueprint-surface { fill: color-mix(in srgb, var(--bg1) 70%, var(--panel-solid)); stroke: color-mix(in srgb, var(--ink) 55%, transparent); stroke-width: 1.15; vector-effect: non-scaling-stroke; }
+.blueprint-surface.active { fill: color-mix(in srgb, var(--accent) 10%, var(--panel-solid)); stroke: var(--accent); }
+.blueprint-node { fill: var(--panel-solid); stroke: var(--accent); stroke-width: 1.5; }
 .blueprint-core { fill: var(--geo-active); stroke: var(--panel-solid); stroke-width: 2; }
-.blueprint-signal { stroke: url(#blueprint-gradient); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 12 20; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--geo-active) 55%, transparent)); animation: blueprintFlow 1.6s linear infinite; }
+.blueprint-signal { stroke: var(--geo-active); stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 10 14; animation: blueprintFlow 1.4s linear infinite; }
 .blueprint-packet { fill: var(--geo-active); stroke: var(--panel-solid); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; }
 .blueprint-packet-horizontal { animation: blueprintPacketAcross 2.2s cubic-bezier(.38,.1,.2,1) infinite; }
 .blueprint-packet-bridge { animation: blueprintPacketBridge 1.8s ease-in-out infinite; }
 .blueprint-pulse { fill: var(--geo-active); animation: blueprintPulse 1.8s ease-out infinite; transform-origin: 360px 65px; }
 .blueprint-slide-scan { stroke: var(--geo-active); stroke-width: 1.5; opacity: .55; animation: blueprintSlideScan 2.4s ease-in-out infinite; }
-.blueprint-enter { animation: blueprintEnter .28s ease-out both; }
-.project-calibration { position: absolute; z-index: 2; top: 0; bottom: 0; left: -24%; width: 18%; transform: skewX(-12deg); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--geo-active) 14%, transparent), transparent); pointer-events: none; animation: projectCalibration .46s ease-out both; }
-.project-visual-index { position: absolute; z-index: 2; right: 22px; bottom: -28px; font-size: 112px; line-height: 1; letter-spacing: -.08em; color: var(--accent); opacity: .055; pointer-events: none; }
+.blueprint-enter { animation: blueprintEnter .45s ease-out both; }
 
-.project-presentation-copy { min-width: 0; padding: 15px 22px 10px; overflow: hidden; }
-.project-selected { font-size: 8px; letter-spacing: .16em; color: var(--accent); }
-.project-presentation-copy h2 { margin-top: 6px; overflow-wrap: anywhere; font-family: var(--f-mono); font-size: clamp(18px, 1.8vw, 25px); line-height: 1.14; }
-.project-presentation-copy > p:last-child { margin-top: 7px; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; max-width: 76ch; color: var(--dim); font-size: 12px; line-height: 1.5; }
-.project-presentation-foot { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 10px 20px; border-top: 1px solid var(--line-soft); }
-.project-tech { min-width: 0; }
-.project-tech > span { color: var(--faint); font-size: 8px; letter-spacing: .12em; }
-.project-tech > div { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 5px; }
-.project-tech i { padding: 3px 6px; border: 1px solid var(--line-soft); color: var(--dim); font-family: var(--f-mono); font-size: 8px; font-style: normal; letter-spacing: .04em; white-space: nowrap; }
-.project-open { flex: none; font-size: 8px; }
+.project-slug { margin-top: 8px; color: var(--faint); font-size: 12px; letter-spacing: .04em; }
+.project-lead { margin-top: 10px; max-width: 46ch; color: var(--dim); font-size: 15px; line-height: 1.5; }
+.project-tech { margin-top: 12px; color: var(--accent); font-size: 10px; letter-spacing: .16em; }
+.project-open { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; min-height: 44px; padding-bottom: 2px; border-bottom: 1px solid var(--accent); font-size: 10px; letter-spacing: .18em; }
+.project-open:hover { border-bottom-color: transparent; }
 
-@keyframes blueprintEnter { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: scale(1); } }
+@keyframes blueprintEnter { from { opacity: 0; } to { opacity: 1; } }
 @keyframes blueprintDraw { from { stroke-dashoffset: 800; opacity: .2; } to { stroke-dashoffset: 0; opacity: 1; } }
 @keyframes blueprintFlow { to { stroke-dashoffset: -64; } }
 @keyframes blueprintPacketAcross { 0%, 12% { transform: translateX(0); opacity: 0; } 22% { opacity: 1; } 76% { opacity: 1; } 88%, 100% { transform: translateX(138px); opacity: 0; } }
 @keyframes blueprintPacketBridge { 0%, 100% { transform: translateY(6px) rotate(45deg); opacity: .45; } 50% { transform: translateY(-6px) rotate(45deg); opacity: 1; } }
 @keyframes blueprintPulse { 0% { opacity: .9; transform: scale(.5); } 75%, 100% { opacity: 0; transform: scale(2.8); } }
 @keyframes blueprintSlideScan { 0%, 12% { transform: translateX(0); opacity: 0; } 22%, 78% { opacity: .7; } 90%, 100% { transform: translateX(300px); opacity: 0; } }
-@keyframes projectCalibration { 0% { left: -24%; opacity: 0; } 24% { opacity: 1; } 100% { left: 108%; opacity: 0; } }
-
-[data-theme="dark"] .project-index,
-[data-theme="dark"] .project-presentation { background: color-mix(in srgb, var(--panel-solid) 94%, transparent); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 8%, transparent), 0 20px 50px color-mix(in srgb, var(--bg0) 34%, transparent); }
-[data-theme="dark"] .project-presentation { background: linear-gradient(130deg, color-mix(in srgb, var(--panel-solid) 97%, transparent), color-mix(in srgb, var(--bg2) 92%, transparent)); }
-[data-theme="dark"] .project-index-item.active { background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 16%, transparent), color-mix(in srgb, var(--geo-active) 4%, transparent) 72%, transparent); }
-[data-theme="dark"] .blueprint-line { stroke: color-mix(in srgb, var(--ink) 62%, transparent); }
+[data-theme="dark"] .blueprint-line { stroke: color-mix(in srgb, var(--ink) 72%, transparent); }
+[data-theme="dark"] .blueprint-surface { fill: color-mix(in srgb, var(--panel-solid) 78%, transparent); }
 [data-theme="dark"] .blueprint-muted { stroke: color-mix(in srgb, var(--line) 90%, transparent); }
 [data-theme="dark"] .project-blueprint text { fill: var(--dim); }
 
-@media (max-width: 860px) {
-  .project-command { grid-template-columns: 1fr auto; }
-  .project-hint { display: none; }
-  .project-showcase { height: auto; grid-template-columns: 1fr; gap: 16px; }
-  .project-index { height: 500px; }
-  .project-presentation { min-height: 520px; grid-template-rows: 52px 220px minmax(0, 1fr) auto; }
+@media (max-width: 900px) {
+  .sphere-meta { grid-template-columns: 1fr; gap: 10px; padding-top: 14px; }
+  .sphere-plate { width: min(92vw, 860px); }
+  .sphere-rows { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .sphere-grid { padding-top: 72px; }
 }
-
+@media (max-width: 768px) {
+  .sphere-colophon { display: none; }
+  .sphere-headline { font-size: clamp(20px, 5vw, 30px); }
+}
+@media (max-width: 640px) {
+  .projects-fit { --hw: min(84vw, 360px); --pad: clamp(12px, 4vw, 18px); }
+  .sphere-cue { display: none; }
+  .sphere-plate { width: 100%; max-width: 560px; }
+  .sphere-meta h3 { font-size: clamp(20px, 5.6vw, 26px); }
+  .project-lead { font-size: 12.5px; line-height: 1.58; }
+  .sphere-close { top: 8px; right: 8px; }
+  .sphere-rows { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sphere-name strong { font-size: 12px; }
+  .sphere-tile .sphere-name strong { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .projects-fit { --hw: min(88vw, 320px); }
+  .sphere-rows { grid-template-columns: 1fr; }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .sphere-colophon, .sphere-cue { display: none; }
+  .sphere-headline { font-size: clamp(18px, 4.8vh, 28px); }
+  .sphere-lit { padding-top: 36px; }
+  .sphere-plate { width: min(58vw, 860px); }
+}
 @media (max-width: 720px) {
-  .project-index { height: 444px; }
-  .project-index-head, .project-presentation-head { height: 44px; padding: 0 13px; }
-  .project-index-cursor { top: 0; height: 58px; transform: translateY(calc(var(--active-index) * 58px)); }
-  .project-index-item { height: 58px; grid-template-columns: 30px minmax(0, 1fr) 12px; gap: 8px; padding: 0 13px; }
-  .project-index-copy strong { font-size: 12px; }
-  .project-index-copy small { font-size: 7.5px; }
-  .project-index-foot { height: 52px; padding: 0 13px; }
-  .project-presentation { min-height: 520px; grid-template-rows: 44px 190px minmax(0, 1fr) auto; }
-  .project-presentation-copy { padding: 14px 15px 12px; overflow: visible; }
-  .project-presentation-copy h2 { font-size: 18px; }
-  .project-presentation-copy > p:last-child { -webkit-line-clamp: 5; font-size: 12.5px; }
-  .project-presentation-foot { align-items: flex-end; padding: 11px 14px; }
-  .project-tech i { font-size: 7.5px; }
-  .project-open { font-size: 7px; }
   .project-blueprint text { font-size: 7px; }
-  .project-visual-index { font-size: 82px; }
 }
 /* ============ EDUCATION ============ */
 .edu-list { max-width: 940px; }

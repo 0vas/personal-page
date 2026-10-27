@@ -51,7 +51,9 @@ export const STRINGS = {
       label: "Projects", title: "PROJECTS", kicker: "03 // OPEN SOURCE CONTROL ROOM",
       index: "SOURCE INDEX", blueprint: "LIVE BLUEPRINT", selected: "SELECTED SOURCE",
       technologies: "TECHNOLOGIES", mode: "VISUAL MODE",
-      hint: "SELECT A SOURCE · ↑↓ HOME END", all: "ALL REPOSITORIES", view: "OPEN REPOSITORY",
+      hint: "DRAG TO ROTATE", all: "ALL REPOSITORIES", view: "OPEN REPOSITORY",
+      sphere: ["I", "Build", "in", "the", "Open"],
+      drag: "Drag to rotate", grid: "Toggle grid view", close: "Close", field: "Open source",
     },
     education: { label: "Education", title: "EDUCATION", kicker: "04 // ACADEMIC RECORD" },
     certifications: {
@@ -128,7 +130,9 @@ export const STRINGS = {
       label: "Proyectos", title: "PROYECTOS", kicker: "03 // SALA DE CONTROL OPEN SOURCE",
       index: "ÍNDICE DE FUENTES", blueprint: "PLANO EN VIVO", selected: "FUENTE SELECCIONADA",
       technologies: "TECNOLOGÍAS", mode: "MODO VISUAL",
-      hint: "SELECCIONA UNA FUENTE · ↑↓ INICIO FIN", all: "TODOS LOS REPOSITORIOS", view: "ABRIR REPOSITORIO",
+      hint: "ARRASTRA PARA GIRAR", all: "TODOS LOS REPOSITORIOS", view: "ABRIR REPOSITORIO",
+      sphere: ["Construyo", "en", "abierto"],
+      drag: "Arrastra para girar", grid: "Alternar vista de rejilla", close: "Cerrar", field: "Código abierto",
     },
     education: { label: "Educación", title: "EDUCACIÓN", kicker: "04 // EXPEDIENTE ACADÉMICO" },
     certifications: {

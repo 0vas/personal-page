@@ -107,7 +107,7 @@ describe("Global", () => {
     expect(css).toMatch(/\.chrome-top-titled \.ct-left \.rule\s*\{[^}]*margin-bottom:\s*18px;/s);
     expect(css).toMatch(/\.stage\s*\{[^}]*--stage-top:\s*clamp\(120px, 19vh, 190px\);[^}]*padding:\s*var\(--stage-top\) 0 86px;/s);
     expect(css).toMatch(/\.stage-titled\s*\{[^}]*--stage-top:\s*clamp\(150px, 17vh, 166px\);/s);
-    expect(css).toMatch(/\.project-command\s*\{[^}]*align-items:\s*start;/s);
+    expect(css).toMatch(/\.projects-stage\s*\{[^}]*position:\s*sticky;\s*top:\s*0;/s);
     expect(css).toMatch(/\.tour-command\s*\{[^}]*align-items:\s*start;/s);
     expect(css).not.toMatch(/\.chrome-top\[data-screen="(?:contact|certifications)"\]\s*\{[^}]*padding-top:/s);
     expect(css).not.toMatch(/\.stage\[data-screen="(?:contact|certifications)"\]\s*\{[^}]*--stage-top:/s);
@@ -457,31 +457,44 @@ describe("Projects", () => {
       expect(["github.com", "0vas.github.io"]).toContain(new URL(project.url).hostname);
     }
   });
-  it("P3/P4/P6 — source index is accessible, atomic and reduced-motion safe", () => {
+  it("P3/P4/P6 — the sphere keeps its title on the ring center and stays reduced-motion safe", () => {
     const source = readFileSync(resolve(ROOT, "src/screens/Projects.jsx"), "utf8");
     const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
-    expect(source).toContain("project-showcase");
-    expect(source).toContain("project-index");
-    expect(source).toContain("project-visual");
+    expect(source).toContain('id="headline"');
+    expect(source).toContain("Math.PI * (3 - Math.sqrt(5))");
+    expect(source).toContain("translateZ(${st.camZ}px) rotateY(${sy}deg) rotateX(${sx}deg)");
+    expect(source).toContain("const TITLE_Z = 1.08");
+    expect(source).toContain("rotateX(${-sx}deg) rotateY(${-sy}deg) translateZ(${st.R * TITLE_Z}px)");
+    expect(source).not.toContain("translate(-50%");
+    expect(source).toContain("requestAnimationFrame");
+    expect(source).toContain("const IDLE_YAW = 6");
+    expect(source).toContain("st.spin += IDLE_YAW * dt");
+    expect(source).toContain("prefers-reduced-motion");
+    expect(css).not.toMatch(/\.sphere-name strong\s*\{[^}]*line-clamp/s);
     expect(source).toContain("ProjectBlueprint");
     expect(source).toContain('type === "workflow"');
-    expect(source).toContain("list.scrollTop");
-    expect(css).toMatch(/\.project-index-list\s*\{[^}]*overflow-y:\s*auto/s);
-    expect(source).toContain('aria-pressed={i === idx}');
-    expect(source).toContain('aria-controls="project-presentation"');
+    expect(source).toContain('role="dialog"');
     expect(source).toContain('aria-live="polite"');
-    expect(source).toContain("ArrowDown");
-    expect(source).toContain("ArrowUp");
-    expect(source).toContain("Home");
-    expect(source).toContain("End");
+    expect(source).toContain("aria-pressed={grid}");
     expect(source).toContain("stopPropagation");
+    expect(source).toContain("Escape");
+    expect(source).toContain("project-lead");
+    expect(source).not.toContain("blueprint-plate");
+    expect(source).not.toContain("blueprint-drift");
+    expect(css).not.toContain("projectSweep");
     expect(source).not.toContain("project-topology");
     expect(source).not.toContain("project-inspector");
     expect(source).not.toContain("AnimatePresence");
     expect(source).not.toContain('mode="wait"');
     expect(source).not.toContain("fetch(");
-    expect(css).toContain(".project-index-item:focus-visible");
+    expect(source).not.toContain("ethanvale");
+    expect(source).not.toContain("cloudfront");
+    expect(css).toMatch(/\.sphere-headline\s*\{[^}]*margin-left:\s*calc\(var\(--hw\)\s*\/\s*-2\)/s);
+    expect(css).toMatch(/\.sphere-headline \.inner\s*\{[^}]*transform:\s*translateY\(-50%\)/s);
+    expect(css).toMatch(/\.sphere-card\s*\{[^}]*margin-left:\s*calc\(var\(--cw\)\s*\/\s*-2\)/s);
+    expect(css).toContain(".sphere-card:focus-visible");
     expect(css).toMatch(/prefers-reduced-motion:[\s\S]*\.blueprint-signal/);
+    expect(css).toMatch(/prefers-reduced-motion:[\s\S]*\.sphere-word/);
   });
 });
 

@@ -13,8 +13,7 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 ### Added
 - **Hyperion joins Projects:** `0vas/hyperion` is the seventh repository, with
   its own workflow blueprint. The open link goes to the live canvas at
-  https://0vas.github.io/hyperion/. The source index scrolls inside the panel
-  so the new row stays reachable.
+  https://0vas.github.io/hyperion/.
 - **UNI education highlights the Tesis con Impacto prize:** a gold line on the
   Systems Engineering record states the award for the best faculty research and
   Top 4 at the university, in English and Spanish.
@@ -25,6 +24,16 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   official broadcast frame ship with the entries, and the talk count is now 11.
 
 ### Changed
+- **Projects is a source sphere in the site palette:** the seven repositories
+  sit on a Fibonacci ring as theme plates, each with its motif and a readable
+  name, shown in full in a short band under the motif. "I Build in the Open" stays on that same center, in the
+  page ink, and no longer fades out. It stays in front of the cards. The ring
+  is sized so every plate and the headline stay inside the stage, with clear
+  space between the plates. Left alone
+  it turns slowly; drag still takes
+  over, and a short scroll of this screen dollies in. A card opens its
+  blueprint, note and repository link. The grid is the same named plates.
+  Reduced motion holds the words and the finished motif, still.
 - **Speaking chronology stays reachable at 11 talks:** the fixed desktop roster
   scrolls inside its panel and brings the active event into view without moving
   the page. Indices use a real two-digit pad, so the counter reads `01 / 11`
@@ -32,9 +41,10 @@ this project uses loose [Semantic Versioning](https://semver.org/).
 - **Every titled route now shares Certifications' compact title spacing:** Career,
   Speaking, Projects, Education, Certifications and Contact use the same 24px
   desktop chrome inset, 18px rule gap and 150–166px chrome-safe content reserve.
-  Speaking and Projects also top-align their command kickers instead of centring
-  them 12px lower. Profile's untitled opening remains unchanged, and Contact
-  remains viewport-locked without scroll.
+  Speaking top-aligns its command kicker. Projects fills that same boundary
+  from the top with the source sphere and no longer has a separate command row.
+  Profile's untitled opening remains unchanged, and Contact remains
+  viewport-locked without scroll.
 
 ### Fixed
 - **Globe venue plates no longer cover the lock-on:** the active name plate
