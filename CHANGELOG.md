@@ -24,6 +24,11 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   official broadcast frame ship with the entries, and the talk count is now 11.
 
 ### Changed
+- **Certifications paints the finished atlas immediately.** The 62-cell wheel
+  no longer plays an intro sweep or attaches an SVG shadow filter to every
+  sector; the existing deck still supplies the lift, and drill and roll-up
+  keep their expansion. Hover updates without a shadow tween, and the
+  ambient glow pulses with opacity instead of a filter.
 - **Projects is a source sphere in the site palette:** the seven repositories
   sit on a Fibonacci ring as theme plates, each with its motif and a readable
   name, shown in full in a short band under the motif. "I Build in the Open" stays on that same center, in the

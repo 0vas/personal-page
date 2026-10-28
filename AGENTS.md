@@ -157,7 +157,8 @@ These were settled through iteration; changing them needs the owner's OK.
    credential marks share the corona midpoint, and both marks use the same
    compact 22px artwork box. Its theme-aware diagonal faces,
    displaced circular deck and restrained neon rim create shallow isometric depth
-   without duplicating the chart. Category focus uses native `rootToNode`
+   without duplicating the chart. The overview paints that finished frame at
+   once, and the SVG sectors do not carry per-cell shadow filters. Category focus uses native `rootToNode`
    expansion; ECharts' ancestor roll-up, both BACK controls and Escape all reset
    React overlays to overview, and become instant under reduced motion. Do not
    replace this with a second chart or a container-only transition. Keep enough

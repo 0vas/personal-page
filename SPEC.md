@@ -253,8 +253,11 @@ Run `npm test` after every change; every box must stay green before shipping.
   off-DOM through a shared result cache, so missing files never flash a
   broken-image icon or repeat the same extension cascade on every focus. Azure's
   eight certifications remain wired with badge slugs.
-- **CE10** — ECharts owns the radial motion: the stable tree uses expansion plus
-  animated update duration/easing for drill and roll-up. Reduced-motion keeps the
+- **CE10** — ECharts owns the radial motion: the overview paints its finished
+  frame immediately (`animationDuration: 0`) and the stable tree uses expansion
+  plus animated update duration/easing for drill and roll-up. Sector faces keep
+  their diagonal gradient; the CSS deck owns the lift, so the SVG sectors do
+  not carry per-cell shadow filters. Reduced-motion keeps the
   same two states but resolves them instantly. The former whole-container
   scale/fade substitute is not used. If theme, language, the compact breakpoint
   or reduced-motion preference changes, the chart and contextual registry reset

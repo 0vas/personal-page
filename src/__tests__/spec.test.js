@@ -593,7 +593,9 @@ describe("Certifications", () => {
     const wrapper = readFileSync(resolve(ROOT, "src/components/EChart.jsx"), "utf8");
     expect(source).toContain("useReducedMotion");
     expect(source).toContain('animationType: "expansion"');
+    expect(source).toContain("animationDuration: 0");
     expect(source).toContain("animationDurationUpdate");
+    expect(source).not.toContain("shadowBlur");
     expect(source).toContain("animation: !reduceMotion");
     expect(source).not.toContain("wrapRef.current.animate(");
     expect(source).toMatch(

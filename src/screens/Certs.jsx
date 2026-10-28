@@ -316,9 +316,6 @@ export default function Certs({ theme, lang }) {
           color: sectorFill(category.color, theme),
           opacity: 1,
           borderRadius: 2,
-          shadowBlur: theme === "dark" ? 11 : 7,
-          shadowOffsetY: theme === "dark" ? 5 : 4,
-          shadowColor: rgba(category.color, theme === "dark" ? 0.34 : 0.18),
         },
         label: { show: false },
         children: category.certs.map((cert, index) => ({
@@ -348,7 +345,7 @@ export default function Certs({ theme, lang }) {
           textBorderWidth: compact ? 2.5 : 3,
         },
         emphasis: {
-          itemStyle: { opacity: 1, shadowBlur: 18, shadowColor: rgba(category.color, theme === "dark" ? 0.5 : 0.28) },
+          itemStyle: { opacity: 1 },
           label: { show: true, color: colors.ink, fontWeight: 700 },
         },
         })),
@@ -402,8 +399,6 @@ export default function Certs({ theme, lang }) {
               color: sectorFill(colors.accent, theme, 0.76),
               borderColor: rgba(colors.accent, theme === "dark" ? 0.72 : 0.48),
               borderWidth: 1.5,
-              shadowBlur: theme === "dark" ? 18 : 10,
-              shadowColor: colors.accentSoft,
             },
           },
           {
@@ -420,8 +415,12 @@ export default function Certs({ theme, lang }) {
         ],
         animation: !reduceMotion,
         animationType: "expansion",
-        animationDuration: reduceMotion ? 0 : 680,
+        // The overview arrives as the finished atlas. Drill and roll-up still
+        // use the update duration below; an intro sweep would redraw every
+        // gradient sector before the first frame is usable.
+        animationDuration: 0,
         animationDurationUpdate: reduceMotion ? 0 : 760,
+        stateAnimation: { duration: 0 },
         animationEasing: "cubicOut",
         animationEasingUpdate: "cubicInOut",
       }],
