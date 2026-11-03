@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import {
   TALKS, CERT_CATEGORIES, CERT_TOTAL, CAREER_ORDER, CAREER_GROUPS, CAREER_DETAILS,
-  EDUCATION, PROFILE, PROJECTS, LINKS, SKILLS, READOUTS,
+  EDUCATION, PROFILE, BIO, ROLES, PROJECTS, LINKS, SKILLS, READOUTS,
 } from "../data/content.js";
 import { STRINGS } from "../i18n.js";
 
@@ -210,6 +210,27 @@ describe("Profile", () => {
     expect(PROFILE.kicker.en).toContain("386940");
     expect(PROFILE.kicker.es).toContain("386940");
   });
+  it("PF2b — current practice replaces a Credicorp employment claim, and English is stated", () => {
+    expect(ROLES.en[0]).toBe("PLATFORM ENGINEERING");
+    expect(ROLES.es[0]).toBe("INGENIERÍA DE PLATAFORMAS");
+    expect(PROFILE.lede.en).toMatch(/platform engineering/i);
+    expect(PROFILE.lede.en).toMatch(/site reliability/i);
+    expect(PROFILE.lede.en).toMatch(/forward-deployed/i);
+    expect(PROFILE.lede.en).toMatch(/English and Spanish/);
+    expect(PROFILE.lede.es).toMatch(/ingeniería de plataformas/i);
+    expect(PROFILE.lede.es).toMatch(/site reliability/i);
+    expect(PROFILE.lede.es).toMatch(/forward deployed/i);
+    expect(PROFILE.lede.es).toMatch(/inglés y español/);
+    expect(PROFILE.lede.en).not.toMatch(/at Credicorp/i);
+    expect(PROFILE.lede.es).not.toMatch(/en Credicorp/i);
+    expect(BIO[0].en).toMatch(/platform engineering/i);
+    expect(BIO[0].en).toMatch(/site reliability/i);
+    expect(BIO[0].en).toMatch(/forward-deployed/i);
+    expect(BIO[0].en).not.toMatch(/of Credicorp/i);
+    expect(BIO[1].en).toMatch(/built at Credicorp/);
+    expect(STRINGS.en.contact.meta).toContain("ENGLISH · SPANISH");
+    expect(STRINGS.es.contact.meta).toContain("INGLÉS · ESPAÑOL");
+  });
   it("PF3 — one minimal vanilla two-pane capability directory replaces facts and the skill-chip grid", () => {
     const profile = readFileSync(resolve(ROOT, "src/screens/Profile.jsx"), "utf8");
     const matrix = readFileSync(resolve(ROOT, "src/components/CapabilityMatrix.jsx"), "utf8");
@@ -273,10 +294,14 @@ describe("Career", () => {
     expect(CAREER_ORDER[CAREER_ORDER.length - 1]).toBe("acm");
     expect(CAREER_ORDER).toContain("lead");
   });
-  it("C4 — flagship lead role flagged ACTIVE and in the professional group", () => {
-    expect(CAREER_DETAILS.lead.status.en).toBe("ACTIVE");
+  it("C4 — flagship lead role stays expanded and is no longer marked active", () => {
+    expect(CAREER_DETAILS.lead.status).toBeUndefined();
+    expect(CAREER_DETAILS.lead.date.en).toBe("FEB 2026 — NOV 2026");
+    expect(CAREER_DETAILS.lead.date.es).toBe("FEB 2026 — NOV 2026");
+    const career = readFileSync(resolve(ROOT, "src/screens/Career.jsx"), "utf8");
+    expect(career).toContain('useState("lead")');
     const pro = CAREER_GROUPS.find((g) => g.id === "professional");
-    expect(pro.dids).toContain("lead");
+    expect(pro.dids[0]).toBe("lead");
   });
   it("C5 — grouped into professional / complementary / academic sub-sections", () => {
     expect(CAREER_GROUPS.map((g) => g.id)).toEqual(["professional", "complementary", "academic"]);

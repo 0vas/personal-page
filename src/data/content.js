@@ -21,14 +21,14 @@ export const LINKS = {
 
 export const ROLES = {
   en: [
-    "PLATFORM PRODUCT LEAD — CREDICORP",
+    "PLATFORM ENGINEERING",
     "DEVSECOPS ARCHITECT",
     "INTERNATIONAL SPEAKER",
     "DEVOPS INSTITUTE AMBASSADOR",
     "AI & ROBOTICS RESEARCHER",
   ],
   es: [
-    "PLATFORM PRODUCT LEAD — CREDICORP",
+    "INGENIERÍA DE PLATAFORMAS",
     "ARQUITECTO DEVSECOPS",
     "SPEAKER INTERNACIONAL",
     "EMBAJADOR DEL DEVOPS INSTITUTE",
@@ -50,19 +50,19 @@ export const PROFILE = {
     es: "MODELO 0VAS — OPERATIVO REGISTRADO · LIMA, PERÚ · CIP 386940",
   },
   lede: {
-    en: "Systems Engineer — top of class, GPA 4.0 — leading platform strategy, DevSecOps and Generative AI adoption at Credicorp, the largest financial group in Peru. DevOps Institute Ambassador with talks across Latin America, Europe, the US and Asia.",
-    es: "Ingeniero de Sistemas — primer puesto, GPA 4.0 — lidera la estrategia de plataformas, DevSecOps y la adopción de IA Generativa en Credicorp, el grupo financiero más grande del Perú. Embajador del DevOps Institute con charlas en Latinoamérica, Europa, EE. UU. y Asia.",
+    en: "Systems Engineer — top of class, GPA 4.0 — scaling DevSecOps through platform engineering, site reliability and forward-deployed work beside the teams who run it. DevOps Institute Ambassador, in English and Spanish, with talks across Latin America, Europe, the US and Asia.",
+    es: "Ingeniero de Sistemas — primer puesto, GPA 4.0 — escala DevSecOps mediante ingeniería de plataformas, site reliability y trabajo forward deployed junto a los equipos que lo operan. Embajador del DevOps Institute, en inglés y español, con charlas en Latinoamérica, Europa, EE. UU. y Asia.",
   },
 };
 
 export const BIO = [
   {
-    en: "I lead the platform strategy of Credicorp, defining golden paths and self-service capabilities for engineering teams across the group. My work sits at the intersection of platform engineering, DevSecOps and Generative AI — making thousands of engineers faster, safer and measurably more productive.",
-    es: "Lidero la estrategia de plataformas de Credicorp, definiendo golden paths y capacidades de autoservicio para los equipos de ingeniería del grupo. Mi trabajo une la ingeniería de plataformas, DevSecOps e IA Generativa — haciendo a miles de ingenieros más rápidos, seguros y medibles en su productividad.",
+    en: "I help organizations scale DevSecOps and a secure SDLC in a sustainable, measurable way. Platform engineering sets the golden paths and the self-service; site reliability keeps them healthy in production; forward-deployed work puts them in the hands of the teams who run them. Generative AI comes in only where it truly adds value.",
+    es: "Ayudo a las organizaciones a escalar DevSecOps y un SDLC seguro de forma sostenible y medible. La ingeniería de plataformas define los golden paths y el autoservicio; site reliability los mantiene sanos en producción; el trabajo forward deployed los pone en manos de los equipos que los operan. La IA Generativa entra solo donde de verdad aporta.",
   },
   {
-    en: "The record includes a Generative AI adoption program that increased delivery speed by 22%, an InnerSource initiative connecting 15 companies and 8,000+ developers, and technical governance of DevSecOps at corporate scale.",
-    es: "El expediente incluye un programa de adopción de IA Generativa que aumentó la velocidad de entrega en 22%, una iniciativa InnerSource que conecta 15 empresas y más de 8,000 desarrolladores, y la gobernanza técnica de DevSecOps a escala corporativa.",
+    en: "The record, built at Credicorp, includes a Generative AI adoption program that increased delivery speed by 22%, an InnerSource initiative connecting 15 companies and 8,000+ developers, and technical governance of DevSecOps at corporate scale.",
+    es: "El expediente, construido en Credicorp, incluye un programa de adopción de IA Generativa que aumentó la velocidad de entrega en 22%, una iniciativa InnerSource que conecta 15 empresas y más de 8,000 desarrolladores, y la gobernanza técnica de DevSecOps a escala corporativa.",
   },
   {
     en: "Outside the enterprise: research on AI applied to humanoid robotics, university teaching from 2020 to 2024, and a background in video game development — the origin of this interface.",
@@ -78,12 +78,11 @@ export const CAREER_DETAILS = {
     logo: "credicorp",
     title: { en: "Platform Product Lead", es: "Platform Product Lead" },
     org: "CREDICORP",
-    date: { en: "FEB 2026 — PRESENT", es: "FEB 2026 — PRESENTE" },
-    status: { en: "ACTIVE", es: "ACTIVO" },
+    date: { en: "FEB 2026 — NOV 2026", es: "FEB 2026 — NOV 2026" },
     notes: [
-      { en: "Define and lead the platform strategy and roadmap — self-service capabilities and golden paths across the group.", es: "Define y lidera la estrategia y el roadmap de plataformas — capacidades de autoservicio y golden paths para todo el grupo." },
-      { en: "Lead a team of expert platform engineers designing, standardizing and scaling shared platform capabilities.", es: "Lidera un equipo de ingenieros de plataforma expertos que diseñan, estandarizan y escalan capacidades compartidas." },
-      { en: "Drive the evolution from technical governance to a product-oriented platform model aligned with developer experience, security and operational efficiency.", es: "Impulsa la evolución de la gobernanza técnica hacia un modelo de plataforma como producto, alineado con developer experience, seguridad y eficiencia operativa." },
+      { en: "Defined and led the platform strategy and roadmap — self-service capabilities and golden paths across the group.", es: "Definió y lideró la estrategia y el roadmap de plataformas — capacidades de autoservicio y golden paths para todo el grupo." },
+      { en: "Led a team of expert platform engineers designing, standardizing and scaling shared platform capabilities.", es: "Lideró un equipo de ingenieros de plataforma expertos que diseñan, estandarizan y escalan capacidades compartidas." },
+      { en: "Drove the evolution from technical governance to a product-oriented platform model aligned with developer experience, security and operational efficiency.", es: "Impulsó la evolución de la gobernanza técnica hacia un modelo de plataforma como producto, alineado con developer experience, seguridad y eficiencia operativa." },
     ],
     keys: [
       { en: "Platform as a product", es: "Plataforma como producto" },

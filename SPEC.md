@@ -66,6 +66,13 @@ Run `npm test` after every change; every box must stay green before shipping.
 ## Profile
 - **PF1** — Full name shows the three parts OSCAR / LOBATON / SALAS.
 - **PF2** — CIP 386940 appears in the Profile kicker.
+- **PF2b** — The Profile lede and opening biography describe current practice:
+  platform engineering, site reliability and forward-deployed work, plus
+  DevSecOps. They do not present Credicorp as a current employer; Credicorp
+  remains past scale in the biography and in the career record. The lede says
+  Oscar works in English and Spanish, and Contact metadata repeats
+  `ENGLISH · SPANISH` / `INGLÉS · ESPAÑOL`. The rotating primary role is
+  `PLATFORM ENGINEERING` / `INGENIERÍA DE PLATAFORMAS`.
 - **PF3** (visual) — The static six-row personal fact ledger and the separate
   skill-chip grid are removed. One minimal, vanilla HTML/CSS **two-pane
   Capability Directory** replaces both inside the personal-file column — no
@@ -114,7 +121,9 @@ Run `npm test` after every change; every box must stay green before shipping.
 - **C1** — Career is a vertical timeline; oldest role overall (`acm`) is last in `CAREER_ORDER`.
 - **C2** — Career contains **no education** nodes (no `uni`, `hanyang`, `mit`).
 - **C3** — Every career item has: logo (JPEG), title(en/es), org, date(en/es), notes[], keys[].
-- **C4** — Flagship role `lead` is flagged ACTIVE and lives in the `professional` group.
+- **C4** — Flagship role `lead` stays first in the `professional` group and
+  expanded by default. It is no longer flagged ACTIVE: the Credicorp platform
+  lead role has ended, so its date is FEB 2026 — NOV 2026 and `status` is absent.
 - **C5** — Career is split into 3 sub-sections: `professional`, `complementary`
   (dss, devopsinstitute, ailab), `academic` (nixvoid, gamedevs, acm); group names bilingual.
 

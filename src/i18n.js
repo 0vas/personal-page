@@ -75,7 +75,7 @@ export const STRINGS = {
       label: "Contact", title: "CONTACT", kicker: "END OF FILE // CHANNEL OPEN",
       heading1: "LET'S BUILD", heading2: "WHAT'S NEXT.",
       sub: "Platform engineering, applied AI, or a stage to share — the channel is open.",
-      meta: ["© 2026 OSCAR LOBATON — 0VAS.COM", "BASE · LIMA, PERU · 12°02′S 77°01′W", "CIP N° 386940 — REGISTERED ENGINEER"],
+      meta: ["© 2026 OSCAR LOBATON — 0VAS.COM", "BASE · LIMA, PERU · 12°02′S 77°01′W", "CIP N° 386940 — REGISTERED ENGINEER", "ENGLISH · SPANISH"],
       musicBy: "Music: “Arcano” —",
     },
     stats: {
@@ -154,7 +154,7 @@ export const STRINGS = {
       label: "Contacto", title: "CONTACTO", kicker: "FIN DEL EXPEDIENTE // CANAL ABIERTO",
       heading1: "CONSTRUYAMOS", heading2: "LO QUE SIGUE.",
       sub: "Ingeniería de plataformas, IA aplicada o un escenario que compartir — el canal está abierto.",
-      meta: ["© 2026 OSCAR LOBATON — 0VAS.COM", "BASE · LIMA, PERÚ · 12°02′S 77°01′O", "CIP N° 386940 — INGENIERO COLEGIADO"],
+      meta: ["© 2026 OSCAR LOBATON — 0VAS.COM", "BASE · LIMA, PERÚ · 12°02′S 77°01′O", "CIP N° 386940 — INGENIERO COLEGIADO", "INGLÉS · ESPAÑOL"],
       musicBy: "Música: «Arcano» —",
     },
     stats: {

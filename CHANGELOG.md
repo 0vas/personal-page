@@ -24,6 +24,11 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   official broadcast frame ship with the entries, and the talk count is now 11.
 
 ### Changed
+- **The profile no longer presents Credicorp as a current role.** The lede and
+  biography describe platform engineering, site reliability and forward-deployed
+  work alongside DevSecOps, and they state that Oscar works in English and
+  Spanish. Contact repeats that as `ENGLISH · SPANISH`. The Credicorp platform
+  lead stays on the timeline as FEB 2026 — NOV 2026, without an ACTIVE badge.
 - **Certifications paints the finished atlas immediately.** The 62-cell wheel
   no longer plays an intro sweep or attaches an SVG shadow filter to every
   sector; the existing deck still supplies the lift, and drill and roll-up

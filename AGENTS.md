@@ -29,8 +29,9 @@ This section itself is the standing rule that makes documentation automatic.
 
 ## 1. What this is
 
-Personal portfolio of **Oscar Lobaton Salas** — Platform Product Lead @ Credicorp,
-DevSecOps architect, DevOps Institute ambassador, international speaker.
+Personal portfolio of **Oscar Lobaton Salas** — platform engineering, DevSecOps
+and site reliability, DevOps Institute ambassador, international speaker.
+He works in English and Spanish. Credicorp is past employment, not a current role.
 Deploys to **0vas.com** (GitHub Pages).
 
 **Aesthetic:** the in-game menu system of *Detroit: Become Human* — washed light
@@ -94,7 +95,8 @@ public/assets/             # drop-in images (see ASSETS.md); category marks may 
   `#/profile` is canonical; `#/home` remains a legacy alias.
 - **Career** — **vertical timeline**, newest→oldest by start date (`CAREER_ORDER`),
   accordion; flagship `lead` role expanded by default; org logo per role.
-  Career = professional roles ONLY (education never appears here).
+  The Credicorp platform-lead role is closed (no ACTIVE badge). Career =
+  professional roles ONLY (education never appears here).
 - **Speaking** — **no horizontal scroll**: a photo-dominant Mission Reel with a
   vertical roster and an exact-venue, draggable Natural Earth globe. Venue
   acquisition is cyan; SVG country marks and the 2026→2024 chronology remain.
