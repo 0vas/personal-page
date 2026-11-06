@@ -29,9 +29,10 @@ This section itself is the standing rule that makes documentation automatic.
 
 ## 1. What this is
 
-Personal portfolio of **Oscar Lobaton Salas** — platform engineering, DevSecOps
-and site reliability, DevOps Institute ambassador, international speaker.
-He works in English and Spanish. Credicorp is past employment, not a current role.
+Personal portfolio of **Oscar Lobaton Salas** — SRE and Forward Deployed
+Engineer at Cobre, platform engineering, DevSecOps, DevOps Institute
+ambassador, international speaker. He works in English and Spanish. Credicorp
+is past employment, not a current role.
 Deploys to **0vas.com** (GitHub Pages).
 
 **Aesthetic:** the in-game menu system of *Detroit: Become Human* — washed light
@@ -87,7 +88,8 @@ public/assets/             # drop-in images (see ASSETS.md); category marks may 
 
 - **Profile** — hero (name OSCAR / LOBATON / SALAS), stable code-typed rotating
   roles, lightweight scan/glitch accents and a merged personal file. Its bio is
-  paired with one vanilla (HTML/CSS, no ECharts) two-pane Capability Directory:
+  a fanned hand of four untitled story cards. The current part sits upright
+  in the center; a click sends it to the back of the fan. It is paired with one vanilla (HTML/CSS, no ECharts) two-pane Capability Directory:
   a left roster of six equal domain rows and a right pane listing the selected
   domain's technologies as plain chips (all 35 names across the six domains).
   Counts remain factual text, never visual scores. The old fact ledger,

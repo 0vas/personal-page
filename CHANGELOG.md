@@ -24,11 +24,18 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   official broadcast frame ship with the entries, and the talk count is now 11.
 
 ### Changed
-- **The profile no longer presents Credicorp as a current role.** The lede and
-  biography describe platform engineering, site reliability and forward-deployed
-  work alongside DevSecOps, and they state that Oscar works in English and
-  Spanish. Contact repeats that as `ENGLISH · SPANISH`. The Credicorp platform
-  lead stays on the timeline as FEB 2026 — NOV 2026, without an ACTIVE badge.
+- **Profile Core is a fanned hand of untitled story cards.** Four parts sit
+  in an arc. The current part is upright in the center; a click brings the
+  next forward and sends that card to the back. The parts are SRE and FDE at
+  Cobre, the previous Credicorp platform role, InnerSource with the +22% and
+  −75% results, then the DevOps Institute ambassadorship, speaking, robotics
+  research, UNI teaching and game-development origin. Each part now carries a
+  little more of that record: the platform roadmap at Credicorp, Pacífico
+  Seguros and Prima AFP beside the +22% and −75%, and the UNI teaching in both
+  languages. Reduced motion swaps instantly. The lede still says he works in
+  English and Spanish, and Contact
+  repeats `ENGLISH · SPANISH`. The Credicorp platform lead stays on the
+  timeline as FEB 2026 — NOV 2026, without an ACTIVE badge.
 - **Certifications paints the finished atlas immediately.** The 62-cell wheel
   no longer plays an intro sweep or attaches an SVG shadow filter to every
   sector; the existing deck still supplies the lift, and drill and roll-up

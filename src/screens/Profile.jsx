@@ -1,8 +1,60 @@
+import { useState } from "react";
 import { Micro, useTyped } from "../components/bits.jsx";
 import { AssetIcon, Icon } from "../components/Icons.jsx";
 import CapabilityMatrix from "../components/CapabilityMatrix.jsx";
 import { ROLES, LINKS, PROFILE, BIO } from "../data/content.js";
 import { L, STRINGS } from "../i18n.js";
+
+const BIO_FAN = [
+  { fan: 0, z: 4 },
+  { fan: 1, z: 3 },
+  { fan: -1, z: 2 },
+  { fan: 1.7, z: 1 },
+];
+
+function BioDeck({ lang, copy }) {
+  const count = BIO.length;
+  const [front, setFront] = useState(0);
+  const current = BIO[front];
+
+  const advance = () => setFront((index) => (index + 1) % count);
+
+  return (
+    <div className="bio-deck">
+      <ol className="bio-stack">
+        {BIO.map((beat, index) => {
+          const depth = (index - front + count) % count;
+          const place = BIO_FAN[depth];
+          const isFront = depth === 0;
+          return (
+            <li
+              key={beat.index}
+              className={`bio-card${isFront ? " is-front" : ""}`}
+              style={{ "--fan": place.fan, zIndex: place.z }}
+              aria-hidden={isFront ? undefined : true}
+            >
+              {isFront ? (
+                <button
+                  type="button"
+                  className="bio-plate"
+                  onClick={advance}
+                  aria-label={`${L(beat.body, lang)} ${copy.deckHint}`}
+                >
+                  <p className="bio-body">{L(beat.body, lang)}</p>
+                </button>
+              ) : (
+                <div className="bio-plate" inert="">
+                  <p className="bio-body">{L(beat.body, lang)}</p>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      <p className="sr-only" aria-live="polite">{L(current.body, lang)}</p>
+    </div>
+  );
+}
 
 function ProfileBlock({ children, className, style }) {
   return <div className={className} style={style}>{children}</div>;
@@ -83,9 +135,7 @@ export default function Profile({ lang, theme }) {
       <div className="profile-file">
         <div className="profile-bio">
           <ProfileBlock><p className="kicker">{S.profile.fileKicker}</p></ProfileBlock>
-          {BIO.map((paragraph, index) => (
-            <ProfileBlock key={index}><p className="p">{L(paragraph, lang)}</p></ProfileBlock>
-          ))}
+          <BioDeck lang={lang} copy={S.profile} />
         </div>
         <ProfileBlock className="profile-capabilities">
           <CapabilityMatrix lang={lang} copy={S.profile} />

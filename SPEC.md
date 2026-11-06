@@ -66,13 +66,19 @@ Run `npm test` after every change; every box must stay green before shipping.
 ## Profile
 - **PF1** — Full name shows the three parts OSCAR / LOBATON / SALAS.
 - **PF2** — CIP 386940 appears in the Profile kicker.
-- **PF2b** — The Profile lede and opening biography describe current practice:
-  platform engineering, site reliability and forward-deployed work, plus
-  DevSecOps. They do not present Credicorp as a current employer; Credicorp
-  remains past scale in the biography and in the career record. The lede says
-  Oscar works in English and Spanish, and Contact metadata repeats
-  `ENGLISH · SPANISH` / `INGLÉS · ESPAÑOL`. The rotating primary role is
-  `PLATFORM ENGINEERING` / `INGENIERÍA DE PLATAFORMAS`.
+- **PF2b** — The Profile lede describes platform engineering, site reliability
+  and forward-deployed work, and says Oscar works in English and Spanish.
+  Contact metadata repeats `ENGLISH · SPANISH` / `INGLÉS · ESPAÑOL`. The
+  rotating primary role is `PLATFORM ENGINEERING` / `INGENIERÍA DE PLATAFORMAS`.
+  Profile Core is a fanned hand of four untitled cards. The current part of
+  the story sits upright in the center; the other parts angle out behind it.
+  A click, or Enter/Space on the center card, brings the next part forward
+  and sends the current card to the back of the fan. The parts are SRE and
+  FDE at Cobre, the previous Credicorp platform role, InnerSource with the
+  +22% / −75% results, then the DevOps Institute ambassadorship, speaking,
+  robotics research, UNI teaching and game-development origin. Reduced motion
+  swaps the center card instantly. Credicorp is previous employment there and
+  in the career record, not a current role.
 - **PF3** (visual) — The static six-row personal fact ledger and the separate
   skill-chip grid are removed. One minimal, vanilla HTML/CSS **two-pane
   Capability Directory** replaces both inside the personal-file column — no

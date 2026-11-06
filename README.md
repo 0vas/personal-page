@@ -1,6 +1,6 @@
 # 0vas.com — Personal Page
 
-Personal portfolio of **Oscar Lobaton Salas** — platform engineering, DevSecOps, site reliability and forward-deployed engineering. DevOps Institute Ambassador and international speaker. English and Spanish.
+Personal portfolio of **Oscar Lobaton Salas** — SRE and Forward Deployed Engineer at Cobre. Platform engineering, DevSecOps, DevOps Institute Ambassador and international speaker. English and Spanish.
 
 Interface concept: a **Detroit: Become Human menu system** in violet — light and dark themes, screen-based navigation (no scroll-page), parallelogram highlights with triangle motifs, corner-bracket selectors, and interactive data visualizations.
 

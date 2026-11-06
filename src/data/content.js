@@ -57,16 +57,32 @@ export const PROFILE = {
 
 export const BIO = [
   {
-    en: "I help organizations scale DevSecOps and a secure SDLC in a sustainable, measurable way. Platform engineering sets the golden paths and the self-service; site reliability keeps them healthy in production; forward-deployed work puts them in the hands of the teams who run them. Generative AI comes in only where it truly adds value.",
-    es: "Ayudo a las organizaciones a escalar DevSecOps y un SDLC seguro de forma sostenible y medible. La ingeniería de plataformas define los golden paths y el autoservicio; site reliability los mantiene sanos en producción; el trabajo forward deployed los pone en manos de los equipos que los operan. La IA Generativa entra solo donde de verdad aporta.",
+    index: "01",
+    body: {
+      en: "I work as an SRE and FDE at Cobre. I design reliable systems and deploy them beside the teams that run them in production — platform engineering, DevOps and site reliability, from the first design to the system that stays up.",
+      es: "Trabajo como SRE y FDE en Cobre. Diseño sistemas confiables y los despliego junto a los equipos que los operan en producción — platform engineering, DevOps y site reliability, desde el primer diseño hasta el sistema que se mantiene en pie.",
+    },
   },
   {
-    en: "The record, built at Credicorp, includes a Generative AI adoption program that increased delivery speed by 22%, an InnerSource initiative connecting 15 companies and 8,000+ developers, and technical governance of DevSecOps at corporate scale.",
-    es: "El expediente, construido en Credicorp, incluye un programa de adopción de IA Generativa que aumentó la velocidad de entrega en 22%, una iniciativa InnerSource que conecta 15 empresas y más de 8,000 desarrolladores, y la gobernanza técnica de DevSecOps a escala corporativa.",
+    index: "02",
+    body: {
+      en: "Previously at Credicorp I led the platform as a product. As Platform Product Lead I set the roadmap with a team of platform engineers: self-service, golden paths, Developer Experience, agentic development, security and efficiency.",
+      es: "Antes, en Credicorp, lideré la plataforma como producto. Como Platform Product Lead definí el roadmap con un equipo de ingenieros de plataforma: autoservicio, golden paths, Developer Experience, desarrollo agéntico, seguridad y eficiencia.",
+    },
   },
   {
-    en: "Outside the enterprise: research on AI applied to humanoid robotics, university teaching from 2020 to 2024, and a background in video game development — the origin of this interface.",
-    es: "Fuera de la empresa: investigación en IA aplicada a robótica humanoide, docencia universitaria de 2020 a 2024 y un origen en el desarrollo de videojuegos — de ahí nace esta interfaz.",
+    index: "03",
+    body: {
+      en: "InnerSource connected 15 companies. I advised IDP, VSDP, SEIP, AST, GenAI and Docs as Code. At Pacífico Seguros and Prima AFP, generative AI raised delivery speed +22%, and documentation as code cut search time −75%.",
+      es: "InnerSource conectó 15 empresas. Asesoré IDP, VSDP, SEIP, AST, GenAI y Docs as Code. En Pacífico Seguros y Prima AFP, la IA generativa subió la velocidad de entrega +22% y la documentación como código redujo el tiempo de búsqueda −75%.",
+    },
+  },
+  {
+    index: "04",
+    body: {
+      en: "Official DevOps Institute Ambassador and speaker across Latin America, the US, Europe and Asia. I research AI for humanoid robotics and taught software at UNI for more than four years. Video games came first — they are the origin of this interface.",
+      es: "Embajador Oficial del DevOps Institute y speaker en Latinoamérica, EE. UU., Europa y Asia. Investigo IA para robótica humanoide y enseñé software más de cuatro años en la UNI. Los videojuegos vinieron antes — de ahí nace esta interfaz.",
+    },
   },
 ];
 
