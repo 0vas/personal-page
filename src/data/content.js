@@ -59,8 +59,8 @@ export const BIO = [
   {
     index: "01",
     body: {
-      en: "I work as an SRE and FDE at Cobre. I design reliable systems and deploy them beside the teams that run them in production — platform engineering, DevOps and site reliability, from the first design to the system that stays up.",
-      es: "Trabajo como SRE y FDE en Cobre. Diseño sistemas confiables y los despliego junto a los equipos que los operan en producción — platform engineering, DevOps y site reliability, desde el primer diseño hasta el sistema que se mantiene en pie.",
+      en: "I work as an SRE and FDE at Cobre. I strengthen observability across the platforms and turn reliability into SLOs and SLIs the teams can measure. I also develop, deploy and maintain AI solutions built for SRE, DevOps and platform engineering.",
+      es: "Trabajo como SRE y FDE en Cobre. Robustezco la observabilidad de las plataformas y convierto la confiabilidad en SLOs y SLIs que los equipos pueden medir. También desarrollo, despliego y mantengo soluciones de IA hechas para SRE, DevOps y platform engineering.",
     },
   },
   {
@@ -97,13 +97,14 @@ export const CAREER_DETAILS = {
     date: { en: "NOV 2026 — PRESENT", es: "NOV 2026 — PRESENTE" },
     status: { en: "ACTIVE", es: "ACTIVO" },
     notes: [
-      { en: "Designs reliable systems and deploys them beside the teams that run them in production.", es: "Diseña sistemas confiables y los despliega junto a los equipos que los operan en producción." },
-      { en: "Works across platform engineering, DevOps and site reliability, from the first design to the system that stays up.", es: "Trabaja entre platform engineering, DevOps y site reliability, desde el primer diseño hasta el sistema que se mantiene en pie." },
+      { en: "Strengthens observability across the platforms, so the people who run them can see what production is doing and act on it with confidence.", es: "Robustece la observabilidad de las plataformas, para que quienes las operan vean lo que pasa en producción y actúen con confianza." },
+      { en: "Frames and builds the SLOs and SLIs that turn reliability into a clear target the teams share.", es: "Plantea y construye los SLOs y SLIs que convierten la confiabilidad en un objetivo claro y compartido." },
+      { en: "Develops, deploys and maintains AI solutions made for the daily work of SRE, DevOps and platform engineering.", es: "Desarrolla, despliega y mantiene soluciones de IA hechas para el trabajo diario de SRE, DevOps y platform engineering." },
     ],
     keys: [
-      { en: "Site reliability", es: "Site reliability" },
-      { en: "Forward deployed", es: "Forward deployed" },
-      { en: "Platform engineering", es: "Platform engineering" },
+      { en: "Platform observability", es: "Observabilidad" },
+      { en: "SLOs & SLIs", es: "SLOs y SLIs" },
+      { en: "AI for SRE", es: "IA para SRE" },
     ],
   },
   lead: {

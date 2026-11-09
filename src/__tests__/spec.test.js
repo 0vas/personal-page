@@ -226,6 +226,12 @@ describe("Profile", () => {
     expect(BIO.map((beat) => beat.index)).toEqual(["01", "02", "03", "04"]);
     expect(BIO[0].body.en).toMatch(/SRE and FDE at Cobre/);
     expect(BIO[0].body.es).toMatch(/SRE y FDE en Cobre/);
+    expect(BIO[0].body.en).toMatch(/observability/);
+    expect(BIO[0].body.en).toMatch(/SLOs and SLIs/);
+    expect(BIO[0].body.en).toMatch(/AI solutions/);
+    expect(BIO[0].body.es).toMatch(/observabilidad/);
+    expect(BIO[0].body.es).toMatch(/SLOs y SLIs/);
+    expect(BIO[0].body.es).toMatch(/soluciones de IA/);
     expect(BIO[0].body.en).not.toMatch(/Credicorp/);
     expect(BIO[0].body.es).not.toMatch(/Credicorp/);
     expect(BIO[1].body.en).toMatch(/Previously at Credicorp/);
@@ -321,6 +327,16 @@ describe("Career", () => {
     expect(CAREER_DETAILS.cobre.status.es).toBe("ACTIVO");
     expect(CAREER_DETAILS.cobre.date.en).toBe("NOV 2026 — PRESENT");
     expect(CAREER_DETAILS.cobre.date.es).toBe("NOV 2026 — PRESENTE");
+    const cobreNotes = {
+      en: CAREER_DETAILS.cobre.notes.map((note) => note.en).join(" "),
+      es: CAREER_DETAILS.cobre.notes.map((note) => note.es).join(" "),
+    };
+    expect(cobreNotes.en).toMatch(/observability/);
+    expect(cobreNotes.en).toMatch(/SLOs and SLIs/);
+    expect(cobreNotes.en).toMatch(/AI solutions/);
+    expect(cobreNotes.es).toMatch(/observabilidad/);
+    expect(cobreNotes.es).toMatch(/SLOs y SLIs/);
+    expect(cobreNotes.es).toMatch(/soluciones de IA/);
     expect(CAREER_DETAILS.lead.status).toBeUndefined();
     expect(CAREER_DETAILS.lead.date.en).toBe("FEB 2026 — NOV 2026");
     expect(CAREER_DETAILS.lead.date.es).toBe("FEB 2026 — NOV 2026");

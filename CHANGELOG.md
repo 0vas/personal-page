@@ -24,6 +24,10 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   official broadcast frame ship with the entries, and the talk count is now 11.
 
 ### Changed
+- **Cobre now says what the work is.** The current role and the opening
+  profile card describe stronger platform observability, SLOs and SLIs the
+  teams can measure, and AI solutions developed, deployed and maintained for
+  SRE, DevOps and platform engineering.
 - **Career opens on Cobre.** The current SRE and Forward Deployed Engineer
   role is first in professional experience, marked ACTIVE from NOV 2026, and
   expanded by default. The Credicorp platform lead stays closed at
