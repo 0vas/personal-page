@@ -90,6 +90,22 @@ export const BIO = [
    Org logo: public/assets/orgs/<logo>.svg */
 
 export const CAREER_DETAILS = {
+  cobre: {
+    logo: "cobre",
+    title: { en: "SRE & Forward Deployed Engineer", es: "SRE y Forward Deployed Engineer" },
+    org: "COBRE",
+    date: { en: "NOV 2026 — PRESENT", es: "NOV 2026 — PRESENTE" },
+    status: { en: "ACTIVE", es: "ACTIVO" },
+    notes: [
+      { en: "Designs reliable systems and deploys them beside the teams that run them in production.", es: "Diseña sistemas confiables y los despliega junto a los equipos que los operan en producción." },
+      { en: "Works across platform engineering, DevOps and site reliability, from the first design to the system that stays up.", es: "Trabaja entre platform engineering, DevOps y site reliability, desde el primer diseño hasta el sistema que se mantiene en pie." },
+    ],
+    keys: [
+      { en: "Site reliability", es: "Site reliability" },
+      { en: "Forward deployed", es: "Forward deployed" },
+      { en: "Platform engineering", es: "Platform engineering" },
+    ],
+  },
   lead: {
     logo: "credicorp",
     title: { en: "Platform Product Lead", es: "Platform Product Lead" },
@@ -278,7 +294,7 @@ export const CAREER_GROUPS = [
   {
     id: "professional",
     name: { en: "PROFESSIONAL EXPERIENCE", es: "EXPERIENCIA PROFESIONAL" },
-    dids: ["lead", "architect", "pacifico", "baufest", "nocountry", "novatronic", "freelance"],
+    dids: ["cobre", "lead", "architect", "pacifico", "baufest", "nocountry", "novatronic", "freelance"],
   },
   {
     id: "complementary",
@@ -297,6 +313,7 @@ export const CAREER_ORDER = CAREER_GROUPS.flatMap((g) => g.dids);
 
 /* short category tag per role, for the timeline */
 export const CAREER_KIND = {
+  cobre: { en: "ENGINEERING", es: "INGENIERÍA" },
   lead: { en: "CORPORATE", es: "CORPORATIVO" },
   architect: { en: "CORPORATE", es: "CORPORATIVO" },
   pacifico: { en: "CORPORATE", es: "CORPORATIVO" },

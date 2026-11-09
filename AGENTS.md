@@ -96,8 +96,9 @@ public/assets/             # drop-in images (see ASSETS.md); category marks may 
   skill-chip grid, 3D plates, duplicate rail and readout do not return.
   `#/profile` is canonical; `#/home` remains a legacy alias.
 - **Career** — **vertical timeline**, newest→oldest by start date (`CAREER_ORDER`),
-  accordion; flagship `lead` role expanded by default; org logo per role.
-  The Credicorp platform-lead role is closed (no ACTIVE badge). Career =
+  accordion; current `cobre` role expanded by default; org logo per role.
+  Cobre is the current SRE and Forward Deployed Engineer role (ACTIVE, from
+  NOV 2026). The Credicorp platform-lead role is closed (no ACTIVE badge). Career =
   professional roles ONLY (education never appears here).
 - **Speaking** — **no horizontal scroll**: a photo-dominant Mission Reel with a
   vertical roster and an exact-venue, draggable Natural Earth globe. Venue

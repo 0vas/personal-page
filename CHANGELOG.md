@@ -24,6 +24,11 @@ this project uses loose [Semantic Versioning](https://semver.org/).
   official broadcast frame ship with the entries, and the talk count is now 11.
 
 ### Changed
+- **Career opens on Cobre.** The current SRE and Forward Deployed Engineer
+  role is first in professional experience, marked ACTIVE from NOV 2026, and
+  expanded by default. The Credicorp platform lead stays closed at
+  FEB 2026 — NOV 2026. The supplied Cobre mark ships as a transparent
+  `orgs/cobre.png` and turns light in dark mode so it stays visible on the tile.
 - **Profile Core is a fanned hand of untitled story cards.** Four parts sit
   in an arc. The current part is upright in the center; a click brings the
   next forward and sends that card to the back. The parts are SRE and FDE at

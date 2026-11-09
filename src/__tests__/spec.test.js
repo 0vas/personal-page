@@ -313,14 +313,25 @@ describe("Career", () => {
     expect(CAREER_ORDER[CAREER_ORDER.length - 1]).toBe("acm");
     expect(CAREER_ORDER).toContain("lead");
   });
-  it("C4 — flagship lead role stays expanded and is no longer marked active", () => {
+  it("C4 — Cobre is the open current role and the Credicorp lead stays closed", () => {
+    expect(CAREER_DETAILS.cobre.title.en).toMatch(/SRE & Forward Deployed Engineer/);
+    expect(CAREER_DETAILS.cobre.title.es).toMatch(/SRE y Forward Deployed Engineer/);
+    expect(CAREER_DETAILS.cobre.org).toBe("COBRE");
+    expect(CAREER_DETAILS.cobre.status.en).toBe("ACTIVE");
+    expect(CAREER_DETAILS.cobre.status.es).toBe("ACTIVO");
+    expect(CAREER_DETAILS.cobre.date.en).toBe("NOV 2026 — PRESENT");
+    expect(CAREER_DETAILS.cobre.date.es).toBe("NOV 2026 — PRESENTE");
     expect(CAREER_DETAILS.lead.status).toBeUndefined();
     expect(CAREER_DETAILS.lead.date.en).toBe("FEB 2026 — NOV 2026");
     expect(CAREER_DETAILS.lead.date.es).toBe("FEB 2026 — NOV 2026");
     const career = readFileSync(resolve(ROOT, "src/screens/Career.jsx"), "utf8");
-    expect(career).toContain('useState("lead")');
+    expect(career).toContain('useState("cobre")');
     const pro = CAREER_GROUPS.find((g) => g.id === "professional");
-    expect(pro.dids[0]).toBe("lead");
+    expect(pro.dids[0]).toBe("cobre");
+    expect(pro.dids[1]).toBe("lead");
+    expect(existsSync(resolve(ROOT, "public/assets/orgs/cobre.png"))).toBe(true);
+    const css = readFileSync(resolve(ROOT, "src/styles/app.css"), "utf8");
+    expect(css).toContain('[data-theme="dark"] .tl-logo img[src*="cobre"]');
   });
   it("C5 — grouped into professional / complementary / academic sub-sections", () => {
     expect(CAREER_GROUPS.map((g) => g.id)).toEqual(["professional", "complementary", "academic"]);

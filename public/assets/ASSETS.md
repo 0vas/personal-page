@@ -151,6 +151,7 @@ PNG of 256–512 px (or a clean SVG); the UI scales it into a compact radial mar
 > Career and Education use **`.jpg`** here (not SVG). Square-ish images work best.
 
 **Career → Professional experience**
+- [x] `orgs/cobre.png`       (current SRE & Forward Deployed Engineer role; transparent mark, inverted in dark mode)
 - [ ] `orgs/credicorp.jpg`   (used for Platform Product Lead + Corporate Architect)
 - [ ] `orgs/pacifico.jpg`
 - [ ] `orgs/baufest.jpg`

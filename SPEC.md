@@ -127,9 +127,11 @@ Run `npm test` after every change; every box must stay green before shipping.
 - **C1** — Career is a vertical timeline; oldest role overall (`acm`) is last in `CAREER_ORDER`.
 - **C2** — Career contains **no education** nodes (no `uni`, `hanyang`, `mit`).
 - **C3** — Every career item has: logo (JPEG), title(en/es), org, date(en/es), notes[], keys[].
-- **C4** — Flagship role `lead` stays first in the `professional` group and
-  expanded by default. It is no longer flagged ACTIVE: the Credicorp platform
-  lead role has ended, so its date is FEB 2026 — NOV 2026 and `status` is absent.
+- **C4** — The current professional role `cobre` is first in the `professional`
+  group and expanded by default. It is SRE & Forward Deployed Engineer at
+  Cobre, dated NOV 2026 — PRESENT / NOV 2026 — PRESENTE, with an ACTIVE badge.
+  The Credicorp platform lead stays second, dated FEB 2026 — NOV 2026, with no
+  `status`.
 - **C5** — Career is split into 3 sub-sections: `professional`, `complementary`
   (dss, devopsinstitute, ailab), `academic` (nixvoid, gamedevs, acm); group names bilingual.
 

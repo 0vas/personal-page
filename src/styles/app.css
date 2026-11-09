@@ -2122,6 +2122,7 @@ button.bio-plate { cursor: pointer; }
   border: 1px solid var(--line-soft); background: var(--panel-solid); color: var(--accent);
 }
 .tl-logo img { width: 28px; height: 28px; }
+[data-theme="dark"] .tl-logo img[src*="cobre"] { filter: invert(1); }
 .tl-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .tl-role {
   font-family: var(--f-disp); font-size: 21px; font-weight: 700;

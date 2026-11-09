@@ -55,7 +55,7 @@ function Role({ did, lang, open, setOpen }) {
 
 export default function Career({ lang }) {
   const S = STRINGS[lang].career;
-  const [open, setOpen] = useState("lead"); // flagship role expanded by default
+  const [open, setOpen] = useState("cobre"); // current role expanded by default
 
   return (
     <div className="screen-inner career-v">
